@@ -1,0 +1,23 @@
+services:
+  postgres:
+    container_name: gogo_postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      PG_DATA: /data/postgres
+    volumes:
+      - gogo_postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - gogo_postgres
+    restart: unless-stopped
+
+networks:
+  gogo_postgres:
+    driver: bridge
+
+volumes:
+  gogo_postgres:
