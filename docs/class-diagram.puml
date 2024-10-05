@@ -15,16 +15,18 @@ entity User {
     dateOfBirth: datetime
 }
 
-entity Favorite {
+entity StayFavorite {
     id: uuid
     user_id: uuid
-    service_id: uuid
-    service_type: ServiceType
+    stay_id: uuid
 }
 
-enum ServiceType {
-    flight
-    stay
+entity FlightFavorite {
+    id: uuid
+    user_id: uuid
+    outbound_id: uuid
+    return_id: uuid
+    is_roundtrip: boolean
 }
 
 entity Flight {
@@ -195,14 +197,14 @@ entity Payment {
     payment_method
 }
 
-Favorite }|-up-|| User
+StayFavorite }|-up-|| User
+FlightFavorite }|-up-|| User
 
 RoomBooking }|-right-|| User
 RoomBooking ||-left-|| Room
 RoomBooking ||--|| Payment
 
-Favorite }|-up-|| Stay
-Favorite }|--|| Trip
+StayFavorite }|-up-|| Stay
 Review }|-up-|| Stay 
 Review }|--|| Flight
 ServiceAmenity }|-up-|| Stay 
@@ -223,6 +225,7 @@ Airport }|-up-|| Location
 Stay }|--|| Location
 
 Seat }|--|| Flight
+FlightFavorite }|--|{ Flight
 FlightBooking ||--|{ FlightBookingDetails
 FlightBookingDetails }|--|| Seat
 FlightBookingDetails ||--|| Flight
