@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface StayRepository extends JpaRepository<Stay, String> {
-    Optional<Stay> findById( String id);
+    Optional<Stay> findById(String id);
 }
