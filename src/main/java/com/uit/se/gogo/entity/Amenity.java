@@ -5,11 +5,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Amenity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -17,5 +19,5 @@ public class Amenity {
     private String name;
     @Enumerated(EnumType.STRING)
     private AmenityIcon icon;
-    private Boolean isFeature;
+    private Boolean isFeatured;
 }

@@ -1,5 +1,6 @@
 package com.uit.se.gogo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class Review {
     private String id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
+    @JsonIgnore
     private BaseService service;
     private String userId;
     private Integer rating;
