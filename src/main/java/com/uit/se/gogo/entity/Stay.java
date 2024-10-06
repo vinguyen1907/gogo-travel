@@ -2,13 +2,17 @@ package com.uit.se.gogo.entity;
 
 import com.uit.se.gogo.enums.StayType;
 import jakarta.persistence.*;
+import lombok.*;
 
-@Entity()
-public class Stay {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
-    private String name;
+import java.util.List;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Stay extends BaseService {
     private String address;
     @ManyToOne
     private Location location;
@@ -19,4 +23,6 @@ public class Stay {
     private String overview;
     private Double latitude;
     private Double longitude;
+    @OneToMany
+    private List<StayAdvantage> advantages;
 }
