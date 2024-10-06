@@ -15,26 +15,27 @@ entity User {
     dateOfBirth: datetime
 }
 
-entity Favorite {
+entity StayFavorite {
     id: uuid
     user_id: uuid
-    service_id: uuid
-    service_type: ServiceType
+    stay_id: uuid
 }
 
-enum ServiceType {
-    flight
-    stay
+entity FlightFavorite {
+    id: uuid
+    user_id: uuid
+    outbound_id: uuid
+    return_id: uuid
+    is_roundtrip: boolean
+}
+
+entity BaseService {
+    id: uuid
+    name: string
 }
 
 entity Flight {
     id: uuid
-    name: string
-    base_fare: number
-    discount: number
-    taxes: number
-    service_fee: number
-    total_price: number
     airline_id: uuid
     departure_airport_id: uuid
     arrival_airport_id: uuid
@@ -42,8 +43,50 @@ entity Flight {
     gate: string
     departure_time: timestamp
     arrival_time: timestamp
-    timezoneL: string
+    timezone: string
     duration: interval
+    is_return: boolean
+}
+
+class FlightQueryResult {
+    id: uuid
+    is_round_trip: boolean
+    outbound_id: uuid
+    return_id: uuid
+}
+
+entity Seat {
+    id: uuid
+    number: string
+    seat_class: SeatClass
+    flight_id: uuid
+    base_fare: number
+    service_fee: number
+    is_available: boolean
+}
+
+entity FlightBooking {
+    id: uuid
+    user_id: uuid
+    status: string
+    date: timestamp
+    total_price: number
+}
+
+entity FlightBookingDetails {
+    id: uuid
+    booking_id: uuid
+    seat_id: uuid
+    flight_id: uuid
+    discount: number
+    taxes: number
+    total_price: number
+}
+
+enum SeatClass {
+    economy
+    first
+    business
 }
 
 entity Amenity {
@@ -59,20 +102,6 @@ entity ServiceAmenity {
     service_id: uuid
 }
 
-entity Seat {
-    id: uuid
-    number: string
-    seat_class: SeatClass
-    flight_id: uuid
-    is_available: boolean
-}
-
-enum SeatClass {
-    economy
-    first
-    business
-}
-
 entity Airport {
     id: uuid
     code: string
@@ -84,7 +113,7 @@ entity Airline {
     id: uuid
     name: string
     image: string
-    ratingsL: number
+    ratings: number
     review_count: number
 }
 
@@ -106,15 +135,6 @@ entity FeatureImage {
     id: uuid
     service_id: uuid
     url: string
-}
-
-entity FlightBooking {
-    id: uuid
-    user_id: uuid
-    status: string
-    date: timestamp
-    seat_id: uuid
-    flight_id: uuid
 }
 
 entity Stay {
@@ -181,39 +201,40 @@ entity Payment {
     payment_method
 }
 
-Favorite }|-up-|| User
-
-FlightBooking }|-left-|| User
-FlightBooking ||--|| Flight
-FlightBooking ||--|| Seat
-FlightBooking ||--|| Payment
+StayFavorite }|-up-|| User
+FlightFavorite }|-up-|| User
 
 RoomBooking }|-right-|| User
 RoomBooking ||-left-|| Room
 RoomBooking ||--|| Payment
 
-Favorite }|-up-|| Stay
-Favorite }|--|| Flight
-Review }|-up-|| Stay 
-Review }|--|| Flight
-ServiceAmenity }|-up-|| Stay 
-ServiceAmenity }|--|| Flight
+StayFavorite }|-up-|| Stay
+Review }|--|| BaseService 
+ServiceAmenity }|-up-|| BaseService 
 Amenity }|--|| ServiceAmenity
 
-Advantage }|-up-|| Stay
-FeatureImage }|-up-|| Stay 
-FeatureImage }|--|| Flight
+Advantage }|-left-|| Stay
+FeatureImage }|--|| BaseService 
 
 Room }|-left-|| Stay 
 
-Flight }|--|| Airline
+Flight }|-right-|| Airline
+Policy }|--|| Airline
 Flight }|-left-|| Airport
-Policy }|--|| Airport
 
-Airport }|--|| Location
+Airport }|-up-|| Location
 Stay }|--|| Location
 
-
 Seat }|--|| Flight
+FlightFavorite }|--|{ Flight
+FlightBooking ||--|{ FlightBookingDetails
+FlightBookingDetails }|--|| Seat
+FlightBookingDetails ||--|| Flight
+FlightQueryResult }|--|{ Flight
+FlightBooking }|-left-|| User
+FlightBooking ||-down-|| Payment
+
+Flight ||--|| BaseService
+Stay ||--|| BaseService
 
 @enduml
