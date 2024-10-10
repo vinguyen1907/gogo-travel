@@ -12,14 +12,14 @@ import com.uit.se.gogo.service.LocationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@Slf4j
+import com.uit.se.gogo.response.DataResponse;
+
 @RestController
 @RequestMapping("/${api.prefix}/locations")
 @RequiredArgsConstructor
@@ -28,20 +28,25 @@ public class LocationController {
     LocationService locationService;
 
     @GetMapping("/{id}")
-    public LocationResponse getById(@PathVariable String id) {
-        log.info("Location id: " + id);
-        return locationService.findById(id);
+    public DataResponse<LocationResponse> getById(@PathVariable String id) {
+        return DataResponse.<LocationResponse>builder()
+            .data(locationService.findById(id))
+            .build();
     }
 
     @GetMapping
-    public List<LocationResponse> getAll() {
-        return locationService.findAll();
+    public DataResponse<List<LocationResponse>> getAll() {
+        return DataResponse.<List<LocationResponse>>builder()
+            .data(locationService.findAll())
+            .build();
     }
     
     
     @PostMapping
-    public LocationResponse postMethodName(@RequestBody LocationRequest request) {
-        return locationService.createLocation(request);
+    public DataResponse<LocationResponse> postMethodName(@RequestBody LocationRequest request) {
+        return DataResponse.<LocationResponse>builder()
+            .data(locationService.createLocation(request))
+            .build();
     }
     
 }

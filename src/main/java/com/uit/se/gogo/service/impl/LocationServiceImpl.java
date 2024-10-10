@@ -19,8 +19,8 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LocationServiceImpl implements LocationService{
-    private final LocationRepository locationRepository;
-    private final LocationMapper locationMapper;
+    LocationRepository locationRepository;
+    LocationMapper locationMapper;
     
     @Override
     public LocationResponse findById(String id) {
