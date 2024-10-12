@@ -10,11 +10,11 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
-        ApiError apiError = new ApiError(BAD_REQUEST);
-        apiError.setMessage(ex.getMessage());
-        apiError.setErrorCode("ILLEGAL_ARGUMENT");
-        return ExceptionUtil.buildResponseEntity(apiError);
-    }
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
+//        ApiError apiError = new ApiError(BAD_REQUEST);
+//        apiError.setMessage(ex.getMessage());
+//        apiError.setErrorCode("ILLEGAL_ARGUMENT");
+//        return ExceptionUtil.buildResponseEntity(apiError);
+//    }
 }
