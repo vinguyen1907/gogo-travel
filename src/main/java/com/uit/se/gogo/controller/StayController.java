@@ -1,5 +1,6 @@
 package com.uit.se.gogo.controller;
 
+import com.uit.se.gogo.entity.Room;
 import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.enums.StayOrderBy;
 import com.uit.se.gogo.enums.StayType;
@@ -60,5 +61,15 @@ public class StayController {
                 .pageSize(pageSize)
                 .build();
         return ResponseEntity.ok(new DataResponse<>(stayService.search(request)));
+    }
+
+    @GetMapping("/{stayId}/rooms/available")
+    public ResponseEntity<DataResponse<List<Room>>> getRooms(
+            @PathVariable String stayId,
+            @RequestParam("checkin_date") Date checkinDate,
+            @RequestParam("checkout_date") Date checkoutDate,
+            @RequestParam Integer guests) {
+        var rooms = stayService.getAvailableRooms(stayId, checkinDate, checkoutDate, guests);
+        return ResponseEntity.ok(new DataResponse<>(rooms));
     }
 }

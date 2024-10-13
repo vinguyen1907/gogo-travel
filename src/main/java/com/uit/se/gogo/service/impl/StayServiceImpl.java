@@ -1,6 +1,8 @@
 package com.uit.se.gogo.service.impl;
 
+import com.uit.se.gogo.entity.Room;
 import com.uit.se.gogo.entity.Stay;
+import com.uit.se.gogo.repository.RoomRepository;
 import com.uit.se.gogo.repository.StayRepository;
 import com.uit.se.gogo.request.SearchStayRequest;
 import com.uit.se.gogo.service.StayService;
@@ -10,12 +12,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class StayServiceImpl implements StayService {
     private final StayRepository stayRepository;
+    private final RoomRepository roomRepository;
 
     @Override
     public Stay findById(String id) {
@@ -38,5 +42,10 @@ public class StayServiceImpl implements StayService {
                 request.getType(),
                 pageable
         );
+    }
+
+    @Override
+    public List<Room> getAvailableRooms(String stayId, Date checkinDate, Date checkoutDate, Integer guests) {
+        return roomRepository.findAvailableRooms(stayId, guests, checkinDate, checkoutDate);
     }
 }
