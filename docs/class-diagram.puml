@@ -173,6 +173,7 @@ entity Room {
     total_price: number
     type: string
     is_available: boolean
+    max_guests: number
 }
 
 entity RoomBooking {
