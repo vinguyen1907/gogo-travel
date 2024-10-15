@@ -27,4 +27,6 @@ public class Stay extends BaseService {
     private Double longitude;
     @OneToMany
     private List<StayAdvantage> advantages;
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Review> reviews;
 }

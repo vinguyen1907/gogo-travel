@@ -19,6 +19,4 @@ public class BaseService {
     private String name;
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ServiceAmenity> amenities;
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Review> reviews;
 }
