@@ -1,11 +1,13 @@
 package com.uit.se.gogo.controller;
 
+import com.uit.se.gogo.dto.StayDTO;
 import com.uit.se.gogo.entity.Room;
 import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.enums.StayOrderBy;
 import com.uit.se.gogo.enums.StayType;
 import com.uit.se.gogo.request.SearchStayRequest;
 import com.uit.se.gogo.response.DataResponse;
+import com.uit.se.gogo.response.PageDataResponse;
 import com.uit.se.gogo.service.StayService;
 import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
@@ -25,15 +27,16 @@ public class StayController {
     private final StayService stayService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Stay> getStayById(@PathVariable String id) {
+    public ResponseEntity<StayDTO> getStayById(@PathVariable String id) {
         LOGGER.info("Receive /api/v1/stays/{}", id);
         var stay = stayService.findById(id);
-        LOGGER.info("Result /api/v1/stays/{}: {}", id, stay);
-        return ResponseEntity.ok(stay);
+        var stayDTO = new StayDTO(stay);
+        LOGGER.info("Result /api/v1/stays/{}: {}", id, stayDTO);
+        return ResponseEntity.ok(stayDTO);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<DataResponse<List<Stay>>> search(@RequestParam("location_id") @NotNull(message = "Location ID is required") String locationId,
+    public ResponseEntity<PageDataResponse<StayDTO>> search(@RequestParam("location_id") @NotNull(message = "Location ID is required") String locationId,
                                                @RequestParam("checkin_date") @NotNull(message = "Check-in date is required") Date checkinDate,
                                                @RequestParam("checkout_date") @NotNull(message = "Check-out date is required") Date checkoutDate,
                                                @RequestParam("rooms") @NotNull(message = "Rooms is required") @Min(value = 1, message = "Rooms must be at least 1") Integer rooms,
@@ -60,7 +63,8 @@ public class StayController {
                 .page(page)
                 .pageSize(pageSize)
                 .build();
-        return ResponseEntity.ok(new DataResponse<>(stayService.search(request)));
+        var stays = stayService.search(request);
+        return ResponseEntity.ok(new PageDataResponse<>(stays));
     }
 
     @GetMapping("/{stayId}/rooms/available")
