@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uit.se.gogo.request.LocationRequest;
+import com.uit.se.gogo.request.LocationCreationRequest;
 import com.uit.se.gogo.response.LocationResponse;
 import com.uit.se.gogo.service.LocationService;
 
@@ -43,7 +43,7 @@ public class LocationController {
     
     
     @PostMapping
-    public DataResponse<LocationResponse> postMethodName(@RequestBody LocationRequest request) {
+    public DataResponse<LocationResponse> postMethodName(@RequestBody LocationCreationRequest request) {
         return DataResponse.<LocationResponse>builder()
             .data(locationService.createLocation(request))
             .build();

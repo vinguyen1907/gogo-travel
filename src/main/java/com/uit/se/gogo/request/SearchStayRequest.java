@@ -1,29 +1,55 @@
 package com.uit.se.gogo.request;
 
-import com.uit.se.gogo.enums.StayOrderBy;
-import com.uit.se.gogo.enums.StayType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
+import com.uit.se.gogo.enums.StayType;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.Data;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class SearchStayRequest {
+
+    @NotNull(message = "Location ID is required")
     private String locationId;
+
+    @NotNull(message = "Check-in date is required")
     private Date checkinDate;
+
+    @NotNull(message = "Check-out date is required")
     private Date checkoutDate;
+
+    @NotNull(message = "Rooms is required")
+    @Min(value = 1, message = "Rooms must be at least 1")
     private Integer rooms;
+
+    @NotNull(message = "Guests is required")
+    @Min(value = 1, message = "Guests must be at least 1")
     private Integer guests;
+
+    @NotNull(message = "Min price is required")
+    @Min(value = 0, message = "Min price must be at least 0")
     private Double minPrice;
+
+    @NotNull(message = "Max price is required")
+    @Min(value = 0, message = "Max price must be at least 0")
     private Double maxPrice;
-    private StayType type;
+
+    @NotNull(message = "Rating is required")
+    @Min(value = 0, message = "Rating must be at least 0")
+    @Max(value = 5, message = "Rating cannot exceed 5")
     private Integer rating;
-    private StayOrderBy orderBy;
-    private Integer page;
-    private Integer pageSize;
+
+    @NotNull(message = "Stay type is required")
+    private StayType type;
+
+    @PositiveOrZero
+    private Integer page = 0; // Default value
+
+    @Positive
+    private Integer pageSize = 10; // Default value
 }

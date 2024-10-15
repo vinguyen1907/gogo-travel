@@ -19,7 +19,7 @@ import com.uit.se.gogo.service.AirportService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.uit.se.gogo.request.AirportRequest;
+import com.uit.se.gogo.request.AirportCreationRequest;
 
 
 
@@ -46,7 +46,7 @@ public class AirportController {
     }
     
     @PostMapping
-    public DataResponse<AirportResponse> postMethodName(@RequestBody AirportRequest request) {
+    public DataResponse<AirportResponse> postMethodName(@RequestBody AirportCreationRequest request) {
         return DataResponse.<AirportResponse>builder()
             .data(airportService.createAirport(request))
             .build();

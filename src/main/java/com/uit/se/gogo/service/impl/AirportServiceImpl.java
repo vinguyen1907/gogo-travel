@@ -8,7 +8,7 @@ import com.uit.se.gogo.entity.Airport;
 import com.uit.se.gogo.mapper.AirportMapper;
 import com.uit.se.gogo.repository.AirportRepository;
 import com.uit.se.gogo.repository.LocationRepository;
-import com.uit.se.gogo.request.AirportRequest;
+import com.uit.se.gogo.request.AirportCreationRequest;
 import com.uit.se.gogo.response.AirportResponse;
 import com.uit.se.gogo.service.AirportService;
 
@@ -40,7 +40,7 @@ public class AirportServiceImpl implements AirportService{
     }
 
     @Override
-    public AirportResponse createAirport(AirportRequest request) {
+    public AirportResponse createAirport(AirportCreationRequest request) {
         Airport airport = airportMapper.toAirport(request);
         var location = locationRepository.findById(request.getLocation()).orElseThrow(RuntimeException::new);
         airport.setLocation(location);
