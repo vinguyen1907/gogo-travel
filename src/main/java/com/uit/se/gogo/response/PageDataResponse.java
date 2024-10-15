@@ -3,21 +3,27 @@ package com.uit.se.gogo.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class PageDataResponse <T> extends DataResponse<T> {
+public class PageDataResponse <T> {
+    private List<T> data;
     private Integer page;
     private Integer size;
     private Long total;
     @JsonProperty("total_page")
-    private Long totalPage;
+    private int totalPage;
 
-    public PageDataResponse(T data) {
-        super(data);
+    public PageDataResponse(Page<T> page) {
+        this.data = page.get().toList();
+        this.page = page.getNumber();
+        this.size = page.getSize();
+        this.total = page.getTotalElements();
+        this.totalPage = page.getTotalPages();
     }
 }
