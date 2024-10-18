@@ -59,7 +59,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"city\": \"Da Lat\",\r\n    \"country\": \"Lam Dong, Viet Nam\",\r\n    \"description\": \"Đà Lạt là thành phố tỉnh lỵ trực thuộc tỉnh Lâm Đồng, nằm trên cao nguyên Lâm Viên, thuộc vùng Tây Nguyên, Việt Nam.\"\r\n}",
+							"raw": "{\r\n    \"city\": \"An Giang\",\r\n    \"country\": \"Viet Nam\",\r\n    \"description\": \"An Giang la que thang Loc.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,7 +114,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/airports/",
+							"raw": "http://localhost:8080/api/v1/airports/eb7328ec-0a97-40dd-940f-2e645d90644b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -124,7 +124,7 @@
 								"api",
 								"v1",
 								"airports",
-								""
+								"eb7328ec-0a97-40dd-940f-2e645d90644b"
 							]
 						}
 					},
@@ -137,7 +137,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"code\": \"vietjet\",\r\n    \"name\": \"VietJet Air\",\r\n    \"location\": \"34d1b47a-ec73-42ba-8ca3-04ce168dab06\"\r\n}",
+							"raw": "{\r\n    \"code\": \"chaudocjet\",\r\n    \"name\": \"ChauDoc Air\",\r\n    \"location\": \"ce774e63-1317-46a3-9425-747a67f8c69a\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -155,6 +155,162 @@
 								"api",
 								"v1",
 								"airports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Airline",
+			"item": [
+				{
+					"name": "Get All Airlines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/airlines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Airline",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/airlines/7f36ea7e-e18e-4bf4-b786-18cc3db577f8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"7f36ea7e-e18e-4bf4-b786-18cc3db577f8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Airline",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Vietnam Airlines\",\r\n    \"image\": \"https://bestcargo.vn/en/wp-content/uploads/2023/06/VJ971.png\",\r\n    \"policies\": [\r\n        {\r\n            \"content\": \"You will ALWAYS retrieve your bag at Port of Entry in New Zealand or Chile to go through Customs and Immigration.\"\r\n        },\r\n        {\r\n            \"content\": \"Be prepared to pay baggage fees at the counter, reimbursable within USAP limits.\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/airlines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Flight",
+			"item": [
+				{
+					"name": "Get Flights",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Flight by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Flight",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"airlineId\": \"7f36ea7e-e18e-4bf4-b786-18cc3db577f8\",\r\n    \"departureAirportId\": \"eb7328ec-0a97-40dd-940f-2e645d90644b\",\r\n    \"arrivalAirportId\": \"5fd45bdd-4da4-4400-b3e1-b32b9adf2441\",\r\n    \"gate\": \"A1\",\r\n    \"timezone\": \"GMT+8\",\r\n    \"departureTime\": \"2024-10-18T15:30:00.000Z\",\r\n    \"arrivalTime\": \"2024-10-18T18:45:00.000Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights"
 							]
 						}
 					},

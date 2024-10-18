@@ -9,5 +9,6 @@ import com.uit.se.gogo.response.AirlineResponse;
 @Mapper(componentModel = "spring")
 public interface AirlineMapper {
     public Airline toAirline(AirlineCreationRequest request);
+    public Airline toAirline(AirlineResponse response);
     public AirlineResponse toAirlineResponse(Airline airline);
 }

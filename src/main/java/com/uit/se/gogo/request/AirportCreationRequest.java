@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class AirportCreationRequest {
-    final String code;
-    final String name;
-    final String location;
+    private String code;
+    private String name;
+    private String location;
 }

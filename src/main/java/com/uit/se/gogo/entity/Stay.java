@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Stay extends BaseService {
+    private String name;
     private String address;
     @ManyToOne
     private Location location;

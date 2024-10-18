@@ -13,4 +13,6 @@ public interface AirportMapper {
 
     @Mapping(target = "location", ignore = true)
     Airport toAirport(AirportCreationRequest request);
+
+    Airport toAirport(AirportResponse response);
 }
