@@ -3,6 +3,7 @@ package com.uit.se.gogo.repository;
 import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.enums.StayType;
 import lombok.NonNull;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +21,7 @@ public interface StayRepository extends JpaRepository<Stay, String> {
             "WHERE s.location.id = :locationId " +
             "AND (:rating IS NULL OR s.rating >= :rating) " +
             "AND s.stayType = :type")
-    List<Stay> search(
+    Page<Stay> search(
 //            Date checkinDate,
 //            Date checkoutDate,
             String locationId,

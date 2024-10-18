@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class StayAdvantage {
+@NoArgsConstructor
+public class StayFavorite {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @ManyToOne
-    @JoinColumn(name = "stay_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "favorite_stay")
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Stay stay;
-    private String name;
 }

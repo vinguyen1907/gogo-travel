@@ -1,5 +1,6 @@
 package com.uit.se.gogo.service.impl;
 
+import com.uit.se.gogo.dto.StayDTO;
 import com.uit.se.gogo.entity.Room;
 import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.repository.RoomRepository;
@@ -8,6 +9,8 @@ import com.uit.se.gogo.request.SearchStayRequest;
 import com.uit.se.gogo.service.StayService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,9 +31,9 @@ public class StayServiceImpl implements StayService {
     }
 
     @Override
-    public List<Stay> search(SearchStayRequest request) {
+    public Page<StayDTO> search(SearchStayRequest request) {
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageSize());
-        return stayRepository.search(
+        var stayPage = stayRepository.search(
 //                request.getCheckinDate(),
 //                request.getCheckoutDate(),
                 request.getLocationId(),
@@ -42,6 +45,9 @@ public class StayServiceImpl implements StayService {
                 request.getType(),
                 pageable
         );
+        var stayDTOs = stayPage.getContent().stream().map(StayDTO::new).toList();
+        return new PageImpl<>(stayDTOs, stayPage.getPageable(), stayPage.getTotalElements());
+
     }
 
     @Override

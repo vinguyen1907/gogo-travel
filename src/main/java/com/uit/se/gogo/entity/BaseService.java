@@ -1,5 +1,6 @@
 package com.uit.se.gogo.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class BaseService {
     private String id;
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ServiceAmenity> amenities;
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Review> reviews;
+    @OneToMany(mappedBy = "service")
+    @JsonProperty("featured_images")
+    private List<FeaturedImage> featuredImages;
 }
