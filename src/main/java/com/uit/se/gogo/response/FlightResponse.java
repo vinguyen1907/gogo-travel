@@ -1,7 +1,9 @@
 package com.uit.se.gogo.response;
 
 import java.sql.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.uit.se.gogo.entity.Airline;
 import com.uit.se.gogo.entity.Airport;
 
@@ -23,4 +25,6 @@ public class FlightResponse {
     private String timezone;
     private Date departureTime;
     private Date arrivalTime;
+    @JsonIgnoreProperties("flight")
+    private List<SeatResponse> seats;
 }

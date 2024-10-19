@@ -2,6 +2,7 @@ package com.uit.se.gogo.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uit.se.gogo.request.FlightCreationRequest;
+import com.uit.se.gogo.request.FlightSeatsUpdateRequest;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.response.FlightResponse;
+import com.uit.se.gogo.response.SeatResponse;
 import com.uit.se.gogo.service.FlightService;
+import com.uit.se.gogo.service.SeatService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FlightController {
     private final FlightService flightService;
+    private final SeatService seatService;
 
     @GetMapping
     public DataResponse<List<FlightResponse>> getAllFlights() {
@@ -44,6 +49,24 @@ public class FlightController {
             .data(flightService.createFlight(request))
             .build();
     }
-    
+
+    @GetMapping("/{flightId}/available-seats")
+    public DataResponse<List<SeatResponse>> getAvailableSeats(@PathVariable String flightId) {
+        List<SeatResponse> availableSeats = seatService.getAvailableSeatsForFlight(flightId);
+        return DataResponse.<List<SeatResponse>>builder().data(availableSeats).build();
+    }
+
+    @PostMapping("/seats/{seatId}/book")
+    public ResponseEntity<String> bookSeat(@PathVariable String seatId) {
+        seatService.bookSeat(seatId);
+        return ResponseEntity.ok("Seat booked successfully");
+    }
+
+    @PostMapping("/seats")
+    public DataResponse<FlightResponse> updateSeats(@RequestBody FlightSeatsUpdateRequest request) {
+        return DataResponse.<FlightResponse>builder()
+            .data(seatService.updateFlightSeats(request.getFlightId(), request.getSeats()))
+            .build();
+    }
     
 }
