@@ -1,25 +1,52 @@
 package com.uit.se.gogo.controller;
 
-import com.uit.se.gogo.entity.Location;
-import com.uit.se.gogo.response.DataResponse;
-import com.uit.se.gogo.service.LocationService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uit.se.gogo.request.LocationCreationRequest;
+import com.uit.se.gogo.response.LocationResponse;
+import com.uit.se.gogo.service.LocationService;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.List;
 
+import com.uit.se.gogo.response.DataResponse;
+
 @RestController
-@RequestMapping("/api/v1/locations")
+@RequestMapping("/${api.prefix}/locations")
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LocationController {
-    private final LocationService locationService;
+    LocationService locationService;
+
+    @GetMapping("/{id}")
+    public DataResponse<LocationResponse> getById(@PathVariable String id) {
+        return DataResponse.<LocationResponse>builder()
+            .data(locationService.findById(id))
+            .build();
+    }
 
     @GetMapping
-    public ResponseEntity<DataResponse<List<Location>>> getAllLocations() {
-        var locations = locationService.findAll();
-        return ResponseEntity.ok(new DataResponse<>(locations));
+    public DataResponse<List<LocationResponse>> getAll() {
+        return DataResponse.<List<LocationResponse>>builder()
+            .data(locationService.findAll())
+            .build();
     }
+    
+    
+    @PostMapping
+    public DataResponse<LocationResponse> postMethodName(@RequestBody LocationCreationRequest request) {
+        return DataResponse.<LocationResponse>builder()
+            .data(locationService.createLocation(request))
+            .build();
+    }
+    
 }

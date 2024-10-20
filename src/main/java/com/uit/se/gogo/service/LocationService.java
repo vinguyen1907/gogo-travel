@@ -1,9 +1,12 @@
 package com.uit.se.gogo.service;
-
-import com.uit.se.gogo.entity.Location;
+import com.uit.se.gogo.request.LocationCreationRequest;
+import com.uit.se.gogo.response.LocationResponse;
 
 import java.util.List;
 
+
 public interface LocationService {
-    List<Location> findAll();
+    LocationResponse findById(String id);
+    List<LocationResponse> findAll();
+    LocationResponse createLocation(LocationCreationRequest request);
 }

@@ -1,6 +1,7 @@
 package com.uit.se.gogo.exception_handler;
 
 import com.uit.se.gogo.exception_handler.error.ApiError;
+import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.util.ExceptionUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,20 +1,26 @@
 package com.uit.se.gogo.exception_handler.error;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.uit.se.gogo.exception_handler.resolver.LowerCaseClassNameResolver;
-import lombok.Data;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
 @JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 public class ApiError {
