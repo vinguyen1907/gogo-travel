@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uit.se.gogo.request.FlightCreationRequest;
+import com.uit.se.gogo.request.FlightFavoriteRequest;
 import com.uit.se.gogo.request.FlightSeatsUpdateRequest;
 import com.uit.se.gogo.response.DataResponse;
+import com.uit.se.gogo.response.FlightFavoriteResponse;
 import com.uit.se.gogo.response.FlightResponse;
 import com.uit.se.gogo.response.SeatResponse;
+import com.uit.se.gogo.response.UserFlightFavoriteResponse;
 import com.uit.se.gogo.service.FlightService;
 import com.uit.se.gogo.service.SeatService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-
 
 @RestController
 @RequestMapping("/${api.prefix}/flights")
@@ -68,5 +70,20 @@ public class FlightController {
             .data(seatService.updateFlightSeats(request.getFlightId(), request.getSeats()))
             .build();
     }
+
+    @PostMapping("/favorites")
+    public DataResponse<FlightFavoriteResponse> postMethodName(@RequestBody @Valid FlightFavoriteRequest request) {
+        return DataResponse.<FlightFavoriteResponse>builder()
+            .data(flightService.addFlightFavorite(request))
+            .build();
+    }
+    
+    @GetMapping("/favorites/{userId}")
+    public DataResponse<UserFlightFavoriteResponse> getUserFlightFavorite(@PathVariable String userId) {
+        return DataResponse.<UserFlightFavoriteResponse>builder()
+            .data(flightService.getUserFlightFavoriteResponse(userId))
+            .build();
+    }
+    
     
 }
