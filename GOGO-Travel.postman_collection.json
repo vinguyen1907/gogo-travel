@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "bc9f1b37-3303-4220-b190-a0751084be83",
-		"name": "GOGO Travel",
+		"name": "GOGO-Travel",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27655962"
 	},
@@ -311,6 +311,114 @@
 								"api",
 								"v1",
 								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get available seats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights/44a7fc71-492c-4ecc-a66e-7922086cbceb/available-seats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights",
+								"44a7fc71-492c-4ecc-a66e-7922086cbceb",
+								"available-seats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Flight Seats",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"flightId\": \"44a7fc71-492c-4ecc-a66e-7922086cbceb\",\r\n    \"seats\": [\r\n        {\r\n            \"number\": \"1A\", \r\n            \"seatClass\": \"BUSINESS\", \r\n            \"available\": true,\r\n            \"baseFare\": 200,\r\n            \"serviceFee\": 40\r\n        },\r\n        {\r\n            \"number\": \"1B\", \r\n            \"seatClass\": \"BUSINESS\", \r\n            \"isAvailable\": true,\r\n            \"baseFare\": 200,\r\n            \"serviceFee\": 40\r\n        },\r\n        {\r\n            \"number\": \"1C\", \r\n            \"seatClass\": \"BUSINESS\", \r\n            \"available\": true,\r\n            \"baseFare\": 200,\r\n            \"serviceFee\": 40\r\n        },\r\n        {\r\n            \"number\": \"2A\", \r\n            \"seatClass\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"baseFare\": 150,\r\n            \"serviceFee\": 20\r\n        },\r\n        {\r\n            \"number\": \"2B\", \r\n            \"seatClass\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"baseFare\": 150,\r\n            \"serviceFee\": 20\r\n        },\r\n        {\r\n            \"number\": \"2C\", \r\n            \"seatClass\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"baseFare\": 150,\r\n            \"serviceFee\": 20\r\n        },\r\n        {\r\n            \"number\": \"3A\", \r\n            \"seatClass\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"baseFare\": 250,\r\n            \"serviceFee\": 50\r\n        },\r\n        {\r\n            \"number\": \"3B\", \r\n            \"seatClass\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"baseFare\": 250,\r\n            \"serviceFee\": 50\r\n        },\r\n        {\r\n            \"number\": \"3C\", \r\n            \"seatClass\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"baseFare\": 250,\r\n            \"serviceFee\": 50\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights/seats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights",
+								"seats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add favorite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"loc\",\r\n    \"outboundFlightId\": \"44a7fc71-492c-4ecc-a66e-7922086cbceb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights/favorites",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights",
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user flight favorites",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights/favorites/0bdc3ef9-5aa6-4237-b4b9-f195293a9b5b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights",
+								"favorites",
+								"0bdc3ef9-5aa6-4237-b4b9-f195293a9b5b"
 							]
 						}
 					},
