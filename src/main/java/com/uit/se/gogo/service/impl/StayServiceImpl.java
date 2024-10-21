@@ -34,13 +34,13 @@ public class StayServiceImpl implements StayService {
     public Page<StayDTO> search(SearchStayRequest request) {
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageSize());
         var stayPage = stayRepository.search(
-//                request.getCheckinDate(),
-//                request.getCheckoutDate(),
+                request.getCheckinDate(),
+                request.getCheckoutDate(),
                 request.getLocationId(),
-//                request.getRooms(),
-//                request.getGuests(),
-//                request.getMinPrice(),
-//                request.getMaxPrice(),
+                request.getRooms(),
+                request.getGuests(),
+                request.getMinPrice(),
+                request.getMaxPrice(),
                 request.getRating(),
                 request.getType(),
                 pageable

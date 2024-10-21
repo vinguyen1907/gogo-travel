@@ -19,7 +19,7 @@ public class Stay extends BaseService {
     private Double rating;
     @JsonProperty("star_rating")
     private Integer starRating;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @JsonProperty("stay_type")
     private StayType stayType;
     private String overview;
