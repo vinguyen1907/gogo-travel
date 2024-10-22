@@ -1,8 +1,12 @@
 package com.uit.se.gogo.request;
 
-import com.uit.se.gogo.enums.FlightOrderBy;
+import java.sql.Date;
+import java.util.List;
 
-import jakarta.validation.constraints.Max;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.uit.se.gogo.enums.FlightOrderBy;
+import com.uit.se.gogo.enums.SeatClass;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -18,27 +22,47 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FlightQueryRequest {
     @NotNull(message = "Departure Location ID is required")
+    @JsonProperty("departure_location_id")
     private String departureLocationId;
 
     @NotNull(message = "Arrival Location ID is required")
+    @JsonProperty("arrival_location_id")
     private String arrivalLocationId;
 
-    private String seatClass;
+    @NotNull
+    @JsonProperty("departure_time_from")
+    private Date departureTimeFrom;
+    
+    @NotNull
+    @JsonProperty("departure_time_to")
+    private Date departureTimeTo;
+
+    @JsonProperty("return_time_from")
+    private Date returnTimeFrom;
+    @JsonProperty("return_time_to")
+    private Date returnTimeTo;
+    
+
+    @JsonProperty("seat_classes")
+    private List<SeatClass> seatClasses;
 
     @Min(value = 0, message = "Min price must be at least 0")
+    @JsonProperty("min_price")
     private Double minPrice;
     @Min(value = 0, message = "Max price must be at least 0")
+    @JsonProperty("max_price")
     private Double maxPrice;
 
-    @NotNull(message = "Rating is required")
-    @Min(value = 0, message = "Rating must be at least 0")
-    @Max(value = 5, message = "Rating cannot exceed 5")
-    private Integer rating;
+    @JsonProperty("order_by")
+    private FlightOrderBy orderBy = FlightOrderBy.NONE;
 
-    private FlightOrderBy orderBy;
+    public boolean isRoundTrip() {
+        return returnTimeFrom != null && returnTimeTo != null;
+    }
 
     @PositiveOrZero
     private Integer page = 0; // Default value
     @Positive
+    @JsonProperty("page_size")
     private Integer pageSize = 10; // Default value
 }

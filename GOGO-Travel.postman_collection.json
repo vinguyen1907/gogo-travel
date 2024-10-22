@@ -59,7 +59,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"city\": \"An Giang\",\r\n    \"country\": \"Viet Nam\",\r\n    \"description\": \"An Giang la que thang Loc.\"\r\n}",
+							"raw": "{\r\n    \"city\": \"Ho Chi Minh City\",\r\n    \"country\": \"Viet Nam\",\r\n    \"description\": \"You made me hate this city.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -137,7 +137,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"code\": \"chaudocjet\",\r\n    \"name\": \"ChauDoc Air\",\r\n    \"location\": \"ce774e63-1317-46a3-9425-747a67f8c69a\"\r\n}",
+							"raw": "{\r\n    \"code\": \"tansonnhat\",\r\n    \"name\": \"Tan Son Nhat\",\r\n    \"location\": \"8cf009e6-8bc7-4f7d-8912-fb615e44d0de\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -270,7 +270,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/flights/",
+							"raw": "http://localhost:8080/api/v1/flights/44a7fc71-492c-4ecc-a66e-7922086cbceb",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -280,7 +280,7 @@
 								"api",
 								"v1",
 								"flights",
-								""
+								"44a7fc71-492c-4ecc-a66e-7922086cbceb"
 							]
 						}
 					},
@@ -293,7 +293,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"airlineId\": \"7f36ea7e-e18e-4bf4-b786-18cc3db577f8\",\r\n    \"departureAirportId\": \"eb7328ec-0a97-40dd-940f-2e645d90644b\",\r\n    \"arrivalAirportId\": \"5fd45bdd-4da4-4400-b3e1-b32b9adf2441\",\r\n    \"gate\": \"A1\",\r\n    \"timezone\": \"GMT+8\",\r\n    \"departureTime\": \"2024-10-18T15:30:00.000Z\",\r\n    \"arrivalTime\": \"2024-10-18T18:45:00.000Z\"\r\n}",
+							"raw": "{\r\n    \"airline_id\": \"7f36ea7e-e18e-4bf4-b786-18cc3db577f8\",\r\n    \"departure_airport_id\": \"5fd45bdd-4da4-4400-b3e1-b32b9adf2441\",\r\n    \"arrival_airport_id\": \"eb7328ec-0a97-40dd-940f-2e645d90644b\",\r\n    \"gate\": \"A1\",\r\n    \"timezone\": \"GMT+8\",\r\n    \"departure_time\": \"2024-10-20T15:30:00.000Z\",\r\n    \"arrival_time\": \"2024-10-20T18:45:00.000Z\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -346,7 +346,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"flightId\": \"44a7fc71-492c-4ecc-a66e-7922086cbceb\",\r\n    \"seats\": [\r\n        {\r\n            \"number\": \"1A\", \r\n            \"seatClass\": \"BUSINESS\", \r\n            \"available\": true,\r\n            \"baseFare\": 200,\r\n            \"serviceFee\": 40\r\n        },\r\n        {\r\n            \"number\": \"1B\", \r\n            \"seatClass\": \"BUSINESS\", \r\n            \"isAvailable\": true,\r\n            \"baseFare\": 200,\r\n            \"serviceFee\": 40\r\n        },\r\n        {\r\n            \"number\": \"1C\", \r\n            \"seatClass\": \"BUSINESS\", \r\n            \"available\": true,\r\n            \"baseFare\": 200,\r\n            \"serviceFee\": 40\r\n        },\r\n        {\r\n            \"number\": \"2A\", \r\n            \"seatClass\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"baseFare\": 150,\r\n            \"serviceFee\": 20\r\n        },\r\n        {\r\n            \"number\": \"2B\", \r\n            \"seatClass\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"baseFare\": 150,\r\n            \"serviceFee\": 20\r\n        },\r\n        {\r\n            \"number\": \"2C\", \r\n            \"seatClass\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"baseFare\": 150,\r\n            \"serviceFee\": 20\r\n        },\r\n        {\r\n            \"number\": \"3A\", \r\n            \"seatClass\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"baseFare\": 250,\r\n            \"serviceFee\": 50\r\n        },\r\n        {\r\n            \"number\": \"3B\", \r\n            \"seatClass\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"baseFare\": 250,\r\n            \"serviceFee\": 50\r\n        },\r\n        {\r\n            \"number\": \"3C\", \r\n            \"seatClass\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"baseFare\": 250,\r\n            \"serviceFee\": 50\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"flight_id\": \"44a7fc71-492c-4ecc-a66e-7922086cbceb\",\r\n    \"seats\": [\r\n        {\r\n            \"number\": \"1A\", \r\n            \"seat_class\": \"BUSINESS\", \r\n            \"available\": true,\r\n            \"base_fare\": 200,\r\n            \"service_fee\": 40\r\n        },\r\n        {\r\n            \"number\": \"1B\", \r\n            \"seat_class\": \"BUSINESS\", \r\n            \"available\": true,\r\n            \"base_fare\": 200,\r\n            \"service_fee\": 40\r\n        },\r\n        {\r\n            \"number\": \"1C\", \r\n            \"seat_class\": \"BUSINESS\", \r\n            \"available\": true,\r\n            \"base_fare\": 200,\r\n            \"service_fee\": 40\r\n        },\r\n        {\r\n            \"number\": \"2A\", \r\n            \"seat_class\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"base_fare\": 150,\r\n            \"service_fee\": 20\r\n        },\r\n        {\r\n            \"number\": \"2B\", \r\n            \"seat_class\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"base_fare\": 150,\r\n            \"service_fee\": 20\r\n        },\r\n        {\r\n            \"number\": \"2C\", \r\n            \"seat_class\": \"ECONOMY\", \r\n            \"available\": true,\r\n            \"base_fare\": 150,\r\n            \"service_fee\": 20\r\n        },\r\n        {\r\n            \"number\": \"3A\", \r\n            \"seat_class\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"base_fare\": 250,\r\n            \"service_fee\": 50\r\n        },\r\n        {\r\n            \"number\": \"3B\", \r\n            \"seat_class\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"base_fare\": 250,\r\n            \"service_fee\": 50\r\n        },\r\n        {\r\n            \"number\": \"3C\", \r\n            \"seat_class\": \"FIRST_CLASS\", \r\n            \"available\": true,\r\n            \"base_fare\": 250,\r\n            \"service_fee\": 50\r\n        }\r\n    ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -377,7 +377,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\": \"loc\",\r\n    \"outboundFlightId\": \"44a7fc71-492c-4ecc-a66e-7922086cbceb\"\r\n}",
+							"raw": "{\r\n    \"user_id\": \"loc\",\r\n    \"outbound_flight_id\": \"44a7fc71-492c-4ecc-a66e-7922086cbceb\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -419,6 +419,74 @@
 								"flights",
 								"favorites",
 								"0bdc3ef9-5aa6-4237-b4b9-f195293a9b5b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter flights roundtrip",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departure_location_id\": \"ce774e63-1317-46a3-9425-747a67f8c69a\",\r\n    \"arrival_location_id\": \"34d1b47a-ec73-42ba-8ca3-04ce168dab06\",\r\n    \"departure_time_from\": \"2024-10-18\",\r\n    \"departure_time_to\": \"2024-10-20\",\r\n    \"return_time_from\": \"2024-10-20\",\r\n    \"return_time_to\": \"2024-10-22\",\r\n    \"min_price\": 0,\r\n    \"max_price\": 400,\r\n    \"seat_classes\": [\"BUSINESS\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights/filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter flights oneway",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departure_location_id\": \"34d1b47a-ec73-42ba-8ca3-04ce168dab06\",\r\n    \"arrival_location_id\": \"ce774e63-1317-46a3-9425-747a67f8c69a\",\r\n    \"departure_time_from\": \"2024-10-20\",\r\n    \"departure_time_to\": \"2024-10-22\",\r\n    \"min_price\": 0,\r\n    \"max_price\": 400,\r\n    \"seat_classes\": [\"BUSINESS\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flights/filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flights",
+								"filter"
 							]
 						}
 					},

@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uit.se.gogo.request.FlightCreationRequest;
 import com.uit.se.gogo.request.FlightFavoriteRequest;
+import com.uit.se.gogo.request.FlightQueryRequest;
 import com.uit.se.gogo.request.FlightSeatsUpdateRequest;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.response.FlightFavoriteResponse;
+import com.uit.se.gogo.response.FlightQueryResponse;
 import com.uit.se.gogo.response.FlightResponse;
+import com.uit.se.gogo.response.PageDataResponse;
 import com.uit.se.gogo.response.SeatResponse;
 import com.uit.se.gogo.response.UserFlightFavoriteResponse;
 import com.uit.se.gogo.service.FlightService;
@@ -43,6 +46,11 @@ public class FlightController {
         return DataResponse.<FlightResponse>builder()
             .data(flightService.getFlight(id))
             .build();
+    }
+
+    @GetMapping("/filter")
+    public PageDataResponse<FlightQueryResponse> filterFlights(@RequestBody FlightQueryRequest request) {
+        return flightService.searchFlights(request);
     }
 
     @PostMapping
