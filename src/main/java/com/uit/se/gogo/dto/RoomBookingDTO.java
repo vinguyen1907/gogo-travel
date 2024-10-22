@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -23,11 +23,11 @@ public class RoomBookingDTO {
     private RoomBookingStatus status = RoomBookingStatus.NEW;
     private Room room;
     @JsonProperty("booking_date")
-    private Date bookingDate;
+    private LocalDate bookingDate;
     @JsonProperty("checkin_date")
-    private Date checkinDate;
+    private LocalDate checkinDate;
     @JsonProperty("checkout_date")
-    private Date checkoutDate;
+    private LocalDate checkoutDate;
 
     public RoomBookingDTO(RoomBooking roomBooking) {
         this.id = roomBooking.getId();

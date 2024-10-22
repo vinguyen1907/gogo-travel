@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -22,7 +22,7 @@ public class RoomBooking {
     private RoomBookingStatus status;
     @ManyToOne
     private Room room;
-    private Date bookingDate;
-    private Date checkinDate;
-    private Date checkoutDate;
+    private LocalDate bookingDate;
+    private LocalDate checkinDate;
+    private LocalDate checkoutDate;
 }
