@@ -6,8 +6,12 @@ spring:
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+    show-sql: true
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -18,3 +22,11 @@ spring:
         spring.json.trusted.packages: "*"
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+api:
+  prefix: api/v1
+
+gogo-travel:
+  openapi:
+    dev-url: http://localhost:8080
+    prod-url: http://localhost:8080

@@ -17,7 +17,6 @@ public class BaseService {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String name;
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ServiceAmenity> amenities;
     @OneToMany(mappedBy = "service")
