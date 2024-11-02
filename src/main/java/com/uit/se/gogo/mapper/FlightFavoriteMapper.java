@@ -1,13 +1,23 @@
 package com.uit.se.gogo.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import com.uit.se.gogo.entity.FlightFavorite;
 import com.uit.se.gogo.response.FlightFavoriteResponse;
 
-@Mapper(componentModel = "spring")
-public interface FlightFavoriteMapper {
-    @Mapping(target = "roundTrip", source = "roundTrip")
-    FlightFavoriteResponse toFlightFavoriteResponse(FlightFavorite flightFavorite);
+public class FlightFavoriteMapper {
+    
+    public FlightFavoriteResponse toFlightFavoriteResponse(FlightFavorite flightFavorite) {
+        if ( flightFavorite == null ) {
+            return null;
+        }
+
+        FlightFavoriteResponse.FlightFavoriteResponseBuilder flightFavoriteResponse = FlightFavoriteResponse.builder();
+
+        flightFavoriteResponse.roundTrip( flightFavorite.isRoundTrip() );
+        flightFavoriteResponse.id( flightFavorite.getId() );
+        flightFavoriteResponse.outboundFlight( flightFavorite.getOutboundFlight() );
+        flightFavoriteResponse.returnFlight( flightFavorite.getReturnFlight() );
+        flightFavoriteResponse.user( flightFavorite.getUser() );
+
+        return flightFavoriteResponse.build();
+    }
 }
