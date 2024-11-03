@@ -1,6 +1,6 @@
 package com.uit.se.gogo.kafka.consumer;
 
-import com.uit.se.gogo.dto.RoomBookingDTO;
+import com.uit.se.gogo.request.RoomBookingRequest;
 import com.uit.se.gogo.service.RoomBookingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class RoomBookingConsumer {
     }
 
     @KafkaListener(topics = "room-booking", groupId = "room-booking-group")
-    public void consume(RoomBookingDTO message, @Header(KafkaHeaders.RECEIVED_KEY) String key) {
+    public void consume(RoomBookingRequest message, @Header(KafkaHeaders.RECEIVED_KEY) String key) {
         LOGGER.info("Received message with key: {}, value: {}", key, message);
         var result = roomBookingService.bookNewRoom(message);
         LOGGER.info("Booked room: {}", result);

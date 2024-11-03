@@ -1,10 +1,10 @@
-package com.uit.se.gogo.dto;
+package com.uit.se.gogo.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uit.se.gogo.entity.Room;
 import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.entity.User;
-import com.uit.se.gogo.enums.RoomBookingStatus;
+import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,27 +14,25 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoomBookingDTO {
+public class RoomBookingRequest {
     private String id;
     @JsonProperty("user_id")
     private String userId;
-    @JsonProperty("citizen_id")
-    private String citizenId;
-    private RoomBookingStatus status = RoomBookingStatus.NEW;
-    private Room room;
+    @JsonProperty("room_id")
+    private String roomId;
     @JsonProperty("booking_date")
     private LocalDate bookingDate;
     @JsonProperty("checkin_date")
+    @Future(message = "checkinDate must be in the future")
     private LocalDate checkinDate;
     @JsonProperty("checkout_date")
+    @Future(message = "checkoutDate must be in the future")
     private LocalDate checkoutDate;
 
-    public RoomBookingDTO(RoomBooking roomBooking) {
+    public RoomBookingRequest(RoomBooking roomBooking) {
         this.id = roomBooking.getId();
         this.userId = roomBooking.getUser().getId();
-        this.citizenId = roomBooking.getCitizenId();
-        this.status = roomBooking.getStatus();
-        this.room = roomBooking.getRoom();
+        this.roomId = roomBooking.getRoom().getId();
         this.bookingDate = roomBooking.getBookingDate();
         this.checkinDate = roomBooking.getCheckinDate();
         this.checkoutDate = roomBooking.getCheckoutDate();
@@ -46,9 +44,9 @@ public class RoomBookingDTO {
         var user = new User();
         user.setId(this.userId);
         entity.setUser(user);
-        entity.setCitizenId(this.citizenId);
-        entity.setStatus(this.status);
-        entity.setRoom(this.room);
+        var room = new Room();
+        room.setId(this.roomId);
+        entity.setRoom(room);
         entity.setBookingDate(this.bookingDate);
         entity.setCheckinDate(this.checkinDate);
         entity.setCheckoutDate(this.checkoutDate);
