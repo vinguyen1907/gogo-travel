@@ -1,0 +1,41 @@
+@startuml Book new room
+
+actor user
+participant Controller
+participant Service
+database Database
+
+user -> Controller: Fill guest info
+activate Controller
+note right of user
+    - booking_id
+    - first_name
+    - last_name
+    - email
+    - phone
+    - country
+end note
+
+Controller -> Service: fill guest info
+activate Service
+Service -> Database: find booking by id
+activate Database
+Service <-- Database: room booking
+alt room booking == null
+    user <-- Service: room not found exception
+end
+Service -> Database: update room booking
+deactivate Database
+deactivate Service
+note right of Service
+    - first_name
+    - last_name
+    - email
+    - phone
+    - country
+    - status = FILLED_INFO
+end note
+user <-- Controller: Fill guest info successfully
+deactivate Controller
+
+@enduml
