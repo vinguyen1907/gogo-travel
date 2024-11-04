@@ -29,6 +29,7 @@ end
 Service -> Database: create new lock
 Service -> Database: check availability
 alt not available
+    Service -> Database: unlock room
     user <-- Service: room is not available exception
 end
 Service -> Database: create new booking
