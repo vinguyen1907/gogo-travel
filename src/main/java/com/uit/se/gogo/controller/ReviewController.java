@@ -1,15 +1,20 @@
 package com.uit.se.gogo.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.uit.se.gogo.dto.ReviewDTO;
 import com.uit.se.gogo.entity.Review;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.response.PageDataResponse;
 import com.uit.se.gogo.service.ReviewService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
