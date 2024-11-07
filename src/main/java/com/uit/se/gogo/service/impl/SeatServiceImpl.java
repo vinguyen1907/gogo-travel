@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SeatServiceImpl implements SeatService {
     private final SeatRepository seatRepository;
-    private final SeatMapper seatMapper;
+    private SeatMapper seatMapper = new SeatMapper();
     
-    private final FlightMapper flightMapper;
+    private FlightMapper flightMapper = new FlightMapper();
     private final FlightRepository flightRepository;
 
     @Override

@@ -11,16 +11,13 @@ import com.uit.se.gogo.request.LocationCreationRequest;
 import com.uit.se.gogo.response.LocationResponse;
 import com.uit.se.gogo.service.LocationService;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LocationServiceImpl implements LocationService{
-    LocationRepository locationRepository;
-    LocationMapper locationMapper;
+    private final LocationRepository locationRepository;
+    private LocationMapper locationMapper = new LocationMapper();
     
     @Override
     public LocationResponse findById(String id) {

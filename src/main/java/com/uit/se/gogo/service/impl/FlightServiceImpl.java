@@ -45,14 +45,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FlightServiceImpl implements FlightService{
     private final FlightRepository flightRepository;
-    private final FlightMapper flightMapper;
+    private FlightMapper flightMapper = new FlightMapper();
     private final FlightFavoriteRepository flightFavoriteRepository;
-    private final FlightFavoriteMapper flightFavoriteMapper;
+    private FlightFavoriteMapper flightFavoriteMapper = new FlightFavoriteMapper();
 
     private final AirportService airportService;
-    private final AirportMapper airportMapper;
+    private AirportMapper airportMapper = new AirportMapper();
     private final AirlineService airlineService;
-    private final AirlineMapper airlineMapper;
+    private AirlineMapper airlineMapper = new AirlineMapper();
 
     private final UserRepository userRepository;
 
