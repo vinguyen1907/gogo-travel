@@ -13,19 +13,15 @@ import com.uit.se.gogo.request.AirlineCreationRequest;
 import com.uit.se.gogo.response.AirlineResponse;
 import com.uit.se.gogo.service.AirlineService;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AirlineServiceImpl implements AirlineService{
-
-    AirlineRepository airlineRepository;
-    AirlineMapper airlineMapper;
+    private final AirlineRepository airlineRepository;
+    private AirlineMapper airlineMapper = new AirlineMapper();
 
     @Override
     public AirlineResponse findById(String id) {

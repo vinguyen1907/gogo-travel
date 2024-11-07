@@ -12,18 +12,15 @@ import com.uit.se.gogo.request.AirportCreationRequest;
 import com.uit.se.gogo.response.AirportResponse;
 import com.uit.se.gogo.service.AirportService;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AirportServiceImpl implements AirportService{
-    AirportRepository airportRepository;
-    AirportMapper airportMapper;
+    private final AirportRepository airportRepository;
+    private AirportMapper airportMapper;
 
-    LocationRepository locationRepository;
+    private final LocationRepository locationRepository;
 
     @Override
     public AirportResponse findById(String id) {
