@@ -15,12 +15,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8888/api/v1/locations",
-							"protocol": "http",
+							"raw": "52.64.172.62:8080/api/v1/locations",
 							"host": [
-								"localhost"
+								"52",
+								"64",
+								"172",
+								"62"
 							],
-							"port": "8888",
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -59,7 +61,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"city\": \"Ho Chi Minh City\",\r\n    \"country\": \"Viet Nam\",\r\n    \"description\": \"You made me hate this city.\"\r\n}",
+							"raw": "{\r\n    \"city\": \"An Giang\",\r\n    \"country\": \"Viet Nam\",\r\n    \"description\": \"You made me hate this city.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -137,7 +139,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"code\": \"tansonnhat\",\r\n    \"name\": \"Tan Son Nhat\",\r\n    \"location\": \"8cf009e6-8bc7-4f7d-8912-fb615e44d0de\"\r\n}",
+							"raw": "{\r\n    \"code\": \"chaudoc\",\r\n    \"name\": \"Chau Doc Air\",\r\n    \"location\": \"5aa86c8d-35d8-4ccb-a916-b9e530688ea9\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -293,7 +295,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"airline_id\": \"7f36ea7e-e18e-4bf4-b786-18cc3db577f8\",\r\n    \"departure_airport_id\": \"5fd45bdd-4da4-4400-b3e1-b32b9adf2441\",\r\n    \"arrival_airport_id\": \"eb7328ec-0a97-40dd-940f-2e645d90644b\",\r\n    \"gate\": \"A1\",\r\n    \"timezone\": \"GMT+8\",\r\n    \"departure_time\": \"2024-10-20T15:30:00.000Z\",\r\n    \"arrival_time\": \"2024-10-20T18:45:00.000Z\"\r\n}\r\n",
+							"raw": "{\r\n    \"name\": \"test flight name\",\r\n    \"airline_id\": \"0bf378da-d51b-411b-99d2-d1b8b3d69746\",\r\n    \"departure_airport_id\": \"d6a0bc35-9e8a-4c76-8130-58a00b488512\",\r\n    \"arrival_airport_id\": \"c7630c27-229c-4003-bfe4-8a2ab12b9cb8\",\r\n    \"gate\": \"A1\",\r\n    \"timezone\": \"GMT+8\",\r\n    \"departure_time\": \"2024-10-20T15:30:00.000Z\",\r\n    \"arrival_time\": \"2024-10-20T18:45:00.000Z\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -487,6 +489,155 @@
 								"v1",
 								"flights",
 								"filter"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FlightBooking",
+			"item": [
+				{
+					"name": "get flight booking by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flight-booking/865b2a87-9f82-4c7c-bc1f-d79eb5729e71",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flight-booking",
+								"865b2a87-9f82-4c7c-bc1f-d79eb5729e71"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create flight booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"0bdc3ef9-5aa6-4237-b4b9-f195293a9b5b\",\r\n    \"seats\": [\r\n        {\r\n            \"citizen_id\": \"0123456789\",\r\n            \"citizen_name\": \"Le Van Teo\",\r\n            \"seat_id\": \"181dc0a4-0ed1-4320-9665-b2bbcd986d95\"\r\n        },\r\n        {\r\n            \"citizen_id\": \"0123456788\",\r\n            \"citizen_name\": \"Le Van Ty\",\r\n            \"seat_id\": \"ce6aefee-9389-4e5b-a038-e98c28b37c77\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flight-booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flight-booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user flight booking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flight-booking/user/0bdc3ef9-5aa6-4237-b4b9-f195293a9b5b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flight-booking",
+								"user",
+								"0bdc3ef9-5aa6-4237-b4b9-f195293a9b5b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay flight booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flight-booking/865b2a87-9f82-4c7c-bc1f-d79eb5729e71/pay",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flight-booking",
+								"865b2a87-9f82-4c7c-bc1f-d79eb5729e71",
+								"pay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm flight booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flight-booking/865b2a87-9f82-4c7c-bc1f-d79eb5729e71/confirm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flight-booking",
+								"865b2a87-9f82-4c7c-bc1f-d79eb5729e71",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel flight booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/flight-booking/865b2a87-9f82-4c7c-bc1f-d79eb5729e71/cancel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"flight-booking",
+								"865b2a87-9f82-4c7c-bc1f-d79eb5729e71",
+								"cancel"
 							]
 						}
 					},

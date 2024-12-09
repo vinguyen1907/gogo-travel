@@ -2,6 +2,7 @@ package com.uit.se.gogo.entity;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.uit.se.gogo.enums.SeatClass;
 
 import jakarta.persistence.Column;
@@ -30,6 +31,7 @@ public class Seat {
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
+    @JsonIgnoreProperties({"seats"})
     private Flight flight;
 
     private String number;

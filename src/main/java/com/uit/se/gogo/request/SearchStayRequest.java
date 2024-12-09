@@ -50,8 +50,10 @@ public class SearchStayRequest {
     private StayType type;
 
     @PositiveOrZero
+    @Builder.Default
     private Integer page = 0; // Default value
 
     @Positive
+    @Builder.Default
     private Integer pageSize = 10; // Default value
 }

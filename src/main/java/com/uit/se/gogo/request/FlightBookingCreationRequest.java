@@ -1,0 +1,19 @@
+package com.uit.se.gogo.request;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FlightBookingCreationRequest {
+    @JsonProperty("user_id")
+    private String userId;
+
+    List<SeatBookingCreationRequest> seats;
+}
