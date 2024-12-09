@@ -44,8 +44,8 @@ public class FlightSpecification implements Specification<Flight> {
             // Handle price range for Seat (baseFare + serviceFee)
             if (criteria.getKey().equals("priceRange")) {
                 String[] prices = criteria.getValue().toString().split("-");
-                Double minPrice = Double.parseDouble(prices[0]);
-                Double maxPrice = Double.parseDouble(prices[1]);
+                Double minPrice = Double.valueOf(prices[0]);
+                Double maxPrice = Double.valueOf(prices[1]);
 
                 // Total fare is baseFare + serviceFee
                 Expression<Double> totalFare = builder.sum(seatJoin.get("baseFare"), seatJoin.get("serviceFee"));
@@ -61,59 +61,61 @@ public class FlightSpecification implements Specification<Flight> {
                 predicates.add(
                     seatJoin.get("seatClass").in(seatClasses)
                 );
-            }else {
+            } else {
                 switch (criteria.getOperation()) {
-                    case EQUAL:
-                        if (criteria.getKey().equals("departureLocationId")) {
-                            predicates.add(builder.equal(
-                                root.get("departureAirport")
-                                    .get("location")
-                                    .get("id"), criteria.getValue()));
-                        } else if (criteria.getKey().equals("arrivalLocationId")) {
-                            predicates.add(builder.equal(
-                                root.get("arrivalAirport")
-                                    .get("location")
-                                    .get("id"), criteria.getValue()));
-                        } else {
-                            predicates.add(builder.equal(root.get(criteria.getKey()), criteria.getValue()));
+                    case EQUAL -> {
+                        switch (criteria.getKey()) {
+                            case "departureLocationId" -> predicates.add(builder.equal(
+                                    root.get("departureAirport")
+                                            .get("location")
+                                            .get("id"), criteria.getValue()));
+                            case "arrivalLocationId" -> predicates.add(builder.equal(
+                                    root.get("arrivalAirport")
+                                            .get("location")
+                                            .get("id"), criteria.getValue()));
+                            default -> predicates.add(builder.equal(root.get(criteria.getKey()), criteria.getValue()));
                         }
-                        break;case GREATER_THAN:
-                        if (criteria.getValue() instanceof Date) {
-                            predicates.add(builder.greaterThan(root.<Date>get(criteria.getKey()), (Date) criteria.getValue()));
+                    }
+                    
+                    case GREATER_THAN -> {
+                        if (criteria.getValue() instanceof Date date) {
+                            predicates.add(builder.greaterThan(root.<Date>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.greaterThan(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }
-                        break;
+                    }
+
                     
-                    case LESS_THAN:
-                        if (criteria.getValue() instanceof Date) {
-                            predicates.add(builder.lessThan(root.<Date>get(criteria.getKey()), (Date) criteria.getValue()));
+                    case LESS_THAN -> {
+                        if (criteria.getValue() instanceof Date date) {
+                            predicates.add(builder.lessThan(root.<Date>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.lessThan(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }
-                        break;
+                    }
+
                     
-                    case GREATER_THAN_EQUAL:
-                        if (criteria.getValue() instanceof Date) {
-                            predicates.add(builder.greaterThanOrEqualTo(root.<Date>get(criteria.getKey()), (Date) criteria.getValue()));
+                    case GREATER_THAN_EQUAL -> {
+                        if (criteria.getValue() instanceof Date date) {
+                            predicates.add(builder.greaterThanOrEqualTo(root.<Date>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.greaterThanOrEqualTo(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }
-                        break;
+                    }
+
                     
-                    case LESS_THAN_EQUAL:
-                        if (criteria.getValue() instanceof Date) {
-                            predicates.add(builder.lessThanOrEqualTo(root.<Date>get(criteria.getKey()), (Date) criteria.getValue()));
+                    case LESS_THAN_EQUAL -> {
+                        if (criteria.getValue() instanceof Date date) {
+                            predicates.add(builder.lessThanOrEqualTo(root.<Date>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.lessThanOrEqualTo(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }
-                        break;                
-                    case IN:
-                        predicates.add(root.get(criteria.getKey()).in(criteria.getValue()));
-                        break;
+                    }                
+                
+                    case IN -> predicates.add(root.get(criteria.getKey()).in(criteria.getValue()));
                 }
             }
         }
-        return builder.and(predicates.toArray(new Predicate[0]));
+        return builder.and(predicates.toArray(Predicate[]::new));
     }
 }

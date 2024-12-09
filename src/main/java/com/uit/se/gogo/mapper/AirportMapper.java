@@ -1,9 +1,12 @@
 package com.uit.se.gogo.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.uit.se.gogo.entity.Airport;
 import com.uit.se.gogo.request.AirportCreationRequest;
 import com.uit.se.gogo.response.AirportResponse;
 
+@Component
 public class AirportMapper {
     public AirportResponse toAirportResponse(Airport airport) {
         if ( airport == null ) {

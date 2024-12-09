@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AirlineServiceImpl implements AirlineService{
     private final AirlineRepository airlineRepository;
-    private AirlineMapper airlineMapper = new AirlineMapper();
+    private final AirlineMapper airlineMapper;
 
     @Override
     public AirlineResponse findById(String id) {

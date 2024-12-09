@@ -41,7 +41,6 @@ public class FlightQueryRequest {
     private Date returnTimeFrom;
     @JsonProperty("return_time_to")
     private Date returnTimeTo;
-    
 
     @JsonProperty("seat_classes")
     private List<SeatClass> seatClasses;
@@ -54,15 +53,24 @@ public class FlightQueryRequest {
     private Double maxPrice;
 
     @JsonProperty("order_by")
+    @Builder.Default
     private FlightOrderBy orderBy = FlightOrderBy.NONE;
-
+    
     public boolean isRoundTrip() {
         return returnTimeFrom != null && returnTimeTo != null;
     }
 
-    @PositiveOrZero
-    private Integer page = 0; // Default value
     @Positive
+    @Builder.Default
+    @JsonProperty("passenger_count")
+    private Integer passengerCount = 1; 
+    
+    @PositiveOrZero
+    @Builder.Default
+    private Integer page = 0; 
+    
+    @Positive
+    @Builder.Default
     @JsonProperty("page_size")
-    private Integer pageSize = 10; // Default value
+    private Integer pageSize = 10;
 }

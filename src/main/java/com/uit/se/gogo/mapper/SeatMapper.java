@@ -1,9 +1,12 @@
 package com.uit.se.gogo.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.uit.se.gogo.entity.Seat;
 import com.uit.se.gogo.request.SeatCreationRequest;
 import com.uit.se.gogo.response.SeatResponse;
 
+@Component
 public class SeatMapper {
     
     public Seat toSeat(SeatCreationRequest request) {

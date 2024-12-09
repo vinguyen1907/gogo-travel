@@ -3,7 +3,6 @@ package com.uit.se.gogo.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,24 +36,27 @@ import com.uit.se.gogo.service.FlightService;
 import com.uit.se.gogo.specification.FlightSpecification;
 import com.uit.se.gogo.specification.SearchCriteria;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal=true, level=AccessLevel.PRIVATE)
 @Slf4j
 public class FlightServiceImpl implements FlightService{
-    private final FlightRepository flightRepository;
-    private FlightMapper flightMapper = new FlightMapper();
-    private final FlightFavoriteRepository flightFavoriteRepository;
-    private FlightFavoriteMapper flightFavoriteMapper = new FlightFavoriteMapper();
+    FlightRepository flightRepository;
+    FlightMapper flightMapper;
+    FlightFavoriteRepository flightFavoriteRepository;
+    FlightFavoriteMapper flightFavoriteMapper;
 
-    private final AirportService airportService;
-    private AirportMapper airportMapper = new AirportMapper();
-    private final AirlineService airlineService;
-    private AirlineMapper airlineMapper = new AirlineMapper();
+    AirportService airportService;
+    AirportMapper airportMapper;
+    AirlineService airlineService;
+    AirlineMapper airlineMapper;
 
-    private final UserRepository userRepository;
+    UserRepository userRepository;
 
     @Override
     public FlightResponse createFlight(FlightCreationRequest request) {
@@ -135,6 +137,7 @@ public class FlightServiceImpl implements FlightService{
             request.getMinPrice(),
             request.getMaxPrice(),
             request.getSeatClasses(),
+            request.getPassengerCount(),
             request.getPage(),
             request.getPageSize(),
             request.getOrderBy()
@@ -150,6 +153,7 @@ public class FlightServiceImpl implements FlightService{
                 request.getMinPrice(),
                 request.getMaxPrice(),
                 request.getSeatClasses(),
+                request.getPassengerCount(),
                 request.getPage(),
                 request.getPageSize(),
                 request.getOrderBy()
@@ -159,7 +163,7 @@ public class FlightServiceImpl implements FlightService{
         } else {
             result = outboundFlights.stream()
                 .map(flight -> new FlightQueryResponse(flight, null, false))
-                .collect(Collectors.toList());
+                .toList();
         }
 
         return PageDataResponse.<FlightQueryResponse>builder()
@@ -177,6 +181,7 @@ public class FlightServiceImpl implements FlightService{
         Double minPrice,
         Double maxPrice,
         List<SeatClass> seatClasses,
+        int passengerCount,
         int page,
         int pageSize,
         FlightOrderBy orderBy
@@ -201,21 +206,18 @@ public class FlightServiceImpl implements FlightService{
 
         return flightRepository.findAll(flightSpec, pageable)
             .stream()
+            .filter(flight -> flight.getSeats().size() >= passengerCount)
             .map(flightMapper::toFlightResponse)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     private Pageable createPageable(int page, int pageSize, FlightOrderBy orderBy) {
         Sort sort = Sort.unsorted(); 
         switch (orderBy) {
-            case QUICKEST:
-                sort = Sort.by("duration").ascending();
-                break;
-            case BEST:
-                sort = Sort.by("rating").descending();
-                break;
-            default:
-                break;
+            case QUICKEST -> sort = Sort.by("duration").ascending();
+            case BEST -> sort = Sort.by("rating").descending();
+            default -> {
+            }
         }
         return PageRequest.of(page, pageSize, sort);
     }
