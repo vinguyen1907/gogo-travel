@@ -1,4 +1,4 @@
-package com.uit.se.gogo.configurations;
+package com.uit.se.gogo.config;
 
 import java.util.List;
 
