@@ -2,6 +2,7 @@ package com.uit.se.gogo.enums;
 
 public enum RoomBookingStatus {
     NEW,
+    FILLED_INFO,
     PAID,
     PENDING,
     CONFIRMED,

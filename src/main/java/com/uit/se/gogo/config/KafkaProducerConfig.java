@@ -1,6 +1,6 @@
 package com.uit.se.gogo.config;
 
-import com.uit.se.gogo.dto.RoomBookingDTO;
+import com.uit.se.gogo.request.RoomBookingRequest;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
     @Bean
-    public ProducerFactory<String, RoomBookingDTO> producerFactory() {
+    public ProducerFactory<String, RoomBookingRequest> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -25,7 +25,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, RoomBookingDTO> kafkaTemplate() {
+    public KafkaTemplate<String, RoomBookingRequest> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

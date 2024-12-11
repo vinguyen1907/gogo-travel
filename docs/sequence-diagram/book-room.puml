@@ -1,0 +1,49 @@
+@startuml Book new room
+
+actor user
+participant Controller
+participant Service
+database Database
+
+user -> Controller: Book new room request
+activate user
+note right of user
+    - user_id
+    - checkin_date
+    - checkout_date
+end note
+activate Controller
+Controller -> Service: lock room
+activate Service
+Service -> Database: get room by id
+activate Database
+Service <-- Database: room
+alt room == null
+user <-- Service: room not found exception
+end 
+Service -> Database: find active lock
+Service <-- Database: lock
+alt lock != null
+    user <-- Service: room is locked exception
+end
+Service -> Database: create new lock
+Service -> Database: check availability
+alt not available
+    Service -> Database: unlock room
+    user <-- Service: room is not available exception
+end
+Service -> Database: create new booking
+deactivate Database
+note right of user
+    - user_id
+    - checkin_date
+    - checkout_date
+    - status = NEW
+end note
+Controller <-- Service: successfully
+deactivate Service
+user <-- Controller: successfully
+deactivate Controller
+deactivate user
+
+@enduml

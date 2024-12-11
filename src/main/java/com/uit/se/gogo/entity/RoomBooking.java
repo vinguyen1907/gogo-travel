@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -18,11 +18,19 @@ public class RoomBooking {
     private String id;
     @ManyToOne
     private User user;
-    private String citizenId;
-    private RoomBookingStatus status;
+    private RoomBookingStatus status = RoomBookingStatus.NEW;
     @ManyToOne
     private Room room;
-    private Date bookingDate;
-    private Date checkinDate;
-    private Date checkoutDate;
+    private LocalDate bookingDate;
+    private LocalDate checkinDate;
+    private LocalDate checkoutDate;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
+    @Column(nullable = false)
+    private String email;
+    private String phone;
+    @Column(nullable = false)
+    private String country;
 }
