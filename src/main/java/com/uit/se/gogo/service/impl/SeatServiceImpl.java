@@ -16,16 +16,19 @@ import com.uit.se.gogo.response.FlightResponse;
 import com.uit.se.gogo.response.SeatResponse;
 import com.uit.se.gogo.service.SeatService;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Service
+@FieldDefaults(makeFinal=true, level=AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public class SeatServiceImpl implements SeatService {
-    private final SeatRepository seatRepository;
-    private SeatMapper seatMapper = new SeatMapper();
+    SeatRepository seatRepository;
+    SeatMapper seatMapper;
     
-    private FlightMapper flightMapper = new FlightMapper();
-    private final FlightRepository flightRepository;
+    FlightMapper flightMapper;
+    FlightRepository flightRepository;
 
     @Override
     public SeatResponse createSeat(SeatCreationRequest request) {

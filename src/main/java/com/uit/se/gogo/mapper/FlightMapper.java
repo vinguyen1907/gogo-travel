@@ -4,12 +4,15 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.uit.se.gogo.entity.Flight;
 import com.uit.se.gogo.entity.Seat;
 import com.uit.se.gogo.request.FlightCreationRequest;
 import com.uit.se.gogo.response.FlightResponse;
 import com.uit.se.gogo.response.SeatResponse;
 
+@Component
 public class FlightMapper {
     public Flight toFlight(FlightCreationRequest request) {
         if ( request == null ) {

@@ -3,11 +3,14 @@ package com.uit.se.gogo.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.uit.se.gogo.entity.Airline;
 import com.uit.se.gogo.entity.Policy;
 import com.uit.se.gogo.request.AirlineCreationRequest;
 import com.uit.se.gogo.response.AirlineResponse;
 
+@Component
 public class AirlineMapper {
     public Airline toAirline(AirlineCreationRequest request) {
         if ( request == null ) {

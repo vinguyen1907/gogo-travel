@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AirportServiceImpl implements AirportService{
     private final AirportRepository airportRepository;
-    private AirportMapper airportMapper;
+    private final AirportMapper airportMapper;
 
     private final LocationRepository locationRepository;
 

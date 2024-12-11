@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService{
     private final LocationRepository locationRepository;
-    private LocationMapper locationMapper = new LocationMapper();
+    private final LocationMapper locationMapper;
     
     @Override
     public LocationResponse findById(String id) {

@@ -1,8 +1,11 @@
 package com.uit.se.gogo.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.uit.se.gogo.entity.FlightFavorite;
 import com.uit.se.gogo.response.FlightFavoriteResponse;
 
+@Component
 public class FlightFavoriteMapper {
     
     public FlightFavoriteResponse toFlightFavoriteResponse(FlightFavorite flightFavorite) {
