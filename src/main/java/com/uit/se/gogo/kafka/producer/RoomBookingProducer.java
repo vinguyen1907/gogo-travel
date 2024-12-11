@@ -13,6 +13,6 @@ public class RoomBookingProducer {
     }
 
     public void sendMessage(String topic, RoomBookingRequest message) {
-        roomBookingTemplate.send(topic, message.getRoom().getId(), message);
+        roomBookingTemplate.send(topic, message.getRoomId(), message);
     }
 }
