@@ -1,5 +1,6 @@
 package com.uit.se.gogo.service.impl;
 
+import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.enums.RoomBookingStatus;
 import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
@@ -18,7 +19,7 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     private final RoomBookingLockService roomBookingLockService;
 
     @Override
-    public RoomBookingRequest bookNewRoom(RoomBookingRequest roomBooking) {
+    public RoomBooking bookNewRoom(RoomBookingRequest roomBooking) {
         var entity = roomBooking.toEntity();
         // check available room
         var x = roomBookingRepository.checkAvailability(
@@ -30,7 +31,7 @@ public class RoomBookingServiceImpl implements RoomBookingService {
             throw new RoomNotAvailableException("This room is no longer available");
         }
 
-        return new RoomBookingRequest(roomBookingRepository.save(entity));
+        return roomBookingRepository.save(entity);
     }
 
     @Override

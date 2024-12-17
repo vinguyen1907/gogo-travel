@@ -23,12 +23,12 @@ public class RoomBookingController {
     private final RoomBookingService roomBookingService;
 
     @PostMapping
-    public ResponseEntity<DataResponse<RoomBookingResponse>> createRoomBooking(@Valid @RequestBody RoomBookingRequest roomBooking) {
-        LocalDateTime lockExpiration = roomBookingLockService.lockRoom(roomBooking.getRoomId());
-        roomBookingService.bookNewRoom(roomBooking);
+    public ResponseEntity<DataResponse<RoomBookingResponse>> createRoomBooking(@Valid @RequestBody RoomBookingRequest request) {
+        LocalDateTime lockExpiration = roomBookingLockService.lockRoom(request.getRoomId());
+        var roomBooking = roomBookingService.bookNewRoom(request);
 //        roomBookingProducer.sendMessage("room-booking", roomBooking);
         return ResponseEntity.ok(new DataResponse<>(
-                new RoomBookingResponse(lockExpiration)
+                new RoomBookingResponse(lockExpiration, roomBooking.getId(), roomBooking.getStatus())
         ));
     }
 
