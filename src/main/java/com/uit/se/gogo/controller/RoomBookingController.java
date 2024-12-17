@@ -4,12 +4,15 @@ import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
 import com.uit.se.gogo.kafka.producer.RoomBookingProducer;
 import com.uit.se.gogo.response.DataResponse;
+import com.uit.se.gogo.response.RoomBookingResponse;
 import com.uit.se.gogo.service.RoomBookingLockService;
 import com.uit.se.gogo.service.RoomBookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/stays/booking")
@@ -20,11 +23,13 @@ public class RoomBookingController {
     private final RoomBookingService roomBookingService;
 
     @PostMapping
-    public ResponseEntity<DataResponse<String>> createRoomBooking(@Valid @RequestBody RoomBookingRequest roomBooking) {
-        roomBookingLockService.lockRoom(roomBooking.getRoomId());
+    public ResponseEntity<DataResponse<RoomBookingResponse>> createRoomBooking(@Valid @RequestBody RoomBookingRequest roomBooking) {
+        LocalDateTime lockExpiration = roomBookingLockService.lockRoom(roomBooking.getRoomId());
         roomBookingService.bookNewRoom(roomBooking);
 //        roomBookingProducer.sendMessage("room-booking", roomBooking);
-        return ResponseEntity.ok(new DataResponse<>("Processing request."));
+        return ResponseEntity.ok(new DataResponse<>(
+                new RoomBookingResponse(lockExpiration)
+        ));
     }
 
 //    @PostMapping("/lock")

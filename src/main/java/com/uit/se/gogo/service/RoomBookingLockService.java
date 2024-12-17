@@ -1,6 +1,8 @@
 package com.uit.se.gogo.service;
 
+import java.time.LocalDateTime;
+
 public interface RoomBookingLockService {
-    void lockRoom(String roomId);
+    LocalDateTime lockRoom(String roomId);
     void unlockRoom(String roomId);
 }
