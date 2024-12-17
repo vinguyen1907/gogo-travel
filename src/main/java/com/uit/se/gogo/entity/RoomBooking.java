@@ -21,16 +21,17 @@ public class RoomBooking {
     private RoomBookingStatus status = RoomBookingStatus.NEW;
     @ManyToOne
     private Room room;
+    @Column(nullable = false)
     private LocalDate bookingDate;
+    @Column(nullable = false)
     private LocalDate checkinDate;
+    @Column(nullable = false)
     private LocalDate checkoutDate;
-    @Column(nullable = false)
+
+    // Guest info
     private String firstName;
-    @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false)
     private String email;
     private String phone;
-    @Column(nullable = false)
     private String country;
 }

@@ -23,7 +23,7 @@ public class RoomBookingLockServiceImpl implements RoomBookingLockService {
 
     @Override
     @Transactional
-    public void lockRoom(String roomId) {
+    public LocalDateTime lockRoom(String roomId) {
         try {
             var room = roomRepository.findById(roomId)
                     .orElseThrow(() -> new EntityNotFoundException("Room not found"));
@@ -34,12 +34,14 @@ public class RoomBookingLockServiceImpl implements RoomBookingLockService {
                     });
 
             RoomBookingLock lock = new RoomBookingLock();
+            var lockExpiration = LocalDateTime.now().plusMinutes(ROOM_LOCKING_TIMEOUT_MINUTES);
             lock.setRoom(room);
             lock.setLockTime(LocalDateTime.now());
-            lock.setExpirationTime(LocalDateTime.now().plusMinutes(ROOM_LOCKING_TIMEOUT_MINUTES));
+            lock.setExpirationTime(lockExpiration);
             lock.setLocked(true);
 
             roomBookingLockRepository.save(lock);
+            return lockExpiration;
         } catch (OptimisticLockException e) {
             throw new RoomNotAvailableException("Room is temporarily unavailable due to concurrent booking attempts.");
         }
