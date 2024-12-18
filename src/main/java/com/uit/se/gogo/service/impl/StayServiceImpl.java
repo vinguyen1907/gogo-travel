@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -51,7 +51,7 @@ public class StayServiceImpl implements StayService {
     }
 
     @Override
-    public List<Room> getAvailableRooms(String stayId, Date checkinDate, Date checkoutDate, Integer guests) {
+    public List<Room> getAvailableRooms(String stayId, LocalDate checkinDate, LocalDate checkoutDate, Integer guests) {
         return roomRepository.findAvailableRooms(stayId, guests, checkinDate, checkoutDate);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface RoomRepository extends JpaRepository<Room, String> {
                         "SELECT id FROM booked_rooms " +
                     ")"
     )
-    List<Room> findAvailableRooms(String stayId, Integer guests, Date checkinDate, Date checkoutDate);
+    List<Room> findAvailableRooms(String stayId, Integer guests, LocalDate checkinDate, LocalDate checkoutDate);
 }
