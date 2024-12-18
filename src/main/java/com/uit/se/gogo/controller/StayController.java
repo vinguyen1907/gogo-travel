@@ -1,5 +1,6 @@
 package com.uit.se.gogo.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -78,8 +79,8 @@ public class StayController {
     @GetMapping("/{stayId}/rooms/available")
     public ResponseEntity<DataResponse<List<Room>>> getRooms(
             @PathVariable String stayId,
-            @RequestParam("checkin_date") Date checkinDate,
-            @RequestParam("checkout_date") Date checkoutDate,
+            @RequestParam("checkin_date") LocalDate checkinDate,
+            @RequestParam("checkout_date") LocalDate checkoutDate,
             @RequestParam Integer guests) {
         var rooms = stayService.getAvailableRooms(stayId, checkinDate, checkoutDate, guests);
         return ResponseEntity.ok(new DataResponse<>(rooms));

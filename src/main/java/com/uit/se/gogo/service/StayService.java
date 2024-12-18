@@ -6,6 +6,7 @@ import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.request.SearchStayRequest;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface StayService {
 
     Page<StayDTO> search(SearchStayRequest request);
 
-    List<Room> getAvailableRooms(String stayId, Date checkinDate, Date checkoutDate, Integer guests);
+    List<Room> getAvailableRooms(String stayId, LocalDate checkinDate, LocalDate checkoutDate, Integer guests);
 }
