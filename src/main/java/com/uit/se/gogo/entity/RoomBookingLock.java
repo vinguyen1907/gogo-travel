@@ -15,7 +15,7 @@ public class RoomBookingLock {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
     private LocalDateTime lockTime;

@@ -30,7 +30,7 @@ public class RoomBookingLockServiceImpl implements RoomBookingLockService {
 
             roomBookingLockRepository.findActiveLockByRoomId(roomId)
                     .ifPresent(lock -> {
-                        throw new RoomNotAvailableException("Room " + roomId + " is booking by another people.");
+                        throw new RoomNotAvailableException("Room " + roomId + " is being booked by another people.");
                     });
 
             RoomBookingLock lock = new RoomBookingLock();

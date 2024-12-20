@@ -1,5 +1,6 @@
 package com.uit.se.gogo.exception_handler;
 
+import com.uit.se.gogo.exception.RoomNotAvailableException;
 import com.uit.se.gogo.exception_handler.error.ApiError;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.util.ExceptionUtil;
@@ -18,4 +19,12 @@ public class GlobalExceptionHandler {
 //        apiError.setErrorCode("ILLEGAL_ARGUMENT");
 //        return ExceptionUtil.buildResponseEntity(apiError);
 //    }
+
+    @ExceptionHandler(RoomNotAvailableException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(RoomNotAvailableException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        apiError.setErrorCode("ROOM_NOT_AVAILABLE");
+        return ExceptionUtil.buildResponseEntity(apiError);
+    }
 }
