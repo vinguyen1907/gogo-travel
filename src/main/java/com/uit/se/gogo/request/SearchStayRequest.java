@@ -1,5 +1,6 @@
 package com.uit.se.gogo.request;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.uit.se.gogo.enums.StayType;
@@ -20,10 +21,10 @@ public class SearchStayRequest {
     private String locationId;
 
     @NotNull(message = "Check-in date is required")
-    private Date checkinDate;
+    private LocalDate checkinDate;
 
     @NotNull(message = "Check-out date is required")
-    private Date checkoutDate;
+    private LocalDate checkoutDate;
 
     @NotNull(message = "Rooms is required")
     @Min(value = 1, message = "Rooms must be at least 1")

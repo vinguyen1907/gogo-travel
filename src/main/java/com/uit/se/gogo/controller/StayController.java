@@ -46,14 +46,14 @@ public class StayController {
 
     @GetMapping("/search")
     public ResponseEntity<PageDataResponse<StayDTO>> search(@RequestParam("location_id") @NotNull(message = "Location ID is required") String locationId,
-                                               @RequestParam("checkin_date") @NotNull(message = "Check-in date is required") Date checkinDate,
-                                               @RequestParam("checkout_date") @NotNull(message = "Check-out date is required") Date checkoutDate,
+                                               @RequestParam("checkin_date") @NotNull(message = "Check-in date is required") LocalDate checkinDate,
+                                               @RequestParam("checkout_date") @NotNull(message = "Check-out date is required") LocalDate checkoutDate,
                                                @RequestParam("rooms") @NotNull(message = "Rooms is required") @Min(value = 1, message = "Rooms must be at least 1") Integer rooms,
                                                @RequestParam("guests") @NotNull(message = "Guests is required") @Min(value = 1, message = "Guests must be at least 1") Integer guests,
-                                               @RequestParam("min_price") @NotNull(message = "Min price is required") @Min(value = 0, message = "Min price must be at least 0") Double minPrice,
-                                               @RequestParam("max_price") @NotNull(message = "Max price is required") @Min(value = 0, message = "Max price must be at least 0") Double maxPrice,
-                                               @RequestParam("rating") @NotNull(message = "Rating is required") @Min(value = 0, message = "Rating must be at least 0") @Max(value = 5, message = "Rating cannot exceed 5") Integer rating,
-                                               @RequestParam("type") @NotNull(message = "Stay type is required") StayType type,
+                                               @RequestParam(value = "min_price", defaultValue = "0") @Min(value = 0, message = "Min price must be at least 0") Double minPrice,
+                                               @RequestParam(value = "max_price", required = false) @Min(value = 0, message = "Max price must be at least 0") Double maxPrice,
+                                               @RequestParam(value = "rating", required = false) @Min(value = 0, message = "Rating must be at least 0") @Max(value = 5, message = "Rating cannot exceed 5") Integer rating,
+                                               @RequestParam(value = "type", required = false) StayType type,
 //                                             @RequestParam("order_by") @NotNull(message = "Order by is required") StayOrderBy orderBy,
                                                @RequestParam(value = "page", defaultValue = "0") @PositiveOrZero Integer page,
                                                @RequestParam(value = "page_size", defaultValue = "10") @Positive Integer pageSize) {
