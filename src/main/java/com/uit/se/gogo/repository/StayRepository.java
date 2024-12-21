@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -22,12 +23,13 @@ public interface StayRepository extends JpaRepository<Stay, String> {
             "FROM Stay s " +
             "WHERE s.location.id = :locationId " +
             "AND (:rating IS NULL OR s.rating >= :rating) " +
-            "AND s.stayType = :type " +
+            "AND (:type IS NULL OR s.stayType = :type) " +
             "AND s.id IN ( " +
                 "SELECT r.stay.id AS stay_id " +
                 "FROM Room AS r " +
                 "WHERE r.maxGuests >= :guests " +
-                "AND r.baseFare + r.serviceFee - r.discount BETWEEN :minPrice AND :maxPrice " +
+                "AND (:minPrice IS NULL OR r.baseFare + r.serviceFee - r.discount >= :minPrice)" +
+                "AND (:maxPrice IS NULL OR r.baseFare + r.serviceFee - r.discount <= :maxPrice)" +
                 "AND r.isAvailable = TRUE " +
                 "AND r.id NOT IN (" +
                     "SELECT r.id " +
@@ -42,8 +44,8 @@ public interface StayRepository extends JpaRepository<Stay, String> {
             ")"
     )
     Page<Stay> search(
-            Date checkinDate,
-            Date checkoutDate,
+            LocalDate checkinDate,
+            LocalDate checkoutDate,
             String locationId,
             Integer rooms,
             Integer guests,
