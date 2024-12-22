@@ -93,8 +93,7 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public FlightFavoriteResponse addFlightFavorite(FlightFavoriteRequest request) {
         User user = new User();
-        user.setFirstName(request.getUserId());
-        user.setLastName(request.getUserId());
+        user.setFullName(request.getUserId());
         Flight outboundFlight = flightRepository.findById(request.getOutboundFlightId()).orElseThrow();
         
         FlightFavorite flightFavorite = FlightFavorite.builder()
