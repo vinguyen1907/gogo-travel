@@ -1,5 +1,7 @@
 package com.uit.se.gogo.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,4 +18,6 @@ public class LocationCreationRequest {
     String city;
     String country;
     String description;
+    @JsonProperty("image_url")
+    private String imageUrl;
 }
