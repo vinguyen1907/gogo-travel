@@ -48,7 +48,7 @@ public class FlightController {
             .build();
     }
 
-    @GetMapping("/filter")
+    @PostMapping("/filter")
     public PageDataResponse<FlightQueryResponse> filterFlights(@RequestBody FlightQueryRequest request) {
         return flightService.searchFlights(request);
     }

@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: gogo
+  jackson:
+    time-zone: UTC
+  datasource:
+    url: jdbc:postgresql://postgres:5432/${POSTGRES_DB:postgres}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:kafka}:9092
+    consumer:
+      group-id: room-booking-group
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+api:
+  prefix: api/v1
+
+gogo-travel:
+  openapi:
+    dev-url: http://52.64.172.62:8080
+    prod-url: http://52.64.172.62:8080
