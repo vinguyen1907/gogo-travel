@@ -30,4 +30,6 @@ public class Room {
     private Boolean isAvailable;
     @JsonProperty("max_guests")
     private Integer maxGuests;
+    @JsonProperty("image_url")
+    private String imageUrl;
 }
