@@ -17,6 +17,7 @@ public class LocationMapper {
             .city( location.getCity() )
             .country( location.getCountry() )
             .description( location.getDescription() )
+            .imageUrl( location.getImageUrl() )
             .id( location.getId() )
             .build();
     }
@@ -30,6 +31,7 @@ public class LocationMapper {
             .city( locationRequest.getCity() )
             .country( locationRequest.getCountry() )
             .description( locationRequest.getDescription() )
+            .imageUrl( locationRequest.getImageUrl() )
             .build();
     }
 }
