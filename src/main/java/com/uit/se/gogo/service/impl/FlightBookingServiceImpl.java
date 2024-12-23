@@ -18,10 +18,12 @@ import com.uit.se.gogo.mapper.FlightBookingMapper;
 import com.uit.se.gogo.repository.FlightBookingRepository;
 import com.uit.se.gogo.repository.SeatRepository;
 import com.uit.se.gogo.repository.UserRepository;
+import com.uit.se.gogo.request.FlightBookingConfirmationRequest;
 import com.uit.se.gogo.request.FlightBookingCreationRequest;
 import com.uit.se.gogo.request.SeatBookingCreationRequest;
 import com.uit.se.gogo.response.FlightBookingResponse;
 import com.uit.se.gogo.service.FlightBookingService;
+import com.uit.se.gogo.service.SeatBookingLockService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,12 +32,22 @@ import lombok.RequiredArgsConstructor;
 public class FlightBookingServiceImpl implements FlightBookingService {
     private final FlightBookingRepository flightBookingRepository;
     private final FlightBookingMapper mapper;
+    
     private final UserRepository userRepository;
     private final SeatRepository seatRepository;
 
+    private final SeatBookingLockService seatLockService;
+
+    @Override
+    public void createFlightBooking(FlightBookingCreationRequest request) {
+        for (String seatId : request.getSeatIds()) {
+            seatLockService.lockSeat(seatId);
+        }
+    }
+
     @Override
     @Transactional
-    public FlightBookingResponse createFlightBooking(FlightBookingCreationRequest request) {
+    public FlightBookingResponse confirmFlightBooking(FlightBookingConfirmationRequest request) {
         User user = userRepository.findById(request.getUserId())
             .orElseThrow(() -> new RuntimeException("User not found"));
         
