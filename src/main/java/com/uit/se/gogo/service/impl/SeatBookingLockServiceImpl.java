@@ -2,6 +2,8 @@ package com.uit.se.gogo.service.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Service;
+
 import static com.uit.se.gogo.constant.TimeConstant.SEAT_LOCKING_TIMEOUT_MINUTES;
 import com.uit.se.gogo.entity.SeatBookingLock;
 import com.uit.se.gogo.exception.SeatNotAvailableException;
@@ -16,6 +18,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
+@Service
 @RequiredArgsConstructor
 public class SeatBookingLockServiceImpl implements SeatBookingLockService {
     

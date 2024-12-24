@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlightBookingCreationRequest {
-    List<String> seatIds;
+    private List<String> seatIds;
 }

@@ -42,6 +42,7 @@ public class FlightMapper {
             .airline( flight.getAirline() )
             .arrivalAirport( flight.getArrivalAirport() )
             .arrivalTime( flight.getArrivalTime() )
+            .minBaseFare( flight.getMinBaseFare() )
             .departureAirport( flight.getDepartureAirport() )
             .departureTime( flight.getDepartureTime() )
             .gate( flight.getGate() )

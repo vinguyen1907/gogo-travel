@@ -1,7 +1,11 @@
 package com.uit.se.gogo.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -39,4 +43,11 @@ public class Flight extends BaseService {
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("flight")
     private List<Seat> seats;
+
+    public Optional<BigDecimal> getMinBaseFare() {
+        return seats.stream()
+            .map(Seat::getBaseFare)
+            .filter(Objects::nonNull) // Avoid null values
+            .min(Comparator.naturalOrder());
+    }
 }

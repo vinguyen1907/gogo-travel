@@ -1,7 +1,9 @@
 package com.uit.se.gogo.response;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,6 +22,8 @@ import lombok.NoArgsConstructor;
 public class FlightResponse {
     private String id;
     private Airline airline;
+
+    private Optional<BigDecimal> minBaseFare;
 
     @JsonProperty("departure_airport")
     private Airport departureAirport;
