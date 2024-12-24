@@ -19,11 +19,11 @@ public class RoomBookingConsumer {
         this.roomBookingService = roomBookingService;
     }
 
-    @KafkaListener(topics = "room-booking", groupId = "room-booking-group")
-    public void consume(RoomBookingRequest message, @Header(KafkaHeaders.RECEIVED_KEY) String key) {
-        LOGGER.info("Received message with key: {}, value: {}", key, message);
-        var result = roomBookingService.bookNewRoom(message);
-        LOGGER.info("Booked room: {}", result);
-        // TODO: return webhook to FE
-    }
+//    @KafkaListener(topics = "room-booking", groupId = "room-booking-group")
+//    public void consume(RoomBookingRequest message, @Header(KafkaHeaders.RECEIVED_KEY) String key) {
+//        LOGGER.info("Received message with key: {}, value: {}", key, message);
+//        var result = roomBookingService.bookNewRoom(message);
+//        LOGGER.info("Booked room: {}", result);
+//        // TODO: return webhook to FE
+//    }
 }
