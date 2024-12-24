@@ -2,6 +2,7 @@ package com.uit.se.gogo.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -37,8 +38,8 @@ public class Flight extends BaseService {
 
     private String gate;
     private String timezone;
-    private Date departureTime;
-    private Date arrivalTime;
+    private Instant departureTime;
+    private Instant arrivalTime;
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("flight")

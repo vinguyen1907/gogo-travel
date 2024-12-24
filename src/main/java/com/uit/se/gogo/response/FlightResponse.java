@@ -2,6 +2,7 @@ package com.uit.se.gogo.response;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +36,10 @@ public class FlightResponse {
     private String timezone;
     
     @JsonProperty("departure_time")
-    private Date departureTime;
+    private Instant departureTime;
 
     @JsonProperty("arrival_time")
-    private Date arrivalTime;
+    private Instant arrivalTime;
     @JsonIgnoreProperties("flight")
     private List<SeatResponse> seats;
 }

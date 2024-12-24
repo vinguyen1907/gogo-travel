@@ -17,14 +17,19 @@ insert into public.service (id, name) values
 ('26', 'QH222'),
 ('27', 'PA333'),
 ('28', '3K444'),
-('29', 'SQ555');
+('29', 'SQ555'),
+('31', 'Vietnam Airlines'),
+('32', 'Bamboo Airways'),
+('33', 'Pacific Airlines'),
+('34', 'AirAsia'),
+('35', 'Singapore Airlines');
 
 INSERT INTO public.airline (id, name, image) VALUES
-('1', 'Vietnam Airlines', 'https://careerfinder.vn/wp-content/uploads/2020/05/vietnam-airline-logo.jpg'),
-('2', 'Bamboo Airways', 'https://static.wikia.nocookie.net/logos/images/f/fd/Bamboo_Airways_logo_2017_-_2018.png/revision/latest?cb=20210909225244&path-prefix=vi'),
-('3', 'Pacific Airlines', 'https://s.pilotsglobal.com/img/5/f/7/8/7/5f7875c55e63384bd80c51c49357ebf6.svg'),
-('4', 'AirAsia', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/AirAsia_New_Logo.svg/300px-AirAsia_New_Logo.svg.png'),
-('5', 'Singapore Airlines', 'https://www.cdnlogo.com/logos/s/19/singapore-airlines.svg');
+('31', 'https://careerfinder.vn/wp-content/uploads/2020/05/vietnam-airline-logo.jpg'),
+('32', 'https://static.wikia.nocookie.net/logos/images/f/fd/Bamboo_Airways_logo_2017_-_2018.png/revision/latest?cb=20210909225244&path-prefix=vi'),
+('33', 'https://s.pilotsglobal.com/img/5/f/7/8/7/5f7875c55e63384bd80c51c49357ebf6.svg'),
+('34', 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/AirAsia_New_Logo.svg/300px-AirAsia_New_Logo.svg.png'),
+('35', 'https://www.cdnlogo.com/logos/s/19/singapore-airlines.svg');
 
 INSERT INTO public.airport (id, code, name, location_id) VALUES
     ('1', 'HAN', 'Noi Bai International Airport', '1'), -- Hà Nội
@@ -44,25 +49,25 @@ INSERT INTO public.airport (id, code, name, location_id) VALUES
     ('15', 'BCN', 'Barcelona–El Prat Airport', '20'); -- Barcelona, Spain
 
 INSERT INTO public.flight (id, airline_id, departure_airport_id, arrival_airport_id, gate, timezone, departure_time, arrival_time) VALUES
-('11', '1', '1', '2', 'A12', 'Asia/Ho_Chi_Minh', '2024-12-25 08:00:00', '2024-12-25 10:30:00'),
-('12', '2', '2', '3', 'B5', 'Asia/Ho_Chi_Minh', '2024-12-26 14:00:00', '2024-12-26 15:45:00'),
-('13', '4', '3', '6', 'C7', 'Asia/Singapore', '2024-12-27 09:00:00', '2024-12-27 12:00:00'),
-('14', '5', '6', '7', 'D10', 'Asia/Tokyo', '2024-12-28 22:00:00', '2024-12-29 06:00:00'),
-('15', '1', '1', '3', 'A1', 'Asia/Ho_Chi_Minh', '2024-12-25 12:00:00', '2024-12-25 14:00:00'),
-('16', '2', '2', '4', 'B2', 'Asia/Ho_Chi_Minh', '2024-12-26 08:30:00', '2024-12-26 10:45:00'),
-('17', '3', '4', '6', 'C8', 'Asia/Singapore', '2024-12-27 18:00:00', '2024-12-27 21:00:00'),
-('18', '4', '3', '2', 'D3', 'Asia/Ho_Chi_Minh', '2024-12-28 10:30:00', '2024-12-28 12:00:00'),
-('19', '5', '6', '1', 'E5', 'Asia/Tokyo', '2024-12-29 23:00:00', '2024-12-30 06:30:00'),
-('20', '1', '2', '7', 'A15', 'Asia/Ho_Chi_Minh', '2024-12-30 07:00:00', '2024-12-30 10:00:00'),
-('21', '2', '7', '8', 'B6', 'Asia/Ho_Chi_Minh', '2024-12-31 09:00:00', '2024-12-31 11:15:00'),
-('22', '3', '8', '4', 'C10', 'Asia/Singapore', '2024-12-31 13:00:00', '2024-12-31 15:30:00'),
-('23', '4', '9', '10', 'D12', 'Asia/Ho_Chi_Minh', '2025-01-01 08:00:00', '2025-01-01 12:00:00'),
-('24', '5', '10', '6', 'E3', 'Asia/Tokyo', '2025-01-01 22:00:00', '2025-01-02 06:00:00'),
-('25', '1', '2', '9', 'A4', 'Asia/Ho_Chi_Minh', '2025-01-02 06:00:00', '2025-01-02 07:45:00'),
-('26', '2', '3', '7', 'B3', 'Asia/Ho_Chi_Minh', '2025-01-02 15:00:00', '2025-01-02 17:30:00'),
-('27', '3', '8', '1', 'C2', 'Asia/Singapore', '2025-01-03 12:00:00', '2025-01-03 14:30:00'),
-('28', '4', '9', '3', 'D1', 'Asia/Ho_Chi_Minh', '2025-01-03 08:00:00', '2025-01-03 11:00:00'),
-('29', '5', '7', '2', 'E8', 'Asia/Tokyo', '2025-01-04 21:00:00', '2025-01-05 05:00:00');
+('11', '31', '1', '2', 'A12', 'Asia/Ho_Chi_Minh', '2024-12-25 08:00:00', '2024-12-25 10:30:00'),
+('12', '32', '2', '3', 'B5', 'Asia/Ho_Chi_Minh', '2024-12-26 14:00:00', '2024-12-26 15:45:00'),
+('13', '34', '3', '6', 'C7', 'Asia/Singapore', '2024-12-27 09:00:00', '2024-12-27 12:00:00'),
+('14', '35', '6', '7', 'D10', 'Asia/Tokyo', '2024-12-28 22:00:00', '2024-12-29 06:00:00'),
+('15', '31', '1', '3', 'A1', 'Asia/Ho_Chi_Minh', '2024-12-25 12:00:00', '2024-12-25 14:00:00'),
+('16', '32', '2', '4', 'B2', 'Asia/Ho_Chi_Minh', '2024-12-26 08:30:00', '2024-12-26 10:45:00'),
+('17', '33', '4', '6', 'C8', 'Asia/Singapore', '2024-12-27 18:00:00', '2024-12-27 21:00:00'),
+('18', '34', '3', '2', 'D3', 'Asia/Ho_Chi_Minh', '2024-12-28 10:30:00', '2024-12-28 12:00:00'),
+('19', '35', '6', '1', 'E5', 'Asia/Tokyo', '2024-12-29 23:00:00', '2024-12-30 06:30:00'),
+('20', '31', '2', '7', 'A15', 'Asia/Ho_Chi_Minh', '2024-12-30 07:00:00', '2024-12-30 10:00:00'),
+('21', '32', '7', '8', 'B6', 'Asia/Ho_Chi_Minh', '2024-12-31 09:00:00', '2024-12-31 11:15:00'),
+('22', '33', '8', '4', 'C10', 'Asia/Singapore', '2024-12-31 13:00:00', '2024-12-31 15:30:00'),
+('23', '34', '9', '10', 'D12', 'Asia/Ho_Chi_Minh', '2025-01-01 08:00:00', '2025-01-01 12:00:00'),
+('24', '35', '10', '6', 'E3', 'Asia/Tokyo', '2025-01-01 22:00:00', '2025-01-02 06:00:00'),
+('25', '31', '2', '9', 'A4', 'Asia/Ho_Chi_Minh', '2025-01-02 06:00:00', '2025-01-02 07:45:00'),
+('26', '32', '3', '7', 'B3', 'Asia/Ho_Chi_Minh', '2025-01-02 15:00:00', '2025-01-02 17:30:00'),
+('27', '33', '8', '1', 'C2', 'Asia/Singapore', '2025-01-03 12:00:00', '2025-01-03 14:30:00'),
+('28', '34', '9', '3', 'D1', 'Asia/Ho_Chi_Minh', '2025-01-03 08:00:00', '2025-01-03 11:00:00'),
+('29', '35', '7', '2', 'E8', 'Asia/Tokyo', '2025-01-04 21:00:00', '2025-01-05 05:00:00');
 
 
 INSERT INTO public.seat (id, flight_id, number, seat_class, base_fare, service_fare, is_available) VALUES
@@ -109,8 +114,8 @@ INSERT INTO public.seat (id, flight_id, number, seat_class, base_fare, service_f
 
 
 INSERT INTO public.policy (id, content, airline_id) VALUES
-('1', 'Baggage allowance: 30kg per passenger.', '1'),
-('2', 'In-flight meals provided.', '2'),
-('3', 'Priority boarding for business class.', '3'),
-('4', 'Free cancellation within 24 hours.', '4'),
-('5', 'Complimentary lounge access for first-class.', '5');
+('1', 'Baggage allowance: 30kg per passenger.', '31'),
+('2', 'In-flight meals provided.', '32'),
+('3', 'Priority boarding for business class.', '33'),
+('4', 'Free cancellation within 24 hours.', '34'),
+('5', 'Complimentary lounge access for first-class.', '35');

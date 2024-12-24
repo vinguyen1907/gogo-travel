@@ -1,6 +1,5 @@
 package com.uit.se.gogo.mapper;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +21,10 @@ public class FlightMapper {
         Flight flight = new Flight();
 
         if ( request.getArrivalTime() != null ) {
-            flight.setArrivalTime( new Date( request.getArrivalTime().getTime() ) );
+            flight.setArrivalTime( request.getArrivalTime() );
         }
         if ( request.getDepartureTime() != null ) {
-            flight.setDepartureTime( new Date( request.getDepartureTime().getTime() ) );
+            flight.setDepartureTime( request.getDepartureTime() );
         }
         flight.setGate( request.getGate() );
         flight.setTimezone( request.getTimezone() );

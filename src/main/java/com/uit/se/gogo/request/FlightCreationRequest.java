@@ -1,5 +1,6 @@
 package com.uit.se.gogo.request;
 
+import java.time.Instant;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,8 +28,8 @@ public class FlightCreationRequest {
     private String timezone;
 
     @JsonProperty("departure_time")
-    private Date departureTime;
+    private Instant departureTime;
 
     @JsonProperty("arrival_time")
-    private Date arrivalTime;
+    private Instant arrivalTime;
 }

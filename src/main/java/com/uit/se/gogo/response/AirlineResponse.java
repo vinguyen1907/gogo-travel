@@ -24,6 +24,8 @@ public class AirlineResponse {
     private String id;
     private String name;
     private String image;
+
+    @JsonIgnoreProperties("service")
     private List<Review> reviews;
 
     private OptionalDouble rating;
