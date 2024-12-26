@@ -6,8 +6,12 @@ import com.uit.se.gogo.entity.Airport;
 import com.uit.se.gogo.request.AirportCreationRequest;
 import com.uit.se.gogo.response.AirportResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class AirportMapper {
+    private final LocationMapper locationMapper;
     public AirportResponse toAirportResponse(Airport airport) {
         if ( airport == null ) {
             return null;
@@ -17,7 +21,7 @@ public class AirportMapper {
 
         airportResponse.code( airport.getCode() );
         airportResponse.id( airport.getId() );
-        airportResponse.location( airport.getLocation() );
+        airportResponse.location( locationMapper.toLocationResponse(airport.getLocation()) );
         airportResponse.name( airport.getName() );
 
         return airportResponse.build();
@@ -45,7 +49,7 @@ public class AirportMapper {
 
         airport.code( response.getCode() );
         airport.id( response.getId() );
-        airport.location( response.getLocation() );
+        airport.location( locationMapper.toLocation(response.getLocation()) );
         airport.name( response.getName() );
 
         return airport.build();

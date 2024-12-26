@@ -1,7 +1,6 @@
 package com.uit.se.gogo.response;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +23,7 @@ public class FlightResponse {
     private String id;
     private Airline airline;
 
+    @JsonProperty("min_base_fare")
     private Optional<BigDecimal> minBaseFare;
 
     @JsonProperty("departure_airport")

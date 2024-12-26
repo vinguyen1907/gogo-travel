@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uit.se.gogo.entity.SeatBooking;
 import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.enums.FlightBookingStatus;
@@ -24,8 +25,10 @@ public class FlightBookingResponse {
 
     private FlightBookingStatus status;
 
+    @JsonProperty("booking_date")
     private Date bookingDate;
-
+    
+    @JsonProperty("update_date")
     private Date updateDate;
 
     @JsonIgnoreProperties("booking")

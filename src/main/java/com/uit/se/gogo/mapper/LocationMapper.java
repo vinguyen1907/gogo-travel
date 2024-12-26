@@ -22,6 +22,20 @@ public class LocationMapper {
             .build();
     }
 
+    public Location toLocation(LocationResponse response) {
+        if ( response == null ) {
+            return null;
+        }
+
+        return Location.builder()
+            .city( response.getCity() )
+            .country( response.getCountry() )
+            .description( response.getDescription() )
+            .imageUrl( response.getImageUrl() )
+            .id( response.getId() )
+            .build();
+    }
+
     public Location toLocation(LocationCreationRequest locationRequest) {
         if ( locationRequest == null ) {
             return null;

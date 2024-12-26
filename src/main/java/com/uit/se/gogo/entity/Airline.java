@@ -30,7 +30,9 @@ public class Airline extends BaseService{
     @OneToMany(mappedBy = "airline", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("airline")
     private List<Policy> policies;
+    
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("service")
     private List<Review> reviews;
 
     
