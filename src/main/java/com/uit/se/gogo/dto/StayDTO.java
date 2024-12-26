@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +34,14 @@ public class StayDTO {
     private List<StayAdvantage> advantages;
     @JsonProperty("featured_images")
     private List<FeaturedImage> featuredImages;
+    @JsonProperty("min_price")
+    private Double minPrice;
+    @JsonProperty("review_count")
+    private Long reviewAmount;
+    @JsonProperty("average_rating")
+    private Double averageRating;
+    @JsonProperty("amenity_count")
+    private Long amenityCount;
 
     public StayDTO(Stay stay) {
         this.id = stay.getId();
