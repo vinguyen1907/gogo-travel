@@ -66,7 +66,7 @@ public class FlightController {
         return DataResponse.<List<SeatResponse>>builder().data(availableSeats).build();
     }
 
-    @PostMapping("/seats/{seatId}")
+    @GetMapping("/seats/{seatId}")
     public DataResponse<SeatResponse> getSeatById(@PathVariable String seatId) {
         return DataResponse.<SeatResponse>builder()
             .data(seatService.getSeat(seatId))
