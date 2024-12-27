@@ -12,17 +12,10 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoomBooking {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-    @ManyToOne
-    private User user;
+public class RoomBooking extends BaseBooking {
     private RoomBookingStatus status = RoomBookingStatus.NEW;
     @ManyToOne
     private Room room;
-    @Column(nullable = false)
-    private LocalDate bookingDate;
     @Column(nullable = false)
     private LocalDate checkinDate;
     @Column(nullable = false)
