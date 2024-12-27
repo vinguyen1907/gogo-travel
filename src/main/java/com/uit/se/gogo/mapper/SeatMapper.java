@@ -18,6 +18,8 @@ public class SeatMapper {
 
         seat.available( request.isAvailable() );
         seat.baseFare( request.getBaseFare() );
+        seat.tax( request.getTax() );
+        seat.discount( request.getDiscount() );
         seat.number( request.getNumber() );
         seat.seatClass( request.getSeatClass() );
         seat.serviceFee( request.getServiceFee() );
@@ -34,6 +36,8 @@ public class SeatMapper {
 
         seatResponse.setAvailable( seat.isAvailable() );
         seatResponse.setBaseFare( seat.getBaseFare() );
+        seatResponse.setDiscount( seat.getDiscount() );
+        seatResponse.setTax( seat.getTax() );
         seatResponse.setFlight( seat.getFlight() );
         seatResponse.setId( seat.getId() );
         seatResponse.setNumber( seat.getNumber() );

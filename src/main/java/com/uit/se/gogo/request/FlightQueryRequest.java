@@ -1,6 +1,6 @@
 package com.uit.se.gogo.request;
 
-import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,16 +31,16 @@ public class FlightQueryRequest {
 
     @NotNull
     @JsonProperty("departure_time_from")
-    private Date departureTimeFrom;
+    private Instant departureTimeFrom;
     
     @NotNull
     @JsonProperty("departure_time_to")
-    private Date departureTimeTo;
+    private Instant departureTimeTo;
 
     @JsonProperty("return_time_from")
-    private Date returnTimeFrom;
+    private Instant returnTimeFrom;
     @JsonProperty("return_time_to")
-    private Date returnTimeTo;
+    private Instant returnTimeTo;
 
     @JsonProperty("seat_classes")
     private List<SeatClass> seatClasses;

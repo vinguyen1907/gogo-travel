@@ -36,6 +36,9 @@ public class Seat {
 
     private String number;
 
+    private BigDecimal discount;
+    private BigDecimal tax; // rate
+
     @Column(name = "seat_class")
     @Enumerated(EnumType.ORDINAL)
     private SeatClass seatClass;

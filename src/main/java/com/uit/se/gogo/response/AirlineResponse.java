@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uit.se.gogo.entity.Policy;
 import com.uit.se.gogo.entity.Review;
 
@@ -27,6 +28,9 @@ public class AirlineResponse {
 
     @JsonIgnoreProperties("service")
     private List<Review> reviews;
+
+    @JsonProperty("review_count")
+    private int reviewCount;
 
     private OptionalDouble rating;
 

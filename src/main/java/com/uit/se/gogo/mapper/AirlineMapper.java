@@ -39,6 +39,7 @@ public class AirlineMapper {
             .image( response.getImage() )
             .name( response.getName() )
             .reviews( response.getReviews() )
+            .policies( response.getPolicies() )
             .build();
         List<Policy> list = response.getPolicies();
         if ( list != null ) {
@@ -58,7 +59,9 @@ public class AirlineMapper {
             .image( airline.getImage() )
             .name( airline.getName() )
             .reviews( airline.getReviews() )
+            .reviewCount( airline.getReviews().size() )
             .rating( airline.getRating() )
+            .policies( airline.getPolicies() )
             .build();
         List<Policy> list = airline.getPolicies();
         if ( list != null ) {

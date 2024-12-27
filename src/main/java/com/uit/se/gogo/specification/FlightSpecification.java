@@ -1,6 +1,6 @@
 package com.uit.se.gogo.specification;
 
-import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,8 +78,8 @@ public class FlightSpecification implements Specification<Flight> {
                     }
                     
                     case GREATER_THAN -> {
-                        if (criteria.getValue() instanceof Date date) {
-                            predicates.add(builder.greaterThan(root.<Date>get(criteria.getKey()), date));
+                        if (criteria.getValue() instanceof Instant date) {
+                            predicates.add(builder.greaterThan(root.<Instant>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.greaterThan(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }
@@ -87,8 +87,8 @@ public class FlightSpecification implements Specification<Flight> {
 
                     
                     case LESS_THAN -> {
-                        if (criteria.getValue() instanceof Date date) {
-                            predicates.add(builder.lessThan(root.<Date>get(criteria.getKey()), date));
+                        if (criteria.getValue() instanceof Instant date) {
+                            predicates.add(builder.lessThan(root.<Instant>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.lessThan(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }
@@ -96,8 +96,8 @@ public class FlightSpecification implements Specification<Flight> {
 
                     
                     case GREATER_THAN_EQUAL -> {
-                        if (criteria.getValue() instanceof Date date) {
-                            predicates.add(builder.greaterThanOrEqualTo(root.<Date>get(criteria.getKey()), date));
+                        if (criteria.getValue() instanceof Instant date) {
+                            predicates.add(builder.greaterThanOrEqualTo(root.<Instant>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.greaterThanOrEqualTo(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }
@@ -105,8 +105,8 @@ public class FlightSpecification implements Specification<Flight> {
 
                     
                     case LESS_THAN_EQUAL -> {
-                        if (criteria.getValue() instanceof Date date) {
-                            predicates.add(builder.lessThanOrEqualTo(root.<Date>get(criteria.getKey()), date));
+                        if (criteria.getValue() instanceof Instant date) {
+                            predicates.add(builder.lessThanOrEqualTo(root.<Instant>get(criteria.getKey()), date));
                         } else {
                             predicates.add(builder.lessThanOrEqualTo(root.get(criteria.getKey()), criteria.getValue().toString()));
                         }

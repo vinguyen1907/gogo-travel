@@ -1,7 +1,7 @@
 package com.uit.se.gogo.service.impl;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
@@ -175,8 +175,8 @@ public class FlightServiceImpl implements FlightService{
     private List<FlightResponse> searchFlightsByCriteria(
         String departureLocationId,
         String arrivalLocationId,
-        Date timeFrom,
-        Date timeTo,
+        Instant timeFrom,
+        Instant timeTo,
         Double minPrice,
         Double maxPrice,
         List<SeatClass> seatClasses,

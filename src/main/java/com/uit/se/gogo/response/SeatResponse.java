@@ -27,5 +27,7 @@ public class SeatResponse {
     private BigDecimal baseFare;
     @JsonProperty("service_fee")
     private BigDecimal serviceFee;
+    private BigDecimal discount;
+    private BigDecimal tax; // rate
     private boolean available;
 }

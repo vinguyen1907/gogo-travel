@@ -11,8 +11,13 @@ import com.uit.se.gogo.request.FlightCreationRequest;
 import com.uit.se.gogo.response.FlightResponse;
 import com.uit.se.gogo.response.SeatResponse;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class FlightMapper {
+    private final AirlineMapper airlineMapper;
+
     public Flight toFlight(FlightCreationRequest request) {
         if ( request == null ) {
             return null;
@@ -38,7 +43,7 @@ public class FlightMapper {
         }
 
         return FlightResponse.builder()
-            .airline( flight.getAirline() )
+            .airline( airlineMapper.toAirlineResponse(flight.getAirline()) )
             .arrivalAirport( flight.getArrivalAirport() )
             .arrivalTime( flight.getArrivalTime() )
             .minBaseFare( flight.getMinBaseFare() )

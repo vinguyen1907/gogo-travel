@@ -21,7 +21,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FlightResponse {
     private String id;
-    private Airline airline;
+
+    @JsonIgnoreProperties("reviews")
+    private AirlineResponse airline;
 
     @JsonProperty("min_base_fare")
     private Optional<BigDecimal> minBaseFare;
