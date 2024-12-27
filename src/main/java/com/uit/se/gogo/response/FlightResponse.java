@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.uit.se.gogo.entity.Airline;
 import com.uit.se.gogo.entity.Airport;
 
 import lombok.AllArgsConstructor;

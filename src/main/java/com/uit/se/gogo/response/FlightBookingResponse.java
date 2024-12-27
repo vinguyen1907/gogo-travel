@@ -1,6 +1,7 @@
 package com.uit.se.gogo.response;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,10 +27,16 @@ public class FlightBookingResponse {
     private FlightBookingStatus status;
 
     @JsonProperty("booking_date")
-    private Date bookingDate;
+    private LocalDate bookingDate;
     
     @JsonProperty("update_date")
-    private Date updateDate;
+    private LocalDate updateDate;
+    
+    @JsonProperty("total_discount")
+    private BigDecimal totalDiscount;
+    
+    @JsonProperty("total_bill")
+    private BigDecimal totalBill;
 
     @JsonIgnoreProperties("booking")
     List<SeatBooking> seats;

@@ -1,7 +1,6 @@
 package com.uit.se.gogo.service.impl;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -63,8 +62,8 @@ public class FlightBookingServiceImpl implements FlightBookingService {
         }
         
         final FlightBooking booking = FlightBooking.builder()
-            .bookingDate(Date.from(Instant.now()))
-            .updateDate(Date.from(Instant.now()))
+            .bookingDate(LocalDate.now())
+            .updateDate(LocalDate.now())
             .user(user)
             .status(FlightBookingStatus.PENDING)
             .build();
@@ -102,7 +101,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
         FlightBooking booking = flightBookingRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Booking not found"));
         booking.setStatus(FlightBookingStatus.PAID);
-        booking.setUpdateDate(Date.from(Instant.now()));
+        booking.setUpdateDate(LocalDate.now());
         return mapper.toResponse(booking);
     }
 
@@ -111,7 +110,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
         FlightBooking booking = flightBookingRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Booking not found"));
         booking.setStatus(FlightBookingStatus.CONFIRMED);
-        booking.setUpdateDate(Date.from(Instant.now()));
+        booking.setUpdateDate(LocalDate.now());
         return mapper.toResponse(booking);
     }
 
@@ -120,7 +119,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
         FlightBooking booking = flightBookingRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Booking not found"));
         booking.setStatus(FlightBookingStatus.CANCELLED);
-        booking.setUpdateDate(Date.from(Instant.now()));
+        booking.setUpdateDate(LocalDate.now());
         return mapper.toResponse(booking);
     }
     

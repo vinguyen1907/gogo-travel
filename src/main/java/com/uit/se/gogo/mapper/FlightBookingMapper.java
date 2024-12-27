@@ -17,6 +17,8 @@ public class FlightBookingMapper {
                 .user(booking.getUser())
                 .status(booking.getStatus())
                 .bookingDate(booking.getBookingDate())
+                .totalDiscount(booking.getTotalDiscount())
+                .totalBill(booking.getTotalBill())
                 .seats(booking.getSeats()) // Assuming seats already have the required structure.
                 .build();
     }
