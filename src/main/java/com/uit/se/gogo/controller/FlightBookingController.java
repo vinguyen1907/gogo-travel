@@ -69,13 +69,6 @@ public class FlightBookingController {
             .build();
     }
     
-    @PostMapping("/{id}/confirm")
-    public DataResponse<FlightBookingResponse> confirmFlightBooking(@PathVariable String id)  {
-        return DataResponse.<FlightBookingResponse>builder()
-            .data(service.confirmFlightBooking(id))
-            .build();
-    }
-    
     @PostMapping("/{id}/cancel")
     public DataResponse<FlightBookingResponse> cancelFlightBooking(@PathVariable String id)  {
         return DataResponse.<FlightBookingResponse>builder()

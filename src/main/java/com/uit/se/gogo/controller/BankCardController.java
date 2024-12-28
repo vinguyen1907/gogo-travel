@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/bank-card")
+@RequestMapping("/${api.prefix}/bank-card")
 public class BankCardController {
     private final BankCardService service;
 
