@@ -29,18 +29,28 @@ public class SecurityConfiguration {
         "/swagger-ui/**", "/v3/api-docs/**"
     };
 
+    private static final String[] WHITELIST_APIS = {
+            "/api/v1/auth/**"
+    };
+
+    private static final String[] SECURED_APIS = {
+            "/api/v1/favorites/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.GET, SWAGGER_ENDPOINTS)
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers(WHITELIST_APIS).permitAll()
+                        .requestMatchers(HttpMethod.GET, SWAGGER_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.POST).authenticated()
+                        .requestMatchers(HttpMethod.PUT).authenticated()
+                        .requestMatchers(HttpMethod.PATCH).authenticated()
+                        .requestMatchers(HttpMethod.DELETE).authenticated()
+                        .requestMatchers(SECURED_APIS).authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
