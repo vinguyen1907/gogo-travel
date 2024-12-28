@@ -1,5 +1,7 @@
 package com.uit.se.gogo.controller;
 
+import com.uit.se.gogo.request.CreateReviewRequest;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +33,8 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResponse<ReviewDTO>> createReview(@RequestBody Review review) {
-        var saved = reviewService.create(review);
-        return ResponseEntity.ok(new DataResponse<>(new ReviewDTO(saved)));
+    public ResponseEntity<DataResponse<ReviewDTO>> createReview(@RequestBody CreateReviewRequest request) throws BadRequestException {
+        var saved = reviewService.create(request);
+        return ResponseEntity.ok(new DataResponse<>(saved));
     }
 }

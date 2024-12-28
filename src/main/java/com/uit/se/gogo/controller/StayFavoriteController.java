@@ -2,6 +2,7 @@ package com.uit.se.gogo.controller;
 
 import com.uit.se.gogo.dto.StayFavoriteDTO;
 import com.uit.se.gogo.entity.StayFavorite;
+import com.uit.se.gogo.request.CreateStayFavoriteRequest;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.response.PageDataResponse;
 import com.uit.se.gogo.service.StayFavoriteService;
@@ -16,8 +17,8 @@ public class StayFavoriteController {
     private final StayFavoriteService stayFavoriteService;
 
     @PostMapping
-    public ResponseEntity<DataResponse<StayFavoriteDTO>> createStayFavorite(@RequestBody StayFavorite stayFavorite) {
-        return ResponseEntity.ok(new DataResponse<>(stayFavoriteService.save(stayFavorite)));
+    public ResponseEntity<DataResponse<StayFavoriteDTO>> createStayFavorite(@RequestBody CreateStayFavoriteRequest request) {
+        return ResponseEntity.ok(new DataResponse<>(stayFavoriteService.insert(request)));
     }
 
     @GetMapping
