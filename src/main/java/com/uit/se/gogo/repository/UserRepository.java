@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.uit.se.gogo.entity.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-    
+    Optional<User> findByEmail(String email);
 }
