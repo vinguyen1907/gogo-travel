@@ -1,13 +1,17 @@
 package com.uit.se.gogo.repository;
 
 import com.uit.se.gogo.entity.Room;
+import com.uit.se.gogo.entity.User;
+import lombok.NonNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, String> {
@@ -25,4 +29,9 @@ public interface RoomRepository extends JpaRepository<Room, String> {
                     ")"
     )
     List<Room> findAvailableRooms(String stayId, Integer guests, LocalDate checkinDate, LocalDate checkoutDate);
+
+    @NonNull
+    Page<Room> findAllByOwner(User owner, @NonNull  Pageable pageable);
+
+    Optional<Room> findAllByOwnerAndId(User owner, String id);
 }
