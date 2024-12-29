@@ -17,6 +17,7 @@ public class Stay extends BaseService {
     @ManyToOne
     private Location location;
     private Double rating;
+    private Long reviewCount = 0L;
     @JsonProperty("star_rating")
     private Integer starRating;
     @Enumerated(EnumType.STRING)
