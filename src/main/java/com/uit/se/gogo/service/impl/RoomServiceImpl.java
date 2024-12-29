@@ -7,10 +7,17 @@ import com.uit.se.gogo.repository.RoomRepository;
 import com.uit.se.gogo.repository.StayRepository;
 import com.uit.se.gogo.repository.UserRepository;
 import com.uit.se.gogo.request.CreateRoomRequest;
+import com.uit.se.gogo.request.UpdateRoomRequest;
 import com.uit.se.gogo.service.RoomService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -46,4 +53,35 @@ public class RoomServiceImpl implements RoomService {
                 .build();
         return roomRepository.save(room);
     }
+
+    @Override
+    public Page<Room> getAll(String userId, int page, int size) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Pageable pageable = PageRequest.of(page, size);
+        return roomRepository.findAllByOwner(user, pageable);
+    }
+
+    @Override
+    public Room updateRoom(UpdateRoomRequest request, String id, User owner) {
+        Room room = roomRepository.findAllByOwnerAndId(owner, id)
+                .orElseThrow(() -> new EntityNotFoundException("Room not found"));
+        updateIfChanged(request.getName(), room::setName, room::getName);
+        updateIfChanged(request.getBaseFare(), room::setBaseFare, room::getBaseFare);
+        updateIfChanged(request.getDiscount(), room::setDiscount, room::getDiscount);
+        updateIfChanged(request.getTax(), room::setTax, room::getTax);
+        updateIfChanged(request.getServiceFee(), room::setServiceFee, room::getServiceFee);
+        updateIfChanged(request.getType(), room::setType, room::getType);
+        updateIfChanged(request.getMaxGuests(), room::setMaxGuests, room::getMaxGuests);
+        updateIfChanged(request.getImageUrl(), room::setImageUrl, room::getImageUrl);
+
+        return roomRepository.save(room);
+    }
+
+    public static <T> void updateIfChanged(T newValue, Consumer<T> setter, Supplier<T> getter) {
+        if (newValue != null && !newValue.equals(getter.get())) {
+            setter.accept(newValue);
+        }
+    }
+
 }
