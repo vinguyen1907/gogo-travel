@@ -52,6 +52,7 @@ public class StayDTO {
         this.address = stay.getAddress();
         this.location = stay.getLocation();
         this.rating = stay.getRating();
+        this.reviewAmount = stay.getReviewCount();
         this.starRating = stay.getStarRating();
         this.stayType = stay.getStayType();
         this.overview = stay.getOverview();

@@ -15,7 +15,8 @@ public class ReviewDTO {
     private String id;
     @JsonProperty("service_id")
     private String serviceId;
-    private User user;
+    @JsonProperty("user_id")
+    private String userId;
     private Integer rating;
     private String description;
     @JsonProperty("service_type")
@@ -24,7 +25,7 @@ public class ReviewDTO {
     public ReviewDTO(Review review) {
         this.id = review.getId();
         this.serviceId = review.getService().getId();
-        this.user = review.getUser();
+        this.userId = review.getUser().getId();
         this.rating = review.getRating();
         this.description = review.getDescription();
         this.serviceType = review.getServiceType();
