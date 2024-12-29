@@ -1,42 +1,40 @@
-package com.uit.se.gogo.entity;
+package com.uit.se.gogo.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+public class CreateRoomRequest {
+    @JsonProperty("owner_id")
+    @NotBlank
+    private String ownerId;
+    @NotBlank
     private String name;
-    @ManyToOne
-    @JsonIgnore
-    private Stay stay;
+    @JsonProperty("stay_id")
+    @NotBlank
+    private String stayId;
     @JsonProperty("base_fare")
+    @Positive
     private Double baseFare;
+    @PositiveOrZero
     private Double discount;
+    @PositiveOrZero
     private Double tax; // rate
     @JsonProperty("service_fee")
+    @PositiveOrZero
     private Double serviceFee;
     private String type;
-    @JsonProperty("is_available")
-    private Boolean isAvailable;
     @JsonProperty("max_guests")
+    @Positive
     private Integer maxGuests;
     @JsonProperty("image_url")
+    @NotBlank
     private String imageUrl;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    private User owner;
 }
