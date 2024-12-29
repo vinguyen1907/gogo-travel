@@ -1,14 +1,17 @@
 package com.uit.se.gogo.controller;
 
+import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
 import com.uit.se.gogo.kafka.producer.RoomBookingProducer;
 import com.uit.se.gogo.response.DataResponse;
+import com.uit.se.gogo.response.PageDataResponse;
 import com.uit.se.gogo.response.RoomBookingResponse;
 import com.uit.se.gogo.service.RoomBookingLockService;
 import com.uit.se.gogo.service.RoomBookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +45,13 @@ public class RoomBookingController {
     public ResponseEntity<DataResponse<String>> fillRoomBookingGuestInfo(@Valid @RequestBody RoomBookingGuestInfoRequest request) {
         roomBookingService.fillGuestInfo(request);
         return ResponseEntity.ok(new DataResponse<>("Filled guest information successfully."));
+    }
+
+    @GetMapping("/admin/all")
+    public ResponseEntity<PageDataResponse<RoomBooking>> getRoomBookings(@RequestParam(name = "room_id") String roomId,
+                                                         @RequestParam(defaultValue = "1") int page,
+                                                         @RequestParam(defaultValue = "10") int size) {
+        Page<RoomBooking> booking = roomBookingService.getRoomBookings(roomId, page, size);
+        return ResponseEntity.ok(new PageDataResponse<>(booking));
     }
 }

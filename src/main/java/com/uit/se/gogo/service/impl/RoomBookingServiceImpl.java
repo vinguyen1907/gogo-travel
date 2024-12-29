@@ -10,6 +10,9 @@ import com.uit.se.gogo.service.RoomBookingLockService;
 import com.uit.se.gogo.service.RoomBookingService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,5 +50,11 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         booking.setStatus(RoomBookingStatus.FILLED_INFO);
 
         roomBookingRepository.save(booking);
+    }
+
+    @Override
+    public Page<RoomBooking> getRoomBookings(String roomId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return roomBookingRepository.findByRoomId(roomId, pageable);
     }
 }
