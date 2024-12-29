@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -17,6 +18,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
+
+import static com.uit.se.gogo.enums.UserType.STAY_MANAGER;
 
 @Configuration
 @EnableWebSecurity
@@ -45,16 +48,21 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITELIST_APIS).permitAll()
                         .requestMatchers(HttpMethod.GET, SWAGGER_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.POST).authenticated()
                         .requestMatchers(HttpMethod.PUT).authenticated()
                         .requestMatchers(HttpMethod.PATCH).authenticated()
                         .requestMatchers(HttpMethod.DELETE).authenticated()
                         .requestMatchers(SECURED_APIS).authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms/admin/**").hasAnyRole("ADMIN", "STAY_MANAGER")
+                        .requestMatchers(HttpMethod.POST).authenticated()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+//                .logout(logout ->
+//                        logout.logoutUrl("/api/v1/auth/logout")
+//                                .addLogoutHandler(logoutHandler)
+//                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
 
         return http.build();
     }

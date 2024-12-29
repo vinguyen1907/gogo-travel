@@ -1,26 +1,19 @@
-package com.uit.se.gogo.entity;
+package com.uit.se.gogo.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+public class CreateRoomRequest {
+    @JsonProperty("owner_id")
+    private String ownerId;
     private String name;
-    @ManyToOne
-    @JsonIgnore
-    private Stay stay;
+    @JsonProperty("stay_id")
+    private String stayId;
     @JsonProperty("base_fare")
     private Double baseFare;
     private Double discount;
@@ -28,15 +21,8 @@ public class Room {
     @JsonProperty("service_fee")
     private Double serviceFee;
     private String type;
-    @JsonProperty("is_available")
-    private Boolean isAvailable;
     @JsonProperty("max_guests")
     private Integer maxGuests;
     @JsonProperty("image_url")
     private String imageUrl;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    private User owner;
 }
