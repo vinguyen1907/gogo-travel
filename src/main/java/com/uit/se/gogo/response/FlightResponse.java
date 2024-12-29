@@ -8,6 +8,8 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uit.se.gogo.entity.Airport;
+import com.uit.se.gogo.entity.FeaturedImage;
+import com.uit.se.gogo.entity.ServiceAmenity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,4 +45,10 @@ public class FlightResponse {
     private Instant arrivalTime;
     @JsonIgnoreProperties("flight")
     private List<SeatResponse> seats;
+    private String name;
+    @JsonIgnoreProperties("service")
+    private List<ServiceAmenity> amenities;
+    @JsonProperty("featured_images")
+    @JsonIgnoreProperties("service")
+    private List<FeaturedImage> featuredImages;
 }

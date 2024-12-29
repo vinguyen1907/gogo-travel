@@ -53,7 +53,7 @@ public class FlightController {
         return flightService.searchFlights(request);
     }
 
-    @PostMapping
+    @PostMapping("/admin")
     public DataResponse<FlightResponse> createFlight(@RequestBody FlightCreationRequest request) {
         return DataResponse.<FlightResponse>builder()
             .data(flightService.createFlight(request))
@@ -79,7 +79,7 @@ public class FlightController {
         return ResponseEntity.ok("Seat booked successfully");
     }
 
-    @PostMapping("/seats")
+    @PostMapping("/admin/seats")
     public DataResponse<FlightResponse> updateSeats(@RequestBody FlightSeatsUpdateRequest request) {
         return DataResponse.<FlightResponse>builder()
             .data(seatService.updateFlightSeats(request.getFlightId(), request.getSeats()))
@@ -87,7 +87,7 @@ public class FlightController {
     }
 
     @PostMapping("/favorites")
-    public DataResponse<FlightFavoriteResponse> postMethodName(@RequestBody @Valid FlightFavoriteRequest request) {
+    public DataResponse<FlightFavoriteResponse> addFlightFavorite(@RequestBody @Valid FlightFavoriteRequest request) {
         return DataResponse.<FlightFavoriteResponse>builder()
             .data(flightService.addFlightFavorite(request))
             .build();

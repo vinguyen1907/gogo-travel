@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -18,8 +17,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
-
-import static com.uit.se.gogo.enums.UserType.STAY_MANAGER;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +34,15 @@ public class SecurityConfiguration {
     };
 
     private static final String[] SECURED_APIS = {
-            "/api/v1/favorites/**"
+            "/api/v1/favorites/**",
+            "/api/v1/flights/favorites/**",
+            "/api/v1/bank-card/**",
+            "/api/v1/payment/**",
+    };
+
+    private static final String[] ADMIN_APIS = {
+            "/api/v1/rooms/admin/**",
+            "/api/v1/flights/admin/**",
     };
 
     @Bean
@@ -46,14 +51,12 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(HttpMethod.POST).authenticated()
                         .requestMatchers(WHITELIST_APIS).permitAll()
-                        .requestMatchers(HttpMethod.GET, SWAGGER_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.PUT).authenticated()
-                        .requestMatchers(HttpMethod.PATCH).authenticated()
-                        .requestMatchers(HttpMethod.DELETE).authenticated()
                         .requestMatchers(SECURED_APIS).authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms/admin/**").hasAnyRole("ADMIN", "STAY_MANAGER")
-                        .requestMatchers(HttpMethod.POST).authenticated()
+                        .requestMatchers(HttpMethod.GET, SWAGGER_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.POST, ADMIN_APIS).hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms/admin/**").hasAnyRole("STAY_MANAGER")
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
