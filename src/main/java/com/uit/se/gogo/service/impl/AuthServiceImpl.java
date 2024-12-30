@@ -10,6 +10,7 @@ import com.uit.se.gogo.repository.UserRepository;
 import com.uit.se.gogo.request.*;
 import com.uit.se.gogo.service.AuthService;
 import com.uit.se.gogo.util.AuthenticationUtil;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,12 +58,12 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
-            authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
-                    )
-            );
+//            authManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            request.getEmail(),
+//                            request.getPassword()
+//                    )
+//            );
             var user = userRepository
                     .findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("This account is not found"));

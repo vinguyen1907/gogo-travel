@@ -33,6 +33,7 @@ public class User implements UserDetails {
 
     @JsonProperty("full_name")
     private String fullName;
+    @Column(unique = true)
     private String email;
     @JsonProperty("phone_number")
     private String phoneNumber;

@@ -30,6 +30,8 @@ public class RoomBookingController {
 
     @PostMapping
     public ResponseEntity<DataResponse<RoomBookingResponse>> createRoomBooking(@Valid @RequestBody RoomBookingRequest request) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setUserId(user.getId());
         LocalDateTime lockExpiration = roomBookingLockService.lockRoom(request.getRoomId());
         var roomBooking = roomBookingService.bookNewRoom(request);
 //        roomBookingProducer.sendMessage("room-booking", roomBooking);

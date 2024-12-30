@@ -4,7 +4,9 @@ import com.uit.se.gogo.enums.RoomBookingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -12,6 +14,8 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class RoomBooking extends BaseBooking {
     private RoomBookingStatus status = RoomBookingStatus.NEW;
     @ManyToOne
