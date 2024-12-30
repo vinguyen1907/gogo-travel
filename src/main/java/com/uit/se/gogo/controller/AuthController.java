@@ -1,8 +1,7 @@
 package com.uit.se.gogo.controller;
 
-import com.uit.se.gogo.request.AuthenticationRequest;
-import com.uit.se.gogo.request.AuthenticationResponse;
-import com.uit.se.gogo.request.RegisterRequest;
+import com.uit.se.gogo.request.*;
+import com.uit.se.gogo.response.OTPResponse;
 import com.uit.se.gogo.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,6 +41,39 @@ public class AuthController {
             return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(AuthenticationResponse.builder().message("User not found or Incorrect password").build());
         } catch (Exception e) {
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<OTPResponse> forgotPassword(
+            @RequestBody ForgotPasswordRequest request
+    ) {
+        var otp = authService.forgotPassword(request);
+        return ResponseEntity.ok(new OTPResponse(
+                otp.getId(),
+                "An OTP was sent to your email."
+        ));
+    }
+
+    @PostMapping("/forgot-password/verify")
+    public ResponseEntity<String> verifyOTPForgotPassword(@RequestBody VerifyForgotPasswordRequest request) {
+        boolean isValid = authService.verifyForgotPassword(request);
+        if (isValid) {
+            return ResponseEntity.ok("OTP is correct.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OTP is invalid");
+        }
+    }
+
+    @PostMapping("/forgot-password/update")
+    public ResponseEntity<String> updateAfterVerification(
+            @RequestBody UpdateAfterVerificationRequest request
+    ) {
+        boolean isValid = authService.updateAfterVerification(request);
+        if (isValid) {
+            return ResponseEntity.ok("Success");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP.");
         }
     }
 }
