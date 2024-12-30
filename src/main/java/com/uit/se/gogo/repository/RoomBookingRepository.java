@@ -1,6 +1,7 @@
 package com.uit.se.gogo.repository;
 
 import com.uit.se.gogo.entity.RoomBooking;
+import com.uit.se.gogo.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface RoomBookingRepository extends JpaRepository<RoomBooking, String
     List<RoomBooking> checkAvailability(String roomId, LocalDate checkinDate, LocalDate checkoutDate);
 
     Page<RoomBooking> findByRoomId(String roomId, Pageable pageable);
+
+    List<RoomBooking> findAllByUser(User user);
 }
