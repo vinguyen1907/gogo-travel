@@ -1,7 +1,9 @@
 package com.uit.se.gogo.service.impl;
 
 import com.uit.se.gogo.entity.RoomBooking;
+import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.enums.RoomBookingStatus;
+import com.uit.se.gogo.repository.UserRepository;
 import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
 import com.uit.se.gogo.exception.RoomNotAvailableException;
@@ -15,11 +17,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RoomBookingServiceImpl implements RoomBookingService {
     private final RoomBookingRepository roomBookingRepository;
     private final RoomBookingLockService roomBookingLockService;
+    private final UserRepository userRepository;
 
     @Override
     public RoomBooking bookNewRoom(RoomBookingRequest roomBooking) {
@@ -56,5 +61,12 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     public Page<RoomBooking> getRoomBookings(String roomId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return roomBookingRepository.findByRoomId(roomId, pageable);
+    }
+
+    @Override
+    public List<RoomBooking> getRoomBookingsByUser(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+        return roomBookingRepository.findAllByUser(user);
     }
 }

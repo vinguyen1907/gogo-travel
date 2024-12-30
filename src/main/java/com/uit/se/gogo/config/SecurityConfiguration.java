@@ -38,6 +38,7 @@ public class SecurityConfiguration {
             "/api/v1/flights/favorites/**",
             "/api/v1/bank-card/**",
             "/api/v1/payment/**",
+            "/api/v1/stays/booking/**"
     };
 
     private static final String[] ADMIN_APIS = {
