@@ -8,6 +8,7 @@ import com.uit.se.gogo.request.AuthenticationResponse;
 import com.uit.se.gogo.request.RegisterRequest;
 import com.uit.se.gogo.service.AuthService;
 import com.uit.se.gogo.util.AuthenticationUtil;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -39,12 +40,12 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
-            authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
-                    )
-            );
+//            authManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            request.getEmail(),
+//                            request.getPassword()
+//                    )
+//            );
             var user = userRepository
                     .findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("This account is not found"));
