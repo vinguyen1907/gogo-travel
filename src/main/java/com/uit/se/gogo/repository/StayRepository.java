@@ -98,4 +98,6 @@ public interface StayRepository extends JpaRepository<Stay, String> {
             Integer rating,
             StayType type,
             Pageable pageable);
+
+
 }

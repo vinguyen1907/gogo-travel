@@ -19,4 +19,6 @@ public interface StayService {
     List<Room> getAvailableRooms(String stayId, LocalDate checkinDate, LocalDate checkoutDate, Integer guests);
 
     Stay create(AdminCreateStayRequest request, User user);
+
+    List<Room> getAllRooms(String stayId);
 }

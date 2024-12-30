@@ -1,6 +1,7 @@
 package com.uit.se.gogo.repository;
 
 import com.uit.se.gogo.entity.Room;
+import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.entity.User;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
@@ -34,4 +35,6 @@ public interface RoomRepository extends JpaRepository<Room, String> {
     Page<Room> findAllByOwner(User owner, @NonNull  Pageable pageable);
 
     Optional<Room> findAllByOwnerAndId(User owner, String id);
+
+    List<Room> findAllByStay(Stay stay);
 }

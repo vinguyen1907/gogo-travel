@@ -86,6 +86,13 @@ public class StayController {
         return ResponseEntity.ok(new DataResponse<>(rooms));
     }
 
+    @GetMapping("/admin/{stayId}/rooms/all")
+    public ResponseEntity<DataResponse<List<Room>>> adminGetAllRoomsOfStay(@PathVariable String stayId) {
+        List<Room> rooms = stayService.getAllRooms(stayId);
+        return ResponseEntity.ok(new DataResponse<>(rooms));
+
+    }
+
     @PostMapping("/admin")
     public ResponseEntity<DataResponse<Stay>> createStay(@RequestBody AdminCreateStayRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

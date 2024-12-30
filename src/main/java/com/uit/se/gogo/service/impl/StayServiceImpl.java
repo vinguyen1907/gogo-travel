@@ -96,4 +96,10 @@ public class StayServiceImpl implements StayService {
                 .build();
         return stayRepository.save(stay);
     }
+
+    @Override
+    public List<Room> getAllRooms(String stayId) {
+        Stay stay = stayRepository.findById(stayId).orElseThrow(() -> new EntityNotFoundException("Stay not found"));
+        return roomRepository.findAllByStay(stay);
+    }
 }
