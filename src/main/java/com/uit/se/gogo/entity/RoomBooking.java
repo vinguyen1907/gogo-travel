@@ -3,6 +3,7 @@ package com.uit.se.gogo.entity;
 import com.uit.se.gogo.enums.RoomBookingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class RoomBooking extends BaseBooking {
+    @Builder.Default
     private RoomBookingStatus status = RoomBookingStatus.NEW;
     @ManyToOne
     private Room room;

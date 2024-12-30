@@ -1,24 +1,23 @@
 package com.uit.se.gogo.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-
-import com.uit.se.gogo.service.BankCardService;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.uit.se.gogo.request.BankCardCreationRequest;
-import com.uit.se.gogo.response.BankCardResponse;
-import com.uit.se.gogo.response.DataResponse;
-
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.uit.se.gogo.entity.User;
+import com.uit.se.gogo.request.BankCardCreationRequest;
+import com.uit.se.gogo.response.BankCardResponse;
+import com.uit.se.gogo.response.DataResponse;
+import com.uit.se.gogo.service.BankCardService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +27,8 @@ public class BankCardController {
 
     @PostMapping
     public DataResponse<BankCardResponse> createCard(@RequestBody BankCardCreationRequest request) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setUserId(user.getId());
         return DataResponse.<BankCardResponse>builder()
             .data(service.createCard(request))
             .build();
@@ -40,8 +41,10 @@ public class BankCardController {
             .build();
     }
 
-    @GetMapping("/user/{userId}")
-    public DataResponse<List<BankCardResponse>> getByUserId(@PathVariable String userId) {
+    @GetMapping("/user")
+    public DataResponse<List<BankCardResponse>> getByUserId() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId = user.getId();
         return DataResponse.<List<BankCardResponse>>builder()
             .data(service.getByUserId(userId))
             .build();

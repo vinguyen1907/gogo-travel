@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.uit.se.gogo.entity.BankCard;
 import com.uit.se.gogo.entity.BaseBooking;
+import com.uit.se.gogo.entity.FlightBooking;
 import com.uit.se.gogo.entity.Payment;
+import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.enums.BookingType;
+import com.uit.se.gogo.enums.FlightBookingStatus;
+import com.uit.se.gogo.enums.RoomBookingStatus;
 import com.uit.se.gogo.repository.BankCardRepository;
 import com.uit.se.gogo.repository.FlightBookingRepository;
 import com.uit.se.gogo.repository.PaymentRepository;
@@ -60,6 +64,19 @@ public class PaymentServiceImpl implements PaymentService {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // Restore interrupted status
             throw new RuntimeException("Thread was interrupted", e);
+        }
+
+        switch (booking) {
+            case FlightBooking flightBooking -> {
+                flightBooking.setStatus(FlightBookingStatus.PAID);
+                flightBookingRepository.save(flightBooking);
+            }
+            case RoomBooking roomBooking -> {
+                roomBooking.setStatus(RoomBookingStatus.PAID);
+                roomBookingRepository.save(roomBooking);
+            }
+            default -> {
+            }
         }
 
         return payment.toResponse();

@@ -3,6 +3,7 @@ package com.uit.se.gogo.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.request.FlightCreationRequest;
 import com.uit.se.gogo.request.FlightFavoriteRequest;
 import com.uit.se.gogo.request.FlightQueryRequest;
@@ -88,15 +90,20 @@ public class FlightController {
 
     @PostMapping("/favorites")
     public DataResponse<FlightFavoriteResponse> addFlightFavorite(@RequestBody @Valid FlightFavoriteRequest request) {
+        if (request.getUserId().isBlank()) {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            request.setUserId(user.getId());
+        }
         return DataResponse.<FlightFavoriteResponse>builder()
             .data(flightService.addFlightFavorite(request))
             .build();
     }
     
-    @GetMapping("/favorites/{userId}")
-    public DataResponse<UserFlightFavoriteResponse> getUserFlightFavorite(@PathVariable String userId) {
-        return DataResponse.<UserFlightFavoriteResponse>builder()
-            .data(flightService.getUserFlightFavoriteResponse(userId))
+    @GetMapping("/favorites")
+    public DataResponse<UserFlightFavoriteResponse> getUserFlightFavorite() {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return DataResponse.<UserFlightFavoriteResponse>builder()
+            .data(flightService.getUserFlightFavoriteResponse(user.getId()))
             .build();
     }
     

@@ -2,6 +2,7 @@ package com.uit.se.gogo.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.request.FlightBookingConfirmationRequest;
 import com.uit.se.gogo.request.FlightBookingCreationRequest;
 import com.uit.se.gogo.response.DataResponse;
@@ -35,6 +37,10 @@ public class FlightBookingController {
     
     @PostMapping("/confirm")
     public DataResponse<FlightBookingResponse> confirmFlightBooking(@RequestBody FlightBookingConfirmationRequest request) {
+        if (request.getUserId().isBlank()) {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            request.setUserId(user.getId());
+        }
         return DataResponse.<FlightBookingResponse>builder()
             .data(service.confirmFlightBooking(request))
             .build();
@@ -55,10 +61,11 @@ public class FlightBookingController {
             .build();
     }
     
-    @GetMapping("/user/{userId}")
-    public DataResponse<List<FlightBookingResponse>> getUserFlightBookings(@PathVariable String userId)  {
+    @GetMapping("/user")
+    public DataResponse<List<FlightBookingResponse>> getUserFlightBookings()  {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return DataResponse.<List<FlightBookingResponse>>builder()
-            .data(service.getUserFlightBookings(userId))
+            .data(service.getUserFlightBookings(user.getId()))
             .build();
     }
     
