@@ -1,13 +1,10 @@
 package com.uit.se.gogo.service.impl;
 
 import com.uit.se.gogo.dto.StayDTO;
-import com.uit.se.gogo.entity.FeaturedImage;
-import com.uit.se.gogo.entity.Room;
-import com.uit.se.gogo.entity.Stay;
+import com.uit.se.gogo.entity.*;
 import com.uit.se.gogo.enums.StayType;
-import com.uit.se.gogo.repository.FeaturedImageRepository;
-import com.uit.se.gogo.repository.RoomRepository;
-import com.uit.se.gogo.repository.StayRepository;
+import com.uit.se.gogo.repository.*;
+import com.uit.se.gogo.request.AdminCreateStayRequest;
 import com.uit.se.gogo.request.SearchStayRequest;
 import com.uit.se.gogo.service.StayService;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +24,8 @@ public class StayServiceImpl implements StayService {
     private final StayRepository stayRepository;
     private final RoomRepository roomRepository;
     private final FeaturedImageRepository featuredImageRepository;
+    private final UserRepository userRepository;
+    private final LocationRepository locationRepository;
 
     @Override
     public Stay findById(String id) {
@@ -79,5 +78,28 @@ public class StayServiceImpl implements StayService {
     @Override
     public List<Room> getAvailableRooms(String stayId, LocalDate checkinDate, LocalDate checkoutDate, Integer guests) {
         return roomRepository.findAvailableRooms(stayId, guests, checkinDate, checkoutDate);
+    }
+
+    @Override
+    public Stay create(AdminCreateStayRequest request, User user) {
+        Location location = locationRepository.findById(request.getLocationId())
+                .orElseThrow(() -> new EntityNotFoundException("Location not found"));
+        Stay stay = Stay.builder()
+                .owner(user)
+                .address(request.getAddress())
+                .location(location)
+                .starRating(request.getStarRating())
+                .stayType(request.getStayType())
+                .overview(request.getOverview())
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .build();
+        return stayRepository.save(stay);
+    }
+
+    @Override
+    public List<Room> getAllRooms(String stayId) {
+        Stay stay = stayRepository.findById(stayId).orElseThrow(() -> new EntityNotFoundException("Stay not found"));
+        return roomRepository.findAllByStay(stay);
     }
 }

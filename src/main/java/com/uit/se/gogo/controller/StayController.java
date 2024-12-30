@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import com.uit.se.gogo.entity.Stay;
+import com.uit.se.gogo.entity.User;
+import com.uit.se.gogo.request.AdminCreateStayRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import com.uit.se.gogo.dto.StayDTO;
 import com.uit.se.gogo.entity.Room;
@@ -84,5 +84,19 @@ public class StayController {
             @RequestParam Integer guests) {
         var rooms = stayService.getAvailableRooms(stayId, checkinDate, checkoutDate, guests);
         return ResponseEntity.ok(new DataResponse<>(rooms));
+    }
+
+    @GetMapping("/admin/{stayId}/rooms/all")
+    public ResponseEntity<DataResponse<List<Room>>> adminGetAllRoomsOfStay(@PathVariable String stayId) {
+        List<Room> rooms = stayService.getAllRooms(stayId);
+        return ResponseEntity.ok(new DataResponse<>(rooms));
+
+    }
+
+    @PostMapping("/admin")
+    public ResponseEntity<DataResponse<Stay>> createStay(@RequestBody AdminCreateStayRequest request) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Stay stay = stayService.create(request, user);
+        return ResponseEntity.ok(new DataResponse<>(stay));
     }
 }

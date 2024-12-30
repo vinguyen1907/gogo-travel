@@ -44,6 +44,7 @@ public class SecurityConfiguration {
     private static final String[] ADMIN_APIS = {
             "/api/v1/rooms/admin/**",
             "/api/v1/flights/admin/**",
+            "/api/v1/stays/admin/**"
     };
 
     @Bean
@@ -55,8 +56,9 @@ public class SecurityConfiguration {
 //                    .requestMatchers(HttpMethod.POST).authenticated()
                         .requestMatchers(SECURED_APIS).authenticated()
                         .requestMatchers(HttpMethod.GET, SWAGGER_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.POST, ADMIN_APIS).hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/v1/rooms/admin/**").hasAnyRole("STAY_MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/stays/admin/**").hasAnyRole("STAY_MANAGER")
+                        .requestMatchers(HttpMethod.POST, ADMIN_APIS).hasAnyRole("ADMIN")
                         .requestMatchers(WHITELIST_APIS).permitAll()
                         .anyRequest().permitAll()
                 )
