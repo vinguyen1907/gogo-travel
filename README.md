@@ -14,4 +14,4 @@
   -p 8080:8080 \
   --network gogo_postgres \
   --restart unless-stopped \
-  thanhloc1087/gogo-travel:0.7.1` 
+  thanhloc1087/gogo-travel:0.7.4` 

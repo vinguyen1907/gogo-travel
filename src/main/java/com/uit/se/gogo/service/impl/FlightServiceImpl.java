@@ -92,8 +92,7 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public FlightFavoriteResponse addFlightFavorite(FlightFavoriteRequest request) {
-        User user = new User();
-        user.setFullName(request.getUserId());
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("user not found"));
         Flight outboundFlight = flightRepository.findById(request.getOutboundFlightId()).orElseThrow();
         
         FlightFavorite flightFavorite = FlightFavorite.builder()
@@ -109,6 +108,11 @@ public class FlightServiceImpl implements FlightService{
         flightFavorite = flightFavoriteRepository.save(flightFavorite);
 
         return flightFavoriteMapper.toFlightFavoriteResponse(flightFavorite);
+    }
+
+    @Override
+    public void removeFlightFavorite(String favoriteFlightId) {
+        flightFavoriteRepository.deleteById(favoriteFlightId);
     }
 
     @Override
@@ -131,6 +135,7 @@ public class FlightServiceImpl implements FlightService{
         List<FlightResponse> outboundFlights = searchFlightsByCriteria(
             request.getDepartureLocationId(),
             request.getArrivalLocationId(),
+            request.getAirlineId(),
             request.getDepartureTimeFrom(),
             request.getDepartureTimeTo(),
             request.getMinPrice(),
@@ -147,6 +152,7 @@ public class FlightServiceImpl implements FlightService{
             List<FlightResponse> returnFlights = searchFlightsByCriteria(
                 request.getArrivalLocationId(),
                 request.getDepartureLocationId(),
+                request.getAirlineId(),
                 request.getReturnTimeFrom(),
                 request.getReturnTimeTo(),
                 request.getMinPrice(),
@@ -175,6 +181,7 @@ public class FlightServiceImpl implements FlightService{
     private List<FlightResponse> searchFlightsByCriteria(
         String departureLocationId,
         String arrivalLocationId,
+        String airlineId,
         Instant timeFrom,
         Instant timeTo,
         Double minPrice,
@@ -192,6 +199,10 @@ public class FlightServiceImpl implements FlightService{
         flightSpec.add(new SearchCriteria("arrivalLocationId", arrivalLocationId, SearchOperation.EQUAL));
         flightSpec.add(new SearchCriteria("departureTime", timeFrom, SearchOperation.GREATER_THAN_EQUAL));
         flightSpec.add(new SearchCriteria("departureTime", timeTo, SearchOperation.LESS_THAN_EQUAL));
+        
+        if (airlineId != null) {
+            flightSpec.add(new SearchCriteria("airlineId", airlineId, SearchOperation.EQUAL));
+        }
 
         // Add price and seat class criteria if available
         if (minPrice != null && maxPrice != null) {

@@ -16,6 +16,7 @@ public interface FlightService {
     public FlightResponse getFlight(String id);
     public List<FlightResponse> getAllFlights();
     public FlightFavoriteResponse addFlightFavorite(FlightFavoriteRequest request);
+    public void removeFlightFavorite(String favoriteFlightId);
     public UserFlightFavoriteResponse getUserFlightFavoriteResponse(String userId);
-     public PageDataResponse<FlightQueryResponse> searchFlights(FlightQueryRequest request);
+    public PageDataResponse<FlightQueryResponse> searchFlights(FlightQueryRequest request);
 }
