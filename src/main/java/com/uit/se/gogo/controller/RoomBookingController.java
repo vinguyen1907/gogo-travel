@@ -40,11 +40,11 @@ public class RoomBookingController {
         ));
     }
 
-//    @PostMapping("/lock")
-//    private ResponseEntity<DataResponse<String>> lockRoomBooking(@RequestBody LockRoomRequest lockRoomRequest) {
-//        roomBookingLockService.lockRoom(lockRoomRequest.getRoomId());
-//        return ResponseEntity.ok(new DataResponse<>("Room locked"));
-//    }
+    @PostMapping("/unlock/{roomId}")
+    private ResponseEntity<DataResponse<String>> lockRoomBooking(@PathVariable String roomId) {
+        roomBookingLockService.unlockRoom(roomId);
+        return ResponseEntity.ok(new DataResponse<>("Unlock success"));
+    }
 
     @PostMapping("/guest-info")
     public ResponseEntity<DataResponse<String>> fillRoomBookingGuestInfo(@Valid @RequestBody RoomBookingGuestInfoRequest request) {
