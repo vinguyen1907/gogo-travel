@@ -1,5 +1,6 @@
 package com.uit.se.gogo.service.impl;
 
+import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.entity.RoomBookingLock;
 import com.uit.se.gogo.exception.RoomNotAvailableException;
 import com.uit.se.gogo.repository.RoomBookingLockRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static com.uit.se.gogo.constant.TimeConstant.ROOM_LOCKING_TIMEOUT_MINUTES;
 
@@ -49,11 +51,14 @@ public class RoomBookingLockServiceImpl implements RoomBookingLockService {
 
     @Transactional
     public void unlockRoom(String roomId) {
-        roomBookingLockRepository.findActiveLockByRoomId(roomId)
-                .ifPresent(lock -> {
-                    lock.setLocked(false);
-                    lock.setExpirationTime(LocalDateTime.now());
-                    roomBookingLockRepository.save(lock);
-                });
+        Optional<RoomBookingLock> optionalLock = roomBookingLockRepository.findActiveLockByRoomId(roomId);
+        if (optionalLock.isPresent()) {
+            var lock = optionalLock.get();
+            lock.setLocked(false);
+            lock.setExpirationTime(LocalDateTime.now());
+            roomBookingLockRepository.save(lock);
+        } else {
+            throw new EntityNotFoundException("This room is not currently locked");
+        }
     }
 }

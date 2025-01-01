@@ -69,4 +69,10 @@ public class RoomBookingServiceImpl implements RoomBookingService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found."));
         return roomBookingRepository.findAllByUser(user);
     }
+
+    @Override
+    public void unlockRoom(String roomId) {
+        roomBookingLockService.unlockRoom(roomId);
+
+    }
 }
