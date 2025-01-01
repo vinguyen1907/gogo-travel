@@ -23,8 +23,7 @@ public class UserController {
     @PatchMapping
     public DataResponse<User> updateUser(@RequestBody User userRequest) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        userRequest.setId(user.getId());
-        var updated = userService.update(userRequest);
+        var updated = userService.update(user, userRequest);
         return new DataResponse<>(updated);
     }
 

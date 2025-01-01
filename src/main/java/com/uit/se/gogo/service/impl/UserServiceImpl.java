@@ -22,26 +22,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
-        User currentUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        if (user.getFullName() != null && !user.getFullName().equals(currentUser.getFullName())) {
-            currentUser.setFullName(user.getFullName());
+    public User update(User currentUser, User requestUser) {
+        if (requestUser.getFullName() != null && !requestUser.getFullName().equals(currentUser.getFullName())) {
+            currentUser.setFullName(requestUser.getFullName());
         }
-        if (user.getEmail() != null && !user.getEmail().equals(currentUser.getEmail())) {
-            currentUser.setEmail(user.getEmail());
+        if (requestUser.getEmail() != null && !requestUser.getEmail().equals(currentUser.getEmail())) {
+            currentUser.setEmail(requestUser.getEmail());
         }
-        if (user.getPhoneNumber() != null && !user.getPhoneNumber().equals(currentUser.getPhoneNumber())) {
-            currentUser.setPhoneNumber(user.getPhoneNumber());
+        if (requestUser.getPhoneNumber() != null && !requestUser.getPhoneNumber().equals(currentUser.getPhoneNumber())) {
+            currentUser.setPhoneNumber(requestUser.getPhoneNumber());
         }
-        if (user.getAddress() != null && !user.getAddress().equals(currentUser.getAddress())) {
-            currentUser.setAddress(user.getAddress());
+        if (requestUser.getAddress() != null && !requestUser.getAddress().equals(currentUser.getAddress())) {
+            currentUser.setAddress(requestUser.getAddress());
         }
-        if (user.getDateOfBirth() != null && !user.getDateOfBirth().equals(currentUser.getDateOfBirth())) {
-            currentUser.setDateOfBirth(user.getDateOfBirth());
+        if (requestUser.getDateOfBirth() != null && !requestUser.getDateOfBirth().equals(currentUser.getDateOfBirth())) {
+            currentUser.setDateOfBirth(requestUser.getDateOfBirth());
         }
 
-        return userRepository.save(user);
+        return userRepository.save(currentUser);
     }
 
     @Override
