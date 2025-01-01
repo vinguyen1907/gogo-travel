@@ -21,6 +21,11 @@ public class StayFavoriteController {
         return ResponseEntity.ok(new DataResponse<>(stayFavoriteService.insert(request)));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DataResponse<Boolean>> removeStayFavorite(@PathVariable String id) {
+        return ResponseEntity.ok(new DataResponse<>(stayFavoriteService.remove(id)));
+    }
+
     @GetMapping
     public ResponseEntity<PageDataResponse<StayFavoriteDTO>> getAllStayFavoritesByUser(
             @RequestParam("user_id") String userId,
