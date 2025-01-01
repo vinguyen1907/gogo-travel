@@ -4,6 +4,7 @@ import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,11 +20,12 @@ public class UserController {
         return new DataResponse<>(user);
     }
 
-    @PatchMapping("/{id}")
-    public DataResponse<User> updateUser(@PathVariable String id, @RequestBody User userRequest) {
-        userRequest.setId(id);
-        var user = userService.update(userRequest);
-        return new DataResponse<>(user);
+    @PatchMapping
+    public DataResponse<User> updateUser(@RequestBody User userRequest) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userRequest.setId(user.getId());
+        var updated = userService.update(userRequest);
+        return new DataResponse<>(updated);
     }
 
     @PutMapping("/{id}/avatar")

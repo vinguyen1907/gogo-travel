@@ -4,6 +4,7 @@ import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.repository.UserRepository;
 import com.uit.se.gogo.service.CloudinaryService;
 import com.uit.se.gogo.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,13 +18,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(String id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     @Override
     public User update(User user) {
         User currentUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         if (user.getFullName() != null && !user.getFullName().equals(currentUser.getFullName())) {
             currentUser.setFullName(user.getFullName());
         }
