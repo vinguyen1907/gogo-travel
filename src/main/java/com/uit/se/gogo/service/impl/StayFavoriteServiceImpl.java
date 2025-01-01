@@ -43,4 +43,10 @@ public class StayFavoriteServiceImpl implements StayFavoriteService {
         stayFavorite.setStay(stay);
         return new StayFavoriteDTO(stayFavoriteRepository.save(stayFavorite));
     }
+
+    @Override
+    public boolean remove(String id) {
+        stayFavoriteRepository.deleteById(id);
+        return true;
+    }
 }
