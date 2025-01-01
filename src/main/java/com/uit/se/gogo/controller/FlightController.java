@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,6 +97,14 @@ public class FlightController {
         }
         return DataResponse.<FlightFavoriteResponse>builder()
             .data(flightService.addFlightFavorite(request))
+            .build();
+    }
+
+    @DeleteMapping("/favorites/{favoriteFlightId}")
+    public DataResponse<String> removeFlightFavorite(@PathVariable String favoriteFlightId) {
+        flightService.removeFlightFavorite(favoriteFlightId);
+        return DataResponse.<String>builder()
+            .data("Success")
             .build();
     }
     

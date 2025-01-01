@@ -10,8 +10,10 @@ import com.uit.se.gogo.repository.UserRepository;
 import com.uit.se.gogo.request.*;
 import com.uit.se.gogo.service.AuthService;
 import com.uit.se.gogo.util.AuthenticationUtil;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +26,8 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+
+import com.uit.se.gogo.service.EmailService;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final AuthenticationUtil authenticationUtil;
     private final OtpRepository otpRepository;
+    private final EmailService emailService;
     private final SecureRandom random = new SecureRandom();
 
 
@@ -90,6 +95,10 @@ public class AuthServiceImpl implements AuthService {
         otp.setExpirationTime(LocalDateTime.now().plusMinutes(OTP_EXPIRATION_MINUTES));
         otp.setBuzType(OTPBuzType.FORGOT_PASSWORD);
         otp.setUser(user);
+        emailService.resetPasswordOTP(new SendOTPRequest(
+            new EmailRecipient(user.getFullName(), user.getEmail()), 
+            otp.getCode()
+        ));
         return otpRepository.save(otp);
     }
 
