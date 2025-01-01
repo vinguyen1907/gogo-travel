@@ -13,12 +13,12 @@ public class StayFavoriteDTO {
     private String id;
     @JsonProperty("user_id")
     private String userId;
-    @JsonProperty("stay_id")
-    private String stayId;
+    @JsonProperty("stay")
+    private StayDTO stay;
 
     public StayFavoriteDTO(StayFavorite stayFavorite) {
         this.id = stayFavorite.getId();
         this.userId = stayFavorite.getUser().getId();
-        this.stayId = stayFavorite.getStay().getId();
+        this.stay = new StayDTO(stayFavorite.getStay());
     }
 }

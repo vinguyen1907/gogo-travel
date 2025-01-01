@@ -27,7 +27,7 @@ public class StayFavoriteServiceImpl implements StayFavoriteService {
     @Override
     public Page<StayFavoriteDTO> findAllByUserId(String userId, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        var stayFavoritePage = stayFavoriteRepository.findAllByUserId(userId, pageable);
+        Page<StayFavorite> stayFavoritePage = stayFavoriteRepository.findAllByUserId(userId, pageable);
         var stayFavoriteDTOs = stayFavoritePage.getContent().stream().map(StayFavoriteDTO::new).toList();
         return new PageImpl<>(stayFavoriteDTOs, stayFavoritePage.getPageable(), stayFavoritePage.getTotalElements());
     }
