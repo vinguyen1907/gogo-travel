@@ -39,7 +39,9 @@ public class RoomBookingServiceImpl implements RoomBookingService {
             throw new RoomNotAvailableException("This room is no longer available");
         }
 
-        return roomBookingRepository.save(entity);
+        entity = roomBookingRepository.save(entity);
+        roomBookingLockService.unlockRoom(roomBooking.getRoomId());
+        return entity;
     }
 
     @Override

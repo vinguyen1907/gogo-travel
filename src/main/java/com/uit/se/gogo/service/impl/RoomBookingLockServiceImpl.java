@@ -30,9 +30,9 @@ public class RoomBookingLockServiceImpl implements RoomBookingLockService {
             var room = roomRepository.findById(roomId)
                     .orElseThrow(() -> new EntityNotFoundException("Room not found"));
 
-            roomBookingLockRepository.findActiveLockByRoomId(roomId)
+            roomBookingLockRepository.findActiveLockByRoomId(roomId, LocalDateTime.now())
                     .ifPresent(lock -> {
-                        throw new RoomNotAvailableException("Room " + roomId + " is being booked by another people.");
+                        throw new RoomNotAvailableException(room.getName() + " is being booked by another people.");
                     });
 
             RoomBookingLock lock = new RoomBookingLock();
@@ -51,7 +51,7 @@ public class RoomBookingLockServiceImpl implements RoomBookingLockService {
 
     @Transactional
     public void unlockRoom(String roomId) {
-        Optional<RoomBookingLock> optionalLock = roomBookingLockRepository.findActiveLockByRoomId(roomId);
+        Optional<RoomBookingLock> optionalLock = roomBookingLockRepository.findActiveLockByRoomId(roomId, LocalDateTime.now());
         if (optionalLock.isPresent()) {
             var lock = optionalLock.get();
             lock.setLocked(false);

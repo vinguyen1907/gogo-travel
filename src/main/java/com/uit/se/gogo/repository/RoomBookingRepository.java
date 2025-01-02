@@ -18,8 +18,7 @@ public interface RoomBookingRepository extends JpaRepository<RoomBooking, String
     FROM RoomBooking AS rb
     WHERE rb.room.id = :roomId
     AND (
-        :checkinDate BETWEEN rb.checkinDate AND rb.checkoutDate
-        OR :checkoutDate BETWEEN rb.checkinDate AND rb.checkoutDate
+        (:checkinDate < rb.checkoutDate AND :checkoutDate > rb.checkinDate)
     )
     """)
     List<RoomBooking> checkAvailability(String roomId, LocalDate checkinDate, LocalDate checkoutDate);
