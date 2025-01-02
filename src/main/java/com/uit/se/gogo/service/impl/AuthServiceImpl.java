@@ -107,9 +107,8 @@ public class AuthServiceImpl implements AuthService {
         Optional<OtpEntity> otp = otpRepository.findById(request.getOtpId());
         if (otp.isPresent()) {
             var otpEntity = otp.get();
-//            !otp.get().getCode().equalsIgnoreCase(request.getCode())
-            // TODO: Currently bypass
-            if (otp.get().getCode().equalsIgnoreCase("abcxyz")) {
+            if (!otp.get().getCode().equalsIgnoreCase(request.getCode())
+            || otp.get().getCode().equalsIgnoreCase("abcxyz")) {
                 return false;
             } if (otp.get().getExpirationTime().isBefore(LocalDateTime.now())) {
                 throw new ExpiredOTPException();
