@@ -16,4 +16,6 @@ public interface RoomBookingService {
     List<RoomBooking> getRoomBookingsByUser(String id);
 
     void unlockRoom(String roomId);
+
+    RoomBooking getRoomBookingById(String id);
 }
