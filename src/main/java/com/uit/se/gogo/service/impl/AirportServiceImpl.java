@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.uit.se.gogo.entity.Airport;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.mapper.AirportMapper;
 import com.uit.se.gogo.repository.AirportRepository;
 import com.uit.se.gogo.repository.LocationRepository;
@@ -24,7 +25,7 @@ public class AirportServiceImpl implements AirportService{
 
     @Override
     public AirportResponse findById(String id) {
-        Airport airport = airportRepository.findById(id).orElseThrow(RuntimeException::new);
+        Airport airport = airportRepository.findById(id).orElseThrow(() -> new CommonException("Cannot find airport."));
         return airportMapper.toAirportResponse(airport);
     }
 
@@ -39,7 +40,7 @@ public class AirportServiceImpl implements AirportService{
     @Override
     public AirportResponse createAirport(AirportCreationRequest request) {
         Airport airport = airportMapper.toAirport(request);
-        var location = locationRepository.findById(request.getLocation()).orElseThrow(RuntimeException::new);
+        var location = locationRepository.findById(request.getLocation()).orElseThrow(() -> new CommonException("Cannot find airport."));
         airport.setLocation(location);
         airport = airportRepository.save(airport);
         return airportMapper.toAirportResponse(airport);

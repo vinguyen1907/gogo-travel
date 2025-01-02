@@ -25,6 +25,12 @@ spring:
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonDeserializer
 
+
+notification:
+  email:
+    brevo-url: https://api.brevo.com
+    brevo-apikey: xkeysib
+
 api:
   prefix: api/v1
 

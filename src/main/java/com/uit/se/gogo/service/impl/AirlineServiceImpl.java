@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.uit.se.gogo.entity.Airline;
 import com.uit.se.gogo.entity.Policy;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.mapper.AirlineMapper;
 import com.uit.se.gogo.repository.AirlineRepository;
 import com.uit.se.gogo.request.AirlineCreationRequest;
@@ -26,7 +27,7 @@ public class AirlineServiceImpl implements AirlineService{
     @Override
     public AirlineResponse findById(String id) {
         Airline airline = airlineRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Airline does not exist."));
+            .orElseThrow(() -> new CommonException("Airline does not exist."));
         return airlineMapper.toAirlineResponse(airline);
     }
 
@@ -48,7 +49,7 @@ public class AirlineServiceImpl implements AirlineService{
             airlineRepository.save(airline);
         } catch (DataIntegrityViolationException ex) {
             log.error(ex.getMessage(), ex);
-            throw new RuntimeException("Airline name has already been taken.");
+            throw new CommonException("Airline name has already been taken.");
         }
         return airlineMapper.toAirlineResponse(airline);
     }

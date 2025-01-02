@@ -73,6 +73,9 @@ public class FlightSpecification implements Specification<Flight> {
                                     root.get("arrivalAirport")
                                             .get("location")
                                             .get("id"), criteria.getValue()));
+                            case "airlineId" -> predicates.add(builder.equal(
+                                root.get("airline")
+                                        .get("id"), criteria.getValue()));
                             default -> predicates.add(builder.equal(root.get(criteria.getKey()), criteria.getValue()));
                         }
                     }

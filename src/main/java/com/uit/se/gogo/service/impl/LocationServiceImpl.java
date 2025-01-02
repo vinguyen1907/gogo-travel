@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.uit.se.gogo.entity.Location;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.mapper.LocationMapper;
 import com.uit.se.gogo.repository.LocationRepository;
 import com.uit.se.gogo.request.LocationCreationRequest;
@@ -21,7 +22,7 @@ public class LocationServiceImpl implements LocationService{
     
     @Override
     public LocationResponse findById(String id) {
-        Location location = locationRepository.findById(id).orElseThrow(RuntimeException::new);
+        Location location = locationRepository.findById(id).orElseThrow(() -> new CommonException("Location not found"));
         return locationMapper.toLocationResponse(location);
     }
 

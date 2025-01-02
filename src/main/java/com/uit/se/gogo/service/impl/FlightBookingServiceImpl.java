@@ -13,6 +13,7 @@ import com.uit.se.gogo.entity.Seat;
 import com.uit.se.gogo.entity.SeatBooking;
 import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.enums.FlightBookingStatus;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.mapper.FlightBookingMapper;
 import com.uit.se.gogo.repository.FlightBookingRepository;
 import com.uit.se.gogo.repository.SeatRepository;
@@ -21,6 +22,7 @@ import com.uit.se.gogo.request.FlightBookingConfirmationRequest;
 import com.uit.se.gogo.request.FlightBookingCreationRequest;
 import com.uit.se.gogo.request.SeatBookingCreationRequest;
 import com.uit.se.gogo.response.FlightBookingResponse;
+import com.uit.se.gogo.service.EmailService;
 import com.uit.se.gogo.service.FlightBookingService;
 import com.uit.se.gogo.service.SeatBookingLockService;
 
@@ -35,6 +37,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
     private final UserRepository userRepository;
     private final SeatRepository seatRepository;
 
+    private final EmailService emailService;
     private final SeatBookingLockService seatLockService;
 
     @Override
@@ -48,15 +51,15 @@ public class FlightBookingServiceImpl implements FlightBookingService {
     @Transactional
     public FlightBookingResponse confirmFlightBooking(FlightBookingConfirmationRequest request) {
         User user = userRepository.findById(request.getUserId())
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new CommonException("User not found"));
         
         Map<String, SeatBookingCreationRequest> seatMap = request.getSeats().stream()
             .collect(Collectors.toMap(SeatBookingCreationRequest::getSeatId, seat -> seat));
         List<Seat> seats = seatRepository.findAllById(List.copyOf(seatMap.keySet()));
-        if (seats.isEmpty()) throw new RuntimeException("Seat list in flight booking can not be empty");
+        if (seats.isEmpty()) throw new CommonException("Seat list in flight booking can not be empty");
 
         for (Seat seat : seats) {
-            if (!seat.isAvailable()) throw new RuntimeException("Seat " + seat.getNumber() + " is unavailable." );
+            if (!seat.isAvailable()) throw new CommonException("Seat " + seat.getNumber() + " is unavailable." );
             seat.setAvailable(false);
             seatRepository.save(seat);
         }
@@ -79,13 +82,13 @@ public class FlightBookingServiceImpl implements FlightBookingService {
         booking.setSeats(seatBookings);
 
         FlightBooking savedBooking = flightBookingRepository.save(booking);
-        return mapper.toResponse(savedBooking);
+        return  mapper.toResponse(savedBooking);
     }
 
     @Override
     public FlightBookingResponse getFlightBookingById(String id) {
         FlightBooking booking = flightBookingRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Booking not found"));
+            .orElseThrow(() -> new CommonException("Booking not found"));
         return mapper.toResponse(booking);
     }
 
@@ -99,7 +102,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
     @Override
     public FlightBookingResponse payFlightBooking(String id) {
         FlightBooking booking = flightBookingRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Booking not found"));
+            .orElseThrow(() -> new CommonException("Booking not found"));
         booking.setStatus(FlightBookingStatus.PAID);
         booking.setUpdateDate(LocalDate.now());
         return mapper.toResponse(booking);
@@ -108,7 +111,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
     @Override
     public FlightBookingResponse confirmFlightBooking(String id) {
         FlightBooking booking = flightBookingRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Booking not found"));
+            .orElseThrow(() -> new CommonException("Booking not found"));
         booking.setStatus(FlightBookingStatus.CONFIRMED);
         booking.setUpdateDate(LocalDate.now());
         return mapper.toResponse(booking);
@@ -117,7 +120,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
     @Override
     public FlightBookingResponse cancelFlightBooking(String id) {
         FlightBooking booking = flightBookingRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Booking not found"));
+            .orElseThrow(() -> new CommonException("Booking not found"));
         booking.setStatus(FlightBookingStatus.CANCELLED);
         booking.setUpdateDate(LocalDate.now());
         return mapper.toResponse(booking);

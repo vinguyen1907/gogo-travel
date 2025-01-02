@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.uit.se.gogo.entity.Flight;
 import com.uit.se.gogo.entity.Seat;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.mapper.FlightMapper;
 import com.uit.se.gogo.mapper.SeatMapper;
 import com.uit.se.gogo.repository.FlightRepository;
@@ -39,7 +40,7 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public SeatResponse getSeat(String id) {
-        Seat seat = seatRepository.findById(id).orElseThrow(() -> new RuntimeException("Seat doesn't exist"));
+        Seat seat = seatRepository.findById(id).orElseThrow(() -> new CommonException("Seat doesn't exist"));
         return seatMapper.toSeatResponse(seat);
     }
 
@@ -61,9 +62,9 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public void bookSeat(String seatId) {
-        Seat seat = seatRepository.findById(seatId).orElseThrow(() -> new RuntimeException("Seat not found"));
+        Seat seat = seatRepository.findById(seatId).orElseThrow(() -> new CommonException("Seat not found"));
         if (!seat.isAvailable()) {
-            throw new RuntimeException("Seat already booked");
+            throw new CommonException("Seat already booked");
         }
         seat.setAvailable(false);
         seatRepository.save(seat);
@@ -71,7 +72,7 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public FlightResponse updateFlightSeats(String flightId, List<SeatCreationRequest> requests) {
-        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new CommonException("Flight not found"));
 
         List<Seat> seatsToDelete = getAllFlightSeats(flightId);
         if (!seatsToDelete.isEmpty())

@@ -42,6 +42,9 @@ public class FlightQueryRequest {
     @JsonProperty("return_time_to")
     private Instant returnTimeTo;
 
+    @JsonProperty("airline_id")
+    private String airlineId;
+
     @JsonProperty("seat_classes")
     private List<SeatClass> seatClasses;
 

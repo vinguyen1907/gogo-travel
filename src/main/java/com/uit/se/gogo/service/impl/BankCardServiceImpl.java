@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.uit.se.gogo.entity.BankCard;
 import com.uit.se.gogo.entity.User;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.repository.BankCardRepository;
 import com.uit.se.gogo.repository.UserRepository;
 import com.uit.se.gogo.request.BankCardCreationRequest;
@@ -23,7 +24,7 @@ public class BankCardServiceImpl implements BankCardService{
     @Override
     public BankCardResponse createCard(BankCardCreationRequest request) {
         BankCard card = BankCard.fromCreationRequest(request);
-        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new CommonException("User not found"));
         card.setUser(user);
         card = repository.save(card);
         return card.toResponse();
@@ -31,7 +32,7 @@ public class BankCardServiceImpl implements BankCardService{
 
     @Override
     public BankCardResponse getById(String id) {
-        BankCard card = repository.findById(id).orElseThrow(() -> new RuntimeException("Card not found"));
+        BankCard card = repository.findById(id).orElseThrow(() -> new CommonException("Card not found"));
         return card.toResponse();
     }
 
@@ -43,7 +44,7 @@ public class BankCardServiceImpl implements BankCardService{
 
     @Override
     public BankCardResponse deleteCard(String id) {
-        BankCard card = repository.findById(id).orElseThrow(() -> new RuntimeException("Card not found"));
+        BankCard card = repository.findById(id).orElseThrow(() -> new CommonException("Card not found"));
         card.setDeleted(true);
         card = repository.save(card);
         return card.toResponse();
