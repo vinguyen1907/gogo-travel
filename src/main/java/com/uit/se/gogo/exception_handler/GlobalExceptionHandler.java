@@ -1,5 +1,8 @@
 package com.uit.se.gogo.exception_handler;
 
+import com.uit.se.gogo.exception.RoomNotAvailableException;
+import com.uit.se.gogo.exception_handler.error.ApiError;
+import com.uit.se.gogo.util.ExceptionUtil;
 import org.apache.coyote.BadRequestException;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -9,9 +12,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.uit.se.gogo.exception.CommonException;
-import com.uit.se.gogo.exception.RoomNotAvailableException;
-import com.uit.se.gogo.exception_handler.error.ApiError;
-import com.uit.se.gogo.util.ExceptionUtil;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
