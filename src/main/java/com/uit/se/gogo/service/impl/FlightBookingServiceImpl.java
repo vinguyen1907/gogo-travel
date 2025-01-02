@@ -17,11 +17,9 @@ import com.uit.se.gogo.mapper.FlightBookingMapper;
 import com.uit.se.gogo.repository.FlightBookingRepository;
 import com.uit.se.gogo.repository.SeatRepository;
 import com.uit.se.gogo.repository.UserRepository;
-import com.uit.se.gogo.request.EmailRecipient;
 import com.uit.se.gogo.request.FlightBookingConfirmationRequest;
 import com.uit.se.gogo.request.FlightBookingCreationRequest;
 import com.uit.se.gogo.request.SeatBookingCreationRequest;
-import com.uit.se.gogo.request.SendFlightBookingEmail;
 import com.uit.se.gogo.response.FlightBookingResponse;
 import com.uit.se.gogo.service.EmailService;
 import com.uit.se.gogo.service.FlightBookingService;
@@ -83,12 +81,7 @@ public class FlightBookingServiceImpl implements FlightBookingService {
         booking.setSeats(seatBookings);
 
         FlightBooking savedBooking = flightBookingRepository.save(booking);
-        FlightBookingResponse bookingResponse = mapper.toResponse(savedBooking);
-        emailService.flightBookingComplete(new SendFlightBookingEmail(
-            new EmailRecipient(user.getFullName(), user.getEmail()), 
-            bookingResponse
-        ));
-        return bookingResponse;
+        return  mapper.toResponse(savedBooking);
     }
 
     @Override

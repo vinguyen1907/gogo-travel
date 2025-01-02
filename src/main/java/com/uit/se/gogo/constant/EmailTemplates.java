@@ -1,8 +1,8 @@
 package com.uit.se.gogo.constant;
 
+import com.uit.se.gogo.entity.FlightBooking;
 import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.entity.SeatBooking;
-import com.uit.se.gogo.response.FlightBookingResponse;
 
 public class EmailTemplates {
     private static String companyName = "GOGO-Travel";
@@ -85,9 +85,9 @@ public class EmailTemplates {
         """.formatted(userName, otp, companyName, companyName);
     }
 
-    public static String generateFlightBookingEmail(FlightBookingResponse flightBookingResponse) {
+    public static String generateFlightBookingEmail(FlightBooking flightBooking) {
         StringBuilder seatDetails = new StringBuilder();
-        for (SeatBooking seatBooking : flightBookingResponse.getSeats()) {
+        for (SeatBooking seatBooking : flightBooking.getSeats()) {
             seatDetails.append("""
                 <tr>
                     <td>%s</td>
@@ -196,13 +196,13 @@ public class EmailTemplates {
             </div>
         </body>
         </html>
-        """.formatted(flightBookingResponse.getUser().getFullName(),
-                      flightBookingResponse.getId(),
-                      flightBookingResponse.getStatus().name(),
-                      flightBookingResponse.getBookingDate(),
-                      flightBookingResponse.getUpdateDate(),
-                      flightBookingResponse.getTotalDiscount(),
-                      flightBookingResponse.getTotalBill(),
+        """.formatted(flightBooking.getUser().getFullName(),
+                      flightBooking.getId(),
+                      flightBooking.getStatus().name(),
+                      flightBooking.getBookingDate(),
+                      flightBooking.getUpdateDate(),
+                      flightBooking.getTotalDiscount(),
+                      flightBooking.getTotalBill(),
                       seatDetails.toString(),
                       companyName);
     }

@@ -19,6 +19,7 @@ import com.uit.se.gogo.repository.PaymentRepository;
 import com.uit.se.gogo.repository.RoomBookingRepository;
 import com.uit.se.gogo.request.PaymentCreationRequest;
 import com.uit.se.gogo.response.PaymentResponse;
+import com.uit.se.gogo.service.EmailService;
 import com.uit.se.gogo.service.PaymentService;
 
 import lombok.AccessLevel;
@@ -34,6 +35,8 @@ public class PaymentServiceImpl implements PaymentService {
     BankCardRepository cardRepository;
     FlightBookingRepository flightBookingRepository;
     RoomBookingRepository roomBookingRepository;
+
+    EmailService emailService;
 
     @Override
     public PaymentResponse createPayment(PaymentCreationRequest request) {
@@ -70,10 +73,12 @@ public class PaymentServiceImpl implements PaymentService {
             case FlightBooking flightBooking -> {
                 flightBooking.setStatus(FlightBookingStatus.PAID);
                 flightBookingRepository.save(flightBooking);
+                emailService.flightBookingComplete(flightBooking);
             }
             case RoomBooking roomBooking -> {
                 roomBooking.setStatus(RoomBookingStatus.PAID);
                 roomBookingRepository.save(roomBooking);
+                emailService.roomBookingComplete(roomBooking);
             }
             default -> {
             }

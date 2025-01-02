@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.uit.se.gogo.constant.EmailTemplates;
+import com.uit.se.gogo.entity.FlightBooking;
+import com.uit.se.gogo.entity.RoomBooking;
+import com.uit.se.gogo.request.EmailRecipient;
 import com.uit.se.gogo.request.EmailRequest;
 import com.uit.se.gogo.request.EmailSender;
-import com.uit.se.gogo.request.SendFlightBookingEmail;
 import com.uit.se.gogo.request.SendOTPRequest;
-import com.uit.se.gogo.request.SendRoomBookingEmail;
 import com.uit.se.gogo.response.EmailResponse;
 import com.uit.se.gogo.service.EmailService;
 
@@ -76,16 +77,16 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public EmailResponse flightBookingComplete(SendFlightBookingEmail request) {
+    public EmailResponse flightBookingComplete(FlightBooking booking) {
         EmailRequest emailRequest = EmailRequest.builder()
                 .sender(EmailSender.builder()
                         .name("GOGO-Travel")
                         .email("21521087@gm.uit.edu.vn")
                         .build())
-                .to(List.of(request.getTo()))
+                .to(List.of(new EmailRecipient(booking.getUser().getFullName(), booking.getUser().getEmail())))
                 .subject(FLIGHT_BOOKING_SUBJECT)
                 .htmlContent(
-                    EmailTemplates.generateFlightBookingEmail(request.getFlightBooking())
+                    EmailTemplates.generateFlightBookingEmail(booking)
                 )
                 .build();
         try {
@@ -107,16 +108,16 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public EmailResponse roomBookingComplete(SendRoomBookingEmail request) {
+    public EmailResponse roomBookingComplete(RoomBooking booking) {
         EmailRequest emailRequest = EmailRequest.builder()
                 .sender(EmailSender.builder()
                         .name("GOGO-Travel")
                         .email("21521087@gm.uit.edu.vn")
                         .build())
-                .to(List.of(request.getTo()))
+                .to(List.of(new EmailRecipient(booking.getUser().getFullName(), booking.getUser().getEmail())))
                 .subject(FLIGHT_BOOKING_SUBJECT)
                 .htmlContent(
-                    EmailTemplates.generateRoomBookingEmail(request.getRoomBooking())
+                    EmailTemplates.generateRoomBookingEmail(booking)
                 )
                 .build();
         try {
