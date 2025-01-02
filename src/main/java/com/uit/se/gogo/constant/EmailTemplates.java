@@ -1,8 +1,11 @@
 package com.uit.se.gogo.constant;
 
+import java.time.format.DateTimeFormatter;
+
 import com.uit.se.gogo.entity.FlightBooking;
 import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.entity.SeatBooking;
+
 
 public class EmailTemplates {
     private static String companyName = "GOGO-Travel";
@@ -77,7 +80,7 @@ public class EmailTemplates {
                     <p>Thank you, <br> The %s Team</p>
                 </div>
                 <div class="footer">
-                    <p>&copy; 2025 %s.</p>
+                    <p>2025 %s.</p>
                 </div>
             </div>
         </body>
@@ -94,10 +97,13 @@ public class EmailTemplates {
                     <td>%s</td>
                     <td>%s</td>
                 </tr>
-            """.formatted(seatBooking.getSeat().getId(),
-                          seatBooking.getCitizenName(),
-                          seatBooking.getCitizenId()));
+            """.formatted(
+                    seatBooking.getSeat().getNumber(),
+                    seatBooking.getCitizenName(),
+                    seatBooking.getCitizenId()
+            ));
         }
+    
         return """
         <!DOCTYPE html>
         <html lang="en">
@@ -139,7 +145,7 @@ public class EmailTemplates {
                     line-height: 1.5;
                 }
                 .table {
-                    width: 100%;
+                    width: 100%%;
                     border-collapse: collapse;
                     margin-top: 20px;
                 }
@@ -179,7 +185,7 @@ public class EmailTemplates {
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Seat ID</th>
+                                <th>Seat Number</th>
                                 <th>Passenger Name</th>
                                 <th>Passenger ID</th>
                             </tr>
@@ -191,23 +197,26 @@ public class EmailTemplates {
                 </div>
                 <div class="footer">
                     <p>Thank you for choosing our service. Have a great flight!</p>
-                    <p>&copy; 2025 %s.  </p>
+                    <p>&copy; 2025 %s.</p>
                 </div>
             </div>
         </body>
         </html>
-        """.formatted(flightBooking.getUser().getFullName(),
-                      flightBooking.getId(),
-                      flightBooking.getStatus().name(),
-                      flightBooking.getBookingDate(),
-                      flightBooking.getUpdateDate(),
-                      flightBooking.getTotalDiscount(),
-                      flightBooking.getTotalBill(),
-                      seatDetails.toString(),
-                      companyName);
+        """.formatted(
+                flightBooking.getUser().getFullName(),
+                flightBooking.getId(),
+                flightBooking.getStatus().name(),
+                flightBooking.getBookingDate(),
+                flightBooking.getUpdateDate(),
+                flightBooking.getTotalDiscount(),
+                flightBooking.getTotalBill(),
+                seatDetails.toString(),
+                companyName
+        );
     }
 
     public static String generateRoomBookingEmail(RoomBooking roomBooking) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
         return """
         <!DOCTYPE html>
         <html lang="en">
@@ -249,7 +258,7 @@ public class EmailTemplates {
                     line-height: 1.5;
                 }
                 .table {
-                    width: 100%;
+                    width: 100%%;
                     border-collapse: collapse;
                     margin-top: 20px;
                 }
@@ -299,7 +308,7 @@ public class EmailTemplates {
                 </div>
                 <div class="footer">
                     <p>We look forward to hosting you. Have a wonderful stay!</p>
-                    <p>&copy; 2025 %s.  </p>
+                    <p>2025 %s.  </p>
                 </div>
             </div>
         </body>
@@ -309,15 +318,15 @@ public class EmailTemplates {
                 roomBooking.getLastName(),
                 roomBooking.getId(),
                 roomBooking.getStatus().name(),
-                roomBooking.getCheckinDate(),
-                roomBooking.getCheckoutDate(),
+                roomBooking.getCheckinDate().format(formatter),
+                roomBooking.getCheckoutDate().format(formatter),
                 roomBooking.getRoom().getName(),
                 roomBooking.getRoom().getType(),
-                roomBooking.getRoom().getBaseFare(),
-                roomBooking.getRoom().getDiscount(),
-                roomBooking.getRoom().getTax(),
-                roomBooking.getRoom().getServiceFee(),
-                roomBooking.getRoom().getMaxGuests(),
+                roomBooking.getRoom().getBaseFare().toString(),
+                roomBooking.getRoom().getDiscount().toString(),
+                roomBooking.getRoom().getTax().toString(),
+                roomBooking.getRoom().getServiceFee().toString(),
+                roomBooking.getRoom().getMaxGuests().toString(),
                 roomBooking.getRoom().getImageUrl(),
                 roomBooking.getEmail(),
                 roomBooking.getPhone(),

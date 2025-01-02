@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.uit.se.gogo.constant.EmailTemplates;
 import com.uit.se.gogo.entity.FlightBooking;
 import com.uit.se.gogo.entity.RoomBooking;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.request.EmailRecipient;
 import com.uit.se.gogo.request.EmailRequest;
 import com.uit.se.gogo.request.EmailSender;
@@ -72,7 +73,7 @@ public class EmailServiceImpl implements EmailService {
 
             return response.getBody();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new CommonException(e.getMessage());
         }
     }
 
@@ -103,7 +104,7 @@ public class EmailServiceImpl implements EmailService {
 
             return response.getBody();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new CommonException(e.getMessage());
         }
     }
 
@@ -134,7 +135,7 @@ public class EmailServiceImpl implements EmailService {
 
             return response.getBody();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new CommonException(e.getMessage());
         }
     }
 }

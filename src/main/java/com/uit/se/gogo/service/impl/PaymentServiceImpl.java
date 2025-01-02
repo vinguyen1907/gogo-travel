@@ -13,6 +13,7 @@ import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.enums.BookingType;
 import com.uit.se.gogo.enums.FlightBookingStatus;
 import com.uit.se.gogo.enums.RoomBookingStatus;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.repository.BankCardRepository;
 import com.uit.se.gogo.repository.FlightBookingRepository;
 import com.uit.se.gogo.repository.PaymentRepository;
@@ -41,15 +42,15 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentResponse createPayment(PaymentCreationRequest request) {
         BankCard card = cardRepository.findById(request.getCardId())
-            .orElseThrow(() -> new RuntimeException("Card not found"));
+            .orElseThrow(() -> new CommonException("Card not found"));
             BaseBooking booking;
 
         if (request.getType() == BookingType.FLIGHT) {
             booking = flightBookingRepository.findById(request.getBookingId())
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new CommonException("Booking not found"));
         } else {
             booking = roomBookingRepository.findById(request.getBookingId())
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new CommonException("Booking not found"));
         }
 
         Payment payment = Payment.builder()
@@ -66,7 +67,7 @@ public class PaymentServiceImpl implements PaymentService {
             Thread.sleep(3000); // Introduce a 3-second delay
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // Restore interrupted status
-            throw new RuntimeException("Thread was interrupted", e);
+            throw new CommonException("Thread was interrupted");
         }
 
         switch (booking) {
@@ -100,7 +101,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse findById(String id) {
-        Payment payment = repository.findById(id).orElseThrow(() -> new RuntimeException("Payment not found"));
+        Payment payment = repository.findById(id).orElseThrow(() -> new CommonException("Payment not found"));
         return payment.toResponse();
     }
     

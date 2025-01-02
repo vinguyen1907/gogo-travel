@@ -15,6 +15,7 @@ import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.enums.FlightOrderBy;
 import com.uit.se.gogo.enums.SearchOperation;
 import com.uit.se.gogo.enums.SeatClass;
+import com.uit.se.gogo.exception.CommonException;
 import com.uit.se.gogo.mapper.AirlineMapper;
 import com.uit.se.gogo.mapper.AirportMapper;
 import com.uit.se.gogo.mapper.FlightFavoriteMapper;
@@ -78,7 +79,7 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public FlightResponse getFlight(String id) {
-        Flight flight = flightRepository.findById(id).orElseThrow(() -> new RuntimeException("Flight does not exist"));
+        Flight flight = flightRepository.findById(id).orElseThrow(() -> new CommonException("Flight does not exist"));
         return flightMapper.toFlightResponse(flight);
     }
 
@@ -92,7 +93,7 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public FlightFavoriteResponse addFlightFavorite(FlightFavoriteRequest request) {
-        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("user not found"));
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new CommonException("user not found"));
         Flight outboundFlight = flightRepository.findById(request.getOutboundFlightId()).orElseThrow();
         
         FlightFavorite flightFavorite = FlightFavorite.builder()
@@ -103,11 +104,22 @@ public class FlightServiceImpl implements FlightService{
         if (request.getReturnFlightId() != null) {
             Flight returnFlight = flightRepository.findById(request.getReturnFlightId()).orElseThrow();
             flightFavorite.setReturnFlight(returnFlight);
+            if (checkDuplicate(flightFavorite)) {
+                throw new CommonException("Duplicate flight favorite");
+            }
         }
         
         flightFavorite = flightFavoriteRepository.save(flightFavorite);
 
         return flightFavoriteMapper.toFlightFavoriteResponse(flightFavorite);
+    }
+
+    private boolean checkDuplicate(FlightFavorite flightFavorite) {
+        return flightFavoriteRepository.findByUserIdAndOutboundFlightIdAndReturnFlightId(
+            flightFavorite.getUser().getId(), 
+            flightFavorite.getOutboundFlight().getId(), 
+            flightFavorite.getReturnFlight().getId()
+        ).isEmpty();
     }
 
     @Override
