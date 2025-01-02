@@ -66,4 +66,10 @@ public class RoomBookingController {
         Page<RoomBooking> booking = roomBookingService.getRoomBookings(roomId, page, size);
         return ResponseEntity.ok(new PageDataResponse<>(booking));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RoomBooking> getRoomBookingById(@PathVariable String id) {
+        RoomBooking booking = roomBookingService.getRoomBookingById(id);
+        return ResponseEntity.ok(booking);
+    }
 }

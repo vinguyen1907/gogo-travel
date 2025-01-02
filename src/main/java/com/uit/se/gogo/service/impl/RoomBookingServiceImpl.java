@@ -77,4 +77,10 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         roomBookingLockService.unlockRoom(roomId);
 
     }
+
+    @Override
+    public RoomBooking getRoomBookingById(String id) {
+        return roomBookingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Room booking not found."));
+    }
 }
