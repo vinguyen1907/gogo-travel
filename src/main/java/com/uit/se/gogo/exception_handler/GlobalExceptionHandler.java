@@ -4,6 +4,7 @@ import com.uit.se.gogo.exception.RoomNotAvailableException;
 import com.uit.se.gogo.exception_handler.error.ApiError;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.util.ExceptionUtil;
+import io.jsonwebtoken.MalformedJwtException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -45,6 +45,15 @@ public class GlobalExceptionHandler {
         ApiError apiError = new ApiError(NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         apiError.setErrorCode("USERNAME_NOT_FOUND");
+        return ExceptionUtil.buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(MalformedJwtException.class)
+    public ResponseEntity<Object> malformedJwtException(MalformedJwtException ex) {
+        ApiError apiError = new ApiError(UNAUTHORIZED);
+        apiError.setMessage("Invalid token");
+        apiError.setDebugMessage(ex.getMessage());
+        apiError.setErrorCode("INVALID_TOKEN");
         return ExceptionUtil.buildResponseEntity(apiError);
     }
 }

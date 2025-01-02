@@ -26,8 +26,9 @@ import lombok.Setter;
 public class ApiError {
 
     private HttpStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    private LocalDateTime timestamp;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+//    private LocalDateTime timestamp;
+    private String timestamp;
     @JsonProperty("error_code")
     private String errorCode;
     private String message;
@@ -37,7 +38,7 @@ public class ApiError {
     private List<ApiSubError> subErrors;
 
     private ApiError() {
-        timestamp = LocalDateTime.now();
+        timestamp = LocalDateTime.now().toString();
     }
 
     public ApiError(HttpStatus status) {
