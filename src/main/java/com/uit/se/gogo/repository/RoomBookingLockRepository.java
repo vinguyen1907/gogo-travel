@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface RoomBookingLockRepository extends JpaRepository<RoomBookingLock, String> {
@@ -15,7 +17,8 @@ public interface RoomBookingLockRepository extends JpaRepository<RoomBookingLock
         SELECT bl
         FROM RoomBookingLock bl
         WHERE bl.room.id = :roomId
-        AND (bl.expirationTime IS NULL OR bl.expirationTime > CURRENT_TIMESTAMP)
+        AND (bl.expirationTime IS NULL OR bl.expirationTime > :now)
+        AND bl.isLocked = true
         """)
-    Optional<RoomBookingLock> findActiveLockByRoomId(String roomId);
+    Optional<RoomBookingLock> findActiveLockByRoomId(String roomId, LocalDateTime now);
 }

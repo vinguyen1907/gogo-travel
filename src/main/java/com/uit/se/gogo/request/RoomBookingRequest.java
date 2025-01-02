@@ -1,5 +1,6 @@
 package com.uit.se.gogo.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uit.se.gogo.entity.Room;
 import com.uit.se.gogo.entity.RoomBooking;
