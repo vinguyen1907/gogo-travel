@@ -7,6 +7,7 @@ import java.util.List;
 import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.request.AdminCreateStayRequest;
+import jakarta.validation.constraints.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,8 @@ import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.response.PageDataResponse;
 import com.uit.se.gogo.service.StayService;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/stays")
@@ -101,9 +98,34 @@ public class StayController {
     }
 
     @PostMapping("/admin")
-    public ResponseEntity<DataResponse<Stay>> createStay(@RequestBody AdminCreateStayRequest request) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Stay stay = stayService.create(request, user);
+    public ResponseEntity<DataResponse<Stay>> createStay(
+            @RequestParam("name") String name,
+            @RequestParam("address") @NotBlank String address,
+            @RequestParam("location_id") @NotBlank String locationId,
+            @RequestParam("star_rating") @Positive @Max(5) Integer starRating,
+            @RequestParam("stay_type") @NotNull StayType stayType,
+            @RequestParam("overview") @NotBlank String overview,
+            @RequestParam("latitude") @NotNull Double latitude,
+            @RequestParam("longitude") @NotNull Double longitude,
+            @RequestParam("amenities") List<String> amenities,
+            @RequestParam(value = "image_1") MultipartFile image1,
+            @RequestParam(value = "image_2", required = false) MultipartFile image2
+    ) {
+        User owner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Stay stay = stayService.create(
+                owner,
+                name,
+                address,
+                locationId,
+                starRating,
+                stayType,
+                overview,
+                latitude,
+                longitude,
+                amenities,
+                image1,
+                image2
+        );
         return ResponseEntity.ok(new DataResponse<>(stay));
     }
 }

@@ -6,6 +6,7 @@ import com.uit.se.gogo.enums.StayType;
 import com.uit.se.gogo.repository.*;
 import com.uit.se.gogo.request.AdminCreateStayRequest;
 import com.uit.se.gogo.request.SearchStayRequest;
+import com.uit.se.gogo.service.AmenityService;
 import com.uit.se.gogo.service.StayService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +29,9 @@ public class StayServiceImpl implements StayService {
     private final FeaturedImageRepository featuredImageRepository;
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
+    private final AmenityService amenityService;
+    private final ServiceAmenityServiceImpl serviceAmenityServiceImpl;
+    private final CloudinaryServiceImpl cloudinaryServiceImpl;
 
     @Override
     public Stay findById(String id) {
@@ -106,5 +112,60 @@ public class StayServiceImpl implements StayService {
     @Override
     public List<Stay> getStaysByOwner(User owner) {
         return stayRepository.findAllByOwner(owner);
+    }
+
+    @Override
+    public Stay create(User owner,
+                       String name,
+                       String address,
+                       String locationId,
+                       Integer starRating,
+                       StayType stayType,
+                       String overview,
+                       Double latitude,
+                       Double longitude,
+                       List<String> amenities,
+                       MultipartFile image1,
+                       MultipartFile image2) {
+        Location location = locationRepository.findById(locationId)
+                .orElseThrow(() -> new EntityNotFoundException("Location not found"));
+        Stay stay = Stay.builder()
+                .owner(owner)
+                .name(name)
+                .address(address)
+                .location(location)
+                .starRating(starRating)
+                .stayType(stayType)
+                .overview(overview)
+                .latitude(latitude)
+                .longitude(longitude)
+                .build();
+        stay = stayRepository.save(stay);
+
+        List<Amenity> amenityEntities = amenityService.findAllByIds(amenities);
+        List<ServiceAmenity> savedAmenities = new ArrayList<>();
+        for (Amenity amenity : amenityEntities) {
+            var newAmenity = serviceAmenityServiceImpl.save(
+                    ServiceAmenity.builder()
+                            .amenity(amenity)
+                            .service(stay)
+                            .build()
+            );
+            savedAmenities.add(newAmenity);
+        }
+
+        var result1 = cloudinaryServiceImpl.uploadFile(image1, "gogo/stay/", stay.getId() + "-1");
+        var result2 = cloudinaryServiceImpl.uploadFile(image2, "gogo/stay/", stay.getId() + "-2");
+        List<FeaturedImage> featuredImages = new ArrayList<>();
+        if (result1 != null) {
+            featuredImages.add(featuredImageRepository.save(new FeaturedImage(null, stay, (String) result1.get("url"))));
+        }
+        if (result2 != null) {
+            featuredImages.add(featuredImageRepository.save(new FeaturedImage(null, stay, (String) result2.get("url"))));
+        }
+
+        stay.setAmenities(savedAmenities);
+        stay.setFeaturedImages(featuredImages);
+        return stay;
     }
 }
