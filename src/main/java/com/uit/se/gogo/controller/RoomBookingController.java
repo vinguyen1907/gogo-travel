@@ -4,9 +4,11 @@ import com.uit.se.gogo.dto.StayDTO;
 import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.entity.User;
+import com.uit.se.gogo.request.ChangeRoomStateRequest;
 import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
 import com.uit.se.gogo.kafka.producer.RoomBookingProducer;
+import com.uit.se.gogo.request.UpdateRoomRequest;
 import com.uit.se.gogo.response.DataResponse;
 import com.uit.se.gogo.response.GetRoomBookingResponse;
 import com.uit.se.gogo.response.PageDataResponse;
@@ -94,5 +96,11 @@ public class RoomBookingController {
                 .country(booking.getCountry())
                 .build();
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/admin/change-state")
+    public ResponseEntity<DataResponse<ChangeRoomStateRequest>> changeRoomBookingState(@Valid @RequestBody ChangeRoomStateRequest request) {
+        boolean success = roomBookingService.changeState(request);
+        return ResponseEntity.ok(new DataResponse<>(request));
     }
 }
