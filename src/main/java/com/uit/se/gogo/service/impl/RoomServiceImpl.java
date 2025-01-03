@@ -8,6 +8,7 @@ import com.uit.se.gogo.repository.StayRepository;
 import com.uit.se.gogo.repository.UserRepository;
 import com.uit.se.gogo.request.CreateRoomRequest;
 import com.uit.se.gogo.request.UpdateRoomRequest;
+import com.uit.se.gogo.service.CloudinaryService;
 import com.uit.se.gogo.service.RoomService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -25,6 +28,7 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
     private final StayRepository stayRepository;
     private final UserRepository userRepository;
+    private final CloudinaryService cloudinaryService;
 
     @Override
     public Room findById(String id) {
@@ -76,6 +80,43 @@ public class RoomServiceImpl implements RoomService {
         updateIfChanged(request.getImageUrl(), room::setImageUrl, room::getImageUrl);
 
         return roomRepository.save(room);
+    }
+
+    @Override
+    public Room createRoom(User owner,
+                           String name,
+                           String stayId,
+                           Double baseFare,
+                           Double discount,
+                           Double tax,
+                           Double serviceFee,
+                           String type,
+                           Integer maxGuests,
+                           MultipartFile file) {
+        Stay stay = stayRepository.findById(stayId)
+                .orElseThrow(() -> new EntityNotFoundException("Stay not found"));
+
+
+
+        Room room = Room.builder()
+                .owner(owner)
+                .name(name)
+                .stay(stay)
+                .baseFare(baseFare)
+                .discount(discount)
+                .tax(tax)
+                .serviceFee(serviceFee)
+                .type(type)
+                .maxGuests(maxGuests)
+                .isAvailable(true)
+                .build();
+        room = roomRepository.save(room);
+        var result = cloudinaryService.uploadFile(file, "gogo/room/", room.getId());
+        if (result != null) {
+            room.setImageUrl((String) result.get("url"));
+            return roomRepository.save(room);
+        }
+        return room;
     }
 
     public static <T> void updateIfChanged(T newValue, Consumer<T> setter, Supplier<T> getter) {
