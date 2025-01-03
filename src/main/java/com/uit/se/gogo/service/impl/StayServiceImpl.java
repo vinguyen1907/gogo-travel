@@ -53,22 +53,22 @@ public class StayServiceImpl implements StayService {
             List<FeaturedImage> featuredImages = featuredImageRepository.findAllByServiceId(id);
             return new StayDTO(
                     id,
-                    "Name",
-                    null,
                     (String) objects[1],
                     null,
-                    (Double) objects[3],
-                    (Integer) objects[4],
-                    (StayType) objects[5],
-                    (String) objects[6],
-                    (Double) objects[7],
+                    (String) objects[2],
+                    null,
+                    (Double) objects[4],
+                    (Integer) objects[5],
+                    (StayType) objects[6],
+                    (String) objects[7],
                     (Double) objects[8],
+                    (Double) objects[9],
                     null,
                     featuredImages,
-                    (Double) objects[9],
-                    (Long) objects[10],
-                    (Double) objects[11],
-                    (Long) objects[12]
+                    (Double) objects[10],
+                    (Long) objects[11],
+                    (Double) objects[12],
+                    (Long) objects[13]
             );
         }).toList();
         return new PageImpl<>(stayDTOs, stayPage.getPageable(), stayPage.getTotalElements());
@@ -101,5 +101,10 @@ public class StayServiceImpl implements StayService {
     public List<Room> getAllRooms(String stayId) {
         Stay stay = stayRepository.findById(stayId).orElseThrow(() -> new EntityNotFoundException("Stay not found"));
         return roomRepository.findAllByStay(stay);
+    }
+
+    @Override
+    public List<Stay> getStaysByOwner(User owner) {
+        return stayRepository.findAllByOwner(owner);
     }
 }

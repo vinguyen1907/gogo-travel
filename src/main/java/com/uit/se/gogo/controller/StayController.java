@@ -90,7 +90,14 @@ public class StayController {
     public ResponseEntity<DataResponse<List<Room>>> adminGetAllRoomsOfStay(@PathVariable String stayId) {
         List<Room> rooms = stayService.getAllRooms(stayId);
         return ResponseEntity.ok(new DataResponse<>(rooms));
+    }
 
+    @GetMapping("/admin/stays-by-owner")
+    public DataResponse<List<StayDTO>> getStaysOfUser() {
+        User owner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<StayDTO> stays = stayService.getStaysByOwner(owner)
+                .stream().map(StayDTO::new).toList();
+        return new DataResponse<>(stays);
     }
 
     @PostMapping("/admin")
