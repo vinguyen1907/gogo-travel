@@ -53,6 +53,7 @@ public class StayDTO {
         this.location = stay.getLocation();
         this.rating = stay.getRating();
         this.reviewAmount = stay.getReviewCount();
+        this.averageRating = stay.getRating();
         this.starRating = stay.getStarRating();
         this.stayType = stay.getStayType();
         this.overview = stay.getOverview();
@@ -60,5 +61,6 @@ public class StayDTO {
         this.longitude = stay.getLongitude();
         this.advantages = stay.getAdvantages();
         this.featuredImages = stay.getFeaturedImages();
+        this.amenityCount = (long) stay.getAmenities().size();
     }
 }

@@ -1,6 +1,7 @@
 package com.uit.se.gogo.repository;
 
 import com.uit.se.gogo.entity.Stay;
+import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.enums.StayType;
 import lombok.NonNull;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -49,6 +51,7 @@ public interface StayRepository extends JpaRepository<Stay, String> {
             HAVING COUNT(r.id) >= :rooms
         )
         SELECT s.id,
+                s.name,
                s.address,
                s.location.id AS locationId,
                s.rating,
@@ -69,6 +72,7 @@ public interface StayRepository extends JpaRepository<Stay, String> {
           AND (:rating IS NULL OR s.rating >= :rating)
           AND (:type IS NULL OR s.stayType = :type)
         GROUP BY s.id,
+                 s.name,
                  s.address,
                  s.location.id,
                  s.rating,
@@ -100,4 +104,5 @@ public interface StayRepository extends JpaRepository<Stay, String> {
             Pageable pageable);
 
 
+    List<Stay> findAllByOwner(User owner);
 }

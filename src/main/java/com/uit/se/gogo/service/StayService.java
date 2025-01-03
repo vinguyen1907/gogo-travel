@@ -21,4 +21,6 @@ public interface StayService {
     Stay create(AdminCreateStayRequest request, User user);
 
     List<Room> getAllRooms(String stayId);
+
+    List<Stay> getStaysByOwner(User owner);
 }
