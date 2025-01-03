@@ -1,0 +1,251 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class airline {
+   image: varchar(255)
+   name: varchar(255)
+   id: varchar(255)
+}
+class airport {
+   code: varchar(255)
+   name: varchar(255)
+   location_id: varchar(255)
+   id: varchar(255)
+}
+class amenity {
+   icon: varchar(255)
+   is_featured: boolean
+   name: varchar(255)
+   id: varchar(255)
+}
+class bank_card {
+   cvc: varchar(255)
+   deleted: boolean
+   expiry_date: timestamp(6)
+   name_on_card: varchar(255)
+   number: varchar(255)
+   region: varchar(255)
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class base_booking {
+   booking_date: date
+   total_bill: numeric(38,2)
+   total_discount: numeric(38,2)
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class featured_image {
+   url: varchar(255)
+   service_id: varchar(255)
+   id: varchar(255)
+}
+class flight {
+   arrival_time: timestamp(6) with time zone
+   departure_time: timestamp(6) with time zone
+   gate: varchar(255)
+   timezone: varchar(255)
+   airline_id: varchar(255)
+   arrival_airport_id: varchar(255)
+   departure_airport_id: varchar(255)
+   id: varchar(255)
+}
+class flight_booking {
+   booking_date: timestamp(6)
+   status: smallint
+   update_date: date
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class flight_favorite {
+   outbound_id: varchar(255)
+   return_id: varchar(255)
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class location {
+   city: varchar(255)
+   country: varchar(255)
+   description: varchar(255)
+   image_url: varchar(255)
+   id: varchar(255)
+}
+class otp_entity {
+   buz_type: varchar(255)
+   code: varchar(255)
+   expiration_time: timestamp(6)
+   is_verified: boolean
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class payment {
+   payment_time: timestamp(6) with time zone
+   type: smallint
+   booking_id: varchar(255)
+   card_id: varchar(255)
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class policy {
+   content: varchar(255)
+   airline_id: varchar(255)
+   id: varchar(255)
+}
+class review {
+   description: varchar(255)
+   rating: integer
+   service_type: varchar(255)
+   service_id: varchar(255)
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class room {
+   base_fare: double precision
+   discount: double precision
+   is_available: boolean
+   max_guests: integer
+   name: varchar(255)
+   service_fee: double precision
+   tax: double precision
+   type: varchar(255)
+   stay_id: varchar(255)
+   image_url: varchar(255)
+   user_id: varchar(255)
+   owner_id: varchar(255)
+   id: varchar(255)
+}
+class room_booking {
+   checkin_date: date
+   checkout_date: date
+   country: varchar(255)
+   email: varchar(255)
+   first_name: varchar(255)
+   last_name: varchar(255)
+   phone: varchar(255)
+   status: smallint
+   room_id: varchar(255)
+   id: varchar(255)
+}
+class room_booking_lock {
+   expiration_time: timestamp(6)
+   is_locked: boolean
+   lock_time: timestamp(6)
+   room_id: varchar(255)
+   id: varchar(255)
+}
+class seat {
+   is_available: boolean
+   base_fare: numeric(19,4)
+   number: varchar(255)
+   seat_class: smallint
+   service_fare: numeric(19,4)
+   flight_id: varchar(255)
+   discount: numeric(38,2)
+   tax: numeric(38,2)
+   id: varchar(255)
+}
+class seat_booking {
+   citizen_id: varchar(255)
+   citizen_name: varchar(255)
+   booking_id: varchar(255)
+   seat_id: varchar(255)
+   id: varchar(255)
+}
+class seat_booking_lock {
+   expiration_time: timestamp(6)
+   is_locked: boolean
+   lock_time: timestamp(6)
+   seat_id: varchar(255)
+   id: varchar(255)
+}
+class service {
+   name: varchar(255)
+   id: varchar(255)
+}
+class service_amenity {
+   amenity_id: varchar(255)
+   service_id: varchar(255)
+   id: varchar(255)
+}
+class stay {
+   address: varchar(255)
+   latitude: double precision
+   longitude: double precision
+   overview: varchar(255)
+   rating: double precision
+   star_rating: integer
+   stay_type: varchar(255)
+   location_id: varchar(255)
+   review_count: bigint
+   owner: varchar(255)
+   id: varchar(255)
+}
+class stay_advantage {
+   name: varchar(255)
+   stay_id: varchar(255)
+   id: varchar(255)
+}
+class stay_favorite {
+   stay_id: varchar(255)
+   user_id: varchar(255)
+   id: varchar(255)
+}
+class users {
+   first_name: varchar(255)
+   last_name: varchar(255)
+   address: varchar(255)
+   avatar_url: varchar(255)
+   cover_url: varchar(255)
+   date_of_birth: date
+   email: varchar(255)
+   full_name: varchar(255)
+   phone_number: varchar(255)
+   is_deleted: boolean
+   password: varchar(255)
+   user_type: varchar(255)
+   id: varchar(255)
+}
+
+airline            -[#595959,plain]-^  service           : "id"
+airport            -[#595959,plain]-^  location          : "location_id:id"
+bank_card          -[#595959,plain]-^  users             : "user_id:id"
+base_booking       -[#595959,plain]-^  users             : "user_id:id"
+featured_image     -[#595959,plain]-^  service           : "service_id:id"
+flight             -[#595959,plain]-^  airline           : "airline_id:id"
+flight             -[#595959,plain]-^  airport           : "arrival_airport_id:id"
+flight             -[#595959,plain]-^  airport           : "departure_airport_id:id"
+flight             -[#595959,plain]-^  service           : "id"
+flight_booking     -[#595959,plain]-^  base_booking      : "id"
+flight_booking     -[#595959,plain]-^  users             : "user_id:id"
+flight_favorite    -[#595959,plain]-^  flight            : "outbound_id:id"
+flight_favorite    -[#595959,plain]-^  flight            : "return_id:id"
+flight_favorite    -[#595959,plain]-^  users             : "user_id:id"
+otp_entity         -[#595959,plain]-^  users             : "user_id:id"
+payment            -[#595959,plain]-^  bank_card         : "card_id:id"
+payment            -[#595959,plain]-^  base_booking      : "booking_id:id"
+payment            -[#595959,plain]-^  users             : "user_id:id"
+policy             -[#595959,plain]-^  airline           : "airline_id:id"
+review             -[#595959,plain]-^  service           : "service_id:id"
+review             -[#595959,plain]-^  users             : "user_id:id"
+room               -[#595959,plain]-^  stay              : "stay_id:id"
+room               -[#595959,plain]-^  users             : "owner_id:id"
+room               -[#595959,plain]-^  users             : "user_id:id"
+room_booking       -[#595959,plain]-^  base_booking      : "id"
+room_booking       -[#595959,plain]-^  room              : "room_id:id"
+room_booking_lock  -[#595959,plain]-^  room              : "room_id:id"
+seat               -[#595959,plain]-^  flight            : "flight_id:id"
+seat_booking       -[#595959,plain]-^  flight_booking    : "booking_id:id"
+seat_booking       -[#595959,plain]-^  seat              : "seat_id:id"
+seat_booking_lock  -[#595959,plain]-^  seat              : "seat_id:id"
+service_amenity    -[#595959,plain]-^  amenity           : "amenity_id:id"
+service_amenity    -[#595959,plain]-^  service           : "service_id:id"
+stay               -[#595959,plain]-^  location          : "location_id:id"
+stay               -[#595959,plain]-^  service           : "id"
+stay               -[#595959,plain]-^  users             : "owner:id"
+stay_advantage     -[#595959,plain]-^  stay              : "stay_id:id"
+stay_favorite      -[#595959,plain]-^  stay              : "stay_id:id"
+stay_favorite      -[#595959,plain]-^  users             : "user_id:id"
+@enduml
