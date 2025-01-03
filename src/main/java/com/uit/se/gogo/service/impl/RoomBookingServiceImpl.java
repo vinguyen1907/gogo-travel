@@ -4,6 +4,7 @@ import com.uit.se.gogo.entity.RoomBooking;
 import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.enums.RoomBookingStatus;
 import com.uit.se.gogo.repository.UserRepository;
+import com.uit.se.gogo.request.ChangeRoomStateRequest;
 import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
 import com.uit.se.gogo.exception.RoomNotAvailableException;
@@ -82,5 +83,14 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     public RoomBooking getRoomBookingById(String id) {
         return roomBookingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Room booking not found."));
+    }
+
+    @Override
+    public boolean changeState(ChangeRoomStateRequest request) {
+        RoomBooking booking = roomBookingRepository.findById(request.getBookingId())
+                .orElseThrow(() -> new EntityNotFoundException("Room booking not found."));
+        booking.setStatus(request.getNewStatus());
+        roomBookingRepository.save(booking);
+        return true;
     }
 }

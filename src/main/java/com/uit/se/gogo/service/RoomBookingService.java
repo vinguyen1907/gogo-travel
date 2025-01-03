@@ -1,6 +1,7 @@
 package com.uit.se.gogo.service;
 
 import com.uit.se.gogo.entity.RoomBooking;
+import com.uit.se.gogo.request.ChangeRoomStateRequest;
 import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
 import org.springframework.data.domain.Page;
@@ -18,4 +19,6 @@ public interface RoomBookingService {
     void unlockRoom(String roomId);
 
     RoomBooking getRoomBookingById(String id);
+
+    boolean changeState(ChangeRoomStateRequest request);
 }
