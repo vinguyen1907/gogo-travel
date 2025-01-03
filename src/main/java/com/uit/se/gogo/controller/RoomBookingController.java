@@ -1,15 +1,19 @@
 package com.uit.se.gogo.controller;
 
+import com.uit.se.gogo.dto.StayDTO;
 import com.uit.se.gogo.entity.RoomBooking;
+import com.uit.se.gogo.entity.Stay;
 import com.uit.se.gogo.entity.User;
 import com.uit.se.gogo.request.RoomBookingGuestInfoRequest;
 import com.uit.se.gogo.request.RoomBookingRequest;
 import com.uit.se.gogo.kafka.producer.RoomBookingProducer;
 import com.uit.se.gogo.response.DataResponse;
+import com.uit.se.gogo.response.GetRoomBookingResponse;
 import com.uit.se.gogo.response.PageDataResponse;
 import com.uit.se.gogo.response.RoomBookingResponse;
 import com.uit.se.gogo.service.RoomBookingLockService;
 import com.uit.se.gogo.service.RoomBookingService;
+import com.uit.se.gogo.service.StayService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,6 +31,7 @@ public class RoomBookingController {
     private final RoomBookingProducer roomBookingProducer;
     private final RoomBookingLockService roomBookingLockService;
     private final RoomBookingService roomBookingService;
+    private final StayService stayService;
 
     @PostMapping
     public ResponseEntity<DataResponse<RoomBookingResponse>> createRoomBooking(@Valid @RequestBody RoomBookingRequest request) {
@@ -68,8 +73,26 @@ public class RoomBookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoomBooking> getRoomBookingById(@PathVariable String id) {
+    public ResponseEntity<GetRoomBookingResponse> getRoomBookingById(@PathVariable String id) {
         RoomBooking booking = roomBookingService.getRoomBookingById(id);
-        return ResponseEntity.ok(booking);
+        Stay stay = booking.getRoom().getStay();
+        GetRoomBookingResponse response = GetRoomBookingResponse.builder()
+                .id(booking.getId())
+                .user(booking.getUser())
+                .totalDiscount(booking.getTotalDiscount())
+                .totalBill(booking.getTotalBill())
+                .bookingDate(booking.getBookingDate())
+                .status(booking.getStatus())
+                .room(booking.getRoom())
+                .stay(new StayDTO(stay))
+                .checkinDate(booking.getCheckinDate())
+                .checkoutDate(booking.getCheckoutDate())
+                .firstName(booking.getFirstName())
+                .lastName(booking.getLastName())
+                .email(booking.getEmail())
+                .phone(booking.getPhone())
+                .country(booking.getCountry())
+                .build();
+        return ResponseEntity.ok(response);
     }
 }
