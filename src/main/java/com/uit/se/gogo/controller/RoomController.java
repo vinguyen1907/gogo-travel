@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/rooms")
@@ -25,8 +28,19 @@ public class RoomController {
     }
 
     @PostMapping("/admin")
-    public DataResponse<Room> createRoom(@RequestBody CreateRoomRequest request) {
-        Room room = roomService.createRoom(request);
+    public DataResponse<Room> createRoom(
+            @RequestParam("name") String name,
+            @RequestParam("stay_id") String stayId,
+            @RequestParam("base_fare") Double baseFare,
+            @RequestParam(value = "discount", required = false) Double discount,
+            @RequestParam(value = "tax", required = false) Double tax,
+            @RequestParam(value = "service_fee", required = false) Double serviceFee,
+            @RequestParam("type") String type,
+            @RequestParam("max_guests") Integer maxGuests,
+            @RequestParam("image") MultipartFile file) {
+        User owner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Room room = roomService.createRoom(owner, name, stayId, baseFare, discount, tax, serviceFee, type, maxGuests, file);
         return new DataResponse<>(room);
     }
 
